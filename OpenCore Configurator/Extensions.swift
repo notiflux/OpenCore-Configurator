@@ -138,7 +138,7 @@ extension ViewController: NSTableViewDelegate {
                 cell.action = #selector(checkboxHandler)
                 cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
                 
-                if tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!]! == "1" {
+                if tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] ?? "0" == "1" {
                     cell.state = NSControl.StateValue.on
                 }
                 
@@ -168,7 +168,7 @@ extension ViewController: NSTableViewDelegate {
                 
             default:
                 let cell = tableViewName.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: (tableColumn?.identifier.rawValue)!), owner: nil) as? NSTableCellView
-                cell?.textField?.stringValue = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!]!       // string value should be whatever was written to the correspondig tableview datasource entry for that row/column
+                cell?.textField?.stringValue = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] ?? ""       // string value should be whatever was written to the correspondig tableview datasource entry for that row/column
                 return cell
             }
         }
