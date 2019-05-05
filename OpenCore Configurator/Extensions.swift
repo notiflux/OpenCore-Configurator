@@ -33,7 +33,26 @@ extension ViewController: NSTableViewDelegate {
         
         let parentTableColumn = parentTableView.tableColumns[parentTableView.column(for: sender)]
         
-        tableLookup[parentTableView]![Int(sender.identifier!.rawValue)!][parentTableColumn.identifier.rawValue] = (sender.selectedItem?.title)!
+        if sender.selectedItem?.title != "Other..." {
+            tableLookup[parentTableView]![Int(sender.identifier!.rawValue)!][parentTableColumn.identifier.rawValue] = (sender.selectedItem?.title)!
+        } else {
+            let customItem = NSAlert()
+            customItem.addButton(withTitle: "OK")      // 1st button
+            customItem.addButton(withTitle: "Cancel")  // 2nd button
+            customItem.messageText = "Add a custom item"
+            customItem.informativeText = ""
+            
+            let txt = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+            txt.stringValue = ""
+            
+            customItem.accessoryView = txt
+            let response: NSApplication.ModalResponse = customItem.runModal()
+            
+            if (response == NSApplication.ModalResponse.alertFirstButtonReturn) {
+                sender.addItem(withTitle: txt.stringValue)
+                sender.selectItem(withTitle: txt.stringValue)
+            }
+        }
         self.view.window?.isDocumentEdited = true
         editedState = true
     }

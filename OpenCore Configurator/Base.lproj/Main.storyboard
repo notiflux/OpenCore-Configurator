@@ -1844,7 +1844,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Add" identifier="" id="BjJ-Rq-gji">
-                                        <view key="view" ambiguous="YES" id="Cfp-8b-j8o">
+                                        <view key="view" id="Cfp-8b-j8o">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -2500,7 +2500,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Patch" identifier="" id="2RJ-VC-Os8">
-                                        <view key="view" id="kCk-sc-XJU">
+                                        <view key="view" ambiguous="YES" id="kCk-sc-XJU">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -2509,7 +2509,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="mNw-YF-hmR">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="nBL-oO-qi0" viewBased="YES" id="Tem-Ee-8s6" userLabel="Kernel Patch Table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
@@ -3760,7 +3760,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="General" identifier="" id="EjP-un-MsJ">
-                                        <view key="view" id="Zqi-aZ-UP9">
+                                        <view key="view" ambiguous="YES" id="Zqi-aZ-UP9">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -3936,7 +3936,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Generic" identifier="" id="qFF-ip-se2">
-                                        <view key="view" ambiguous="YES" id="Hvo-fR-Av5">
+                                        <view key="view" id="Hvo-fR-Av5">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -3945,7 +3945,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="NsL-Uu-Poe">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="Ec7-uk-eDe" viewBased="YES" id="rBC-gD-Snx" userLabel="Generic platformInfo table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
@@ -4179,7 +4179,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="5YZ-Ax-tsJ">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="OOu-eY-ta6" viewBased="YES" id="Ifx-P2-lvI" userLabel="SMBIOS table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
@@ -4288,7 +4288,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Drivers" identifier="" id="ja6-aw-l6L">
-                                        <view key="view" id="Nw6-F0-wsW">
+                                        <view key="view" ambiguous="YES" id="Nw6-F0-wsW">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -4402,7 +4402,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Quirks" identifier="" id="xgU-NW-kru">
-                                        <view key="view" ambiguous="YES" id="iHd-Vo-d7W">
+                                        <view key="view" id="iHd-Vo-d7W">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>

@@ -23,6 +23,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
     
+    func application(_ sender: NSApplication, openFile filename: String) -> Bool {
+        path = filename
+        NotificationCenter.default.post(name: .plistOpen, object: nil)
+        return true
+    }
+    
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         if editedState {
             let alert = NSAlert()
