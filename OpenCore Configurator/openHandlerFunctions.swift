@@ -41,7 +41,18 @@ class openHandlerFunctions {
             var tempDict: [String:String] = [String:String]()
             tempDict["device"] = key
             tempDict["property"] = innerKey as? String
-            tempDict["value"] = (innerValue as! Data).hexEncodedString(options: .upperCase)
+            switch innerValue {
+            case is String:
+                tempDict["value"] = (innerValue as! String).data(using: .ascii)!.hexEncodedString(options: .upperCase)
+            case is Int:
+                tempDict["value"] = String(innerValue as! Int).data(using: .ascii)!.hexEncodedString(options: .upperCase)
+            case is Bool:
+                tempDict["value"] = String(innerValue as! Bool).data(using: .ascii)!.hexEncodedString(options: .upperCase)
+            case is Data:
+                tempDict["value"] = (innerValue as! Data).hexEncodedString(options: .upperCase)
+            default:
+                break
+            }
             tempArray.append(tempDict)
         }
         return tempArray
@@ -82,11 +93,10 @@ class openHandlerFunctions {
                     tempDict = arrayOfStrings(predefinedKey: predefinedKey!, entry: entry as! String)
                 }
                 tableLookup[table]!.append(tempDict)
-                tableLookup[table]! = tableLookup[table]!.sorted { $0.keys.first! < $1.keys.first! }
+                tableLookup[table]! = tableLookup[table]!.sorted { $0.values.first! < $1.values.first! }
             }
             
         case is NSDictionary:
-            
             for (key, value) in input as! NSDictionary {
                 if value is NSDictionary {
                     let tempArray: [[String: String]] = (dictionaryOfDictionarys(key: key as! String, value: value as! NSDictionary))
@@ -137,6 +147,10 @@ class openHandlerFunctions {
                 switch innerValue {
                 case is String:
                     tempDict["value"] = innerValue as? String
+                case is Int:
+                    tempDict["value"] = String(innerValue as! Int).data(using: .ascii)!.hexEncodedString(options: .upperCase)
+                case is Bool:
+                    tempDict["value"] = String(innerValue as! Bool).data(using: .ascii)!.hexEncodedString(options: .upperCase)
                 case is Data:
                     tempDict["value"] = (innerValue as! Data).hexEncodedString(options: .upperCase)
                 default:

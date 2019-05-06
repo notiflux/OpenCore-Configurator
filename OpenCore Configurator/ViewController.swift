@@ -136,6 +136,8 @@ class ViewController: NSViewController {
         
     }
     
+    var dragDropType = NSPasteboard.PasteboardType(rawValue: "private.table-row")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -145,6 +147,8 @@ class ViewController: NSViewController {
             table.delegate = self as NSTableViewDelegate
             table.dataSource = self
         }
+        
+        kernelAddTable.registerForDraggedTypes([dragDropType])      // allow row reordering for kexts table
         
         sectionsTable.action = #selector(onItemClicked)     // on section selection
         
@@ -421,7 +425,6 @@ class ViewController: NSViewController {
                 }
             case "ConsoleBehaviourUi":
                 if value as! String != "" {
-                    print(value)
                     if UiBehavior.itemTitles.contains(value as! String) {
                         UiBehavior.selectItem(withTitle: value as! String)
                     }
@@ -523,7 +526,9 @@ class ViewController: NSViewController {
         OHF.createData(input: deviceBlockDict, table: &deviceBlockTable)
         // OHF.createQuirksData(input: deviceQuirksDict, quirksDict: deviceQuirks)          // device properties don't exist anymore. leaving this here in case they come back
         
-        OHF.createData(input: kernelAddArray, table: &kernelAddTable)
+        //OHF.createData(input: kernelAddArray, table: &kernelAddTable)
+        tableLookup[kernelAddTable] = kernelAddArray as? Array ?? Array()
+        kernelAddTable.reloadData()
         OHF.createData(input: kernelBlockArray, table: &kernelBlockTable)
         OHF.createData(input: kernelPatchArray, table: &kernelPatchTable)
         OHF.createQuirksData(input: kernelQuirksDict, quirksDict: kernelQuirks)
@@ -551,7 +556,8 @@ class ViewController: NSViewController {
         SHF.saveArrayOfDictData(table: acpiPatchTable, array: &acpiPatchArray)
         SHF.saveQuirksData(dict: acpiQuirks, quirksDict: &acpiQuirksDict)
         
-        SHF.saveArrayOfDictData(table: kernelAddTable, array: &kernelAddArray)
+        //SHF.saveArrayOfDictData(table: kernelAddTable, array: &kernelAddArray)
+        kernelAddArray = (tableLookup[kernelAddTable]! as NSArray).mutableCopy() as! NSMutableArray
         SHF.saveArrayOfDictData(table: kernelBlockTable, array: &kernelBlockArray)
         SHF.saveArrayOfDictData(table: kernelPatchTable, array: &kernelPatchArray)
         SHF.saveQuirksData(dict: kernelQuirks, quirksDict: &kernelQuirksDict)
