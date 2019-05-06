@@ -567,7 +567,7 @@ class ViewController: NSViewController {
         
         SHF.saveStringData(table: uefiDriverTable, array: &uefiDriverArray)
         SHF.saveQuirksData(dict: uefiQuirks, quirksDict: &uefiQuirksDict)
-        uefiQuirksDict.addEntries(from: ["ExitBootServicesDelay": Int(ExitBootServicesDelay.stringValue)!])
+        uefiQuirksDict.addEntries(from: ["ExitBootServicesDelay": Int(ExitBootServicesDelay.stringValue) ?? 0])
         SHF.saveQuirksData(dict: uefiProtocols, quirksDict: &uefiProtocolsDict)
         
         SHF.saveNvramBootData(table: nvramBootTable, dict: &nvramAddDict)       // TODO: create subdicts for GUID, handle custom table seperately
@@ -670,13 +670,13 @@ class ViewController: NSViewController {
         
         miscDebugDict.removeAllObjects()
         miscDebugDict.addEntries(from: ["DisableWatchDog": checkboxState(button: disableWatchdog)])
-        miscDebugDict.addEntries(from: ["DisplayDelay": Int(miscDelayText.stringValue)!])
-        miscDebugDict.addEntries(from: ["DisplayLevel": Int(miscDisplayLevelText.stringValue)!])
+        miscDebugDict.addEntries(from: ["DisplayDelay": Int(miscDelayText.stringValue) ?? 0])
+        miscDebugDict.addEntries(from: ["DisplayLevel": Int(miscDisplayLevelText.stringValue) ?? 0])
         miscDebugDict.addEntries(from: ["ExposeBootPath": checkboxState(button: miscExposeBootPath)])
-        miscDebugDict.addEntries(from: ["Target": Int(miscTargetText.stringValue)!])
+        miscDebugDict.addEntries(from: ["Target": Int(miscTargetText.stringValue) ?? 0])
         
         miscSecurityDict.removeAllObjects()
-        miscSecurityDict.addEntries(from: ["HaltLevel": Int(miscHaltlevel.stringValue)!])
+        miscSecurityDict.addEntries(from: ["HaltLevel": Int(miscHaltlevel.stringValue) ?? 0])
         miscSecurityDict.addEntries(from: ["RequireSignature": checkboxState(button: miscRequireSignature)])
         miscSecurityDict.addEntries(from: ["RequireVault": checkboxState(button: miscRequireVault)])
         
@@ -861,6 +861,7 @@ class ViewController: NSViewController {
         for kext in Array(execLookup!.keys) {
             tableLookup[kernelAddTable]!.append(["Comment": "", "BundlePath": kext, "Enabled": "1", "ExecutablePath": "\(execLookup![kext]!)", "MatchKernel": "", "PlistPath": "Contents/Info.plist"])
         }
+        tableLookup[kernelAddTable]! = tableLookup[kernelAddTable]!.sorted { $0.values[$0.keys.firstIndex(of: "BundlePath")!] < $1.values[$1.keys.firstIndex(of: "BundlePath")!] }
         kernelAddTable.reloadData()
     }
     

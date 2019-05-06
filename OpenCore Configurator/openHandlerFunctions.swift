@@ -82,6 +82,7 @@ class openHandlerFunctions {
                     tempDict = arrayOfStrings(predefinedKey: predefinedKey!, entry: entry as! String)
                 }
                 tableLookup[table]!.append(tempDict)
+                tableLookup[table]! = tableLookup[table]!.sorted { $0.keys.first! < $1.keys.first! }
             }
             
         case is NSDictionary:
