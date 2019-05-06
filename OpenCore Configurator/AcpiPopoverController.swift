@@ -18,6 +18,7 @@ class AcpiPopoverController: NSViewController {
     @IBOutlet weak var ReplaceMask: NSTextField!
     @IBOutlet weak var Skip: NSTextField!
     @IBOutlet weak var TableLength: NSTextField!
+    @IBOutlet weak var Count: NSTextField!
     
     let popover = NSPopover()
     
@@ -53,6 +54,9 @@ class AcpiPopoverController: NSViewController {
         
         TableLength.stringValue = acpiTableLengthString
         TableLength.isEditable = true
+        
+        Count.stringValue = acpiCountString
+        Count.isEditable = true
     }
     
     @IBAction func sendLimit(_ sender: Any) {
@@ -77,6 +81,10 @@ class AcpiPopoverController: NSViewController {
     }
     @IBAction func sendTableLength(_ sender: Any) {
         acpiCurrentTextField = TableLength
+        NotificationCenter.default.post(name: .syncAcpiPopoverAndDict, object: nil)
+    }
+    @IBAction func sendCount(_ sender: Any) {
+        acpiCurrentTextField = Count
         NotificationCenter.default.post(name: .syncAcpiPopoverAndDict, object: nil)
     }
 }

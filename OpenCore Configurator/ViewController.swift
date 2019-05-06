@@ -15,6 +15,7 @@ public var acpiOemTableIdString: String = String()
 public var acpiReplaceMaskString: String = String()
 public var acpiSkipString: String = String()
 public var acpiTableLengthString: String = String()
+public var acpiCountString: String = String()
 
 public var kernelBaseString: String = String()
 public var kernelCountString: String = String()
@@ -23,6 +24,8 @@ public var kernelLimitString: String = String()
 public var kernelMaskString: String = String()
 public var kernelReplaceString: String = String()
 public var kernelSkipString: String = String()
+
+public var mountedESP: String = "/Volumes/EFI"
 
 public var tableLookup: [NSTableView: [[String: String]]] = [NSTableView: [[String: String]]]()
 
@@ -125,6 +128,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var updateSmbios: NSButton!
     @IBOutlet weak var smbioUpdateModePopup: NSPopUpButton!
     
+    @IBOutlet weak var espPopup: NSPopUpButton!
+    
     var acpiQuirks: [String: NSButton] = [String: NSButton]()
     var deviceQuirks: [String: NSButton] = [String: NSButton]()
     var kernelQuirks: [String: NSButton] = [String: NSButton]()
@@ -137,9 +142,25 @@ class ViewController: NSViewController {
     }
     
     var dragDropType = NSPasteboard.PasteboardType(rawValue: "private.table-row")
+    var drivesDict: [String: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let efiScript = Bundle.main.url(forResource: "MountEFI", withExtension: "py")!.path
+        let drives = shell(launchPath: efiScript, arguments: [])
+        let tempDrivesArray = drives?.components(separatedBy: "\n")
+        for drive in tempDrivesArray! {
+            var tempArray = drive.components(separatedBy: " ")
+            tempArray = Array(tempArray.dropFirst())
+            if tempArray.count > 1 {
+                drivesDict[tempArray[0]] = tempArray[1].replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "")
+            }
+        }
+        
+        for drive in Array(drivesDict.keys) {
+            espPopup.addItem(withTitle: drive)
+        }
         
         resetTables()   // initialize table datasources
         
@@ -278,6 +299,7 @@ class ViewController: NSViewController {
         acpiReplaceMaskString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["ReplaceMask"]!
         acpiSkipString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Skip"]!
         acpiTableLengthString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["TableLength"]!
+        acpiCountString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Count"]!
         
         acpiVc.showPopover(button: sender)
     }
@@ -382,14 +404,16 @@ class ViewController: NSViewController {
         kernelDict = plistDict?.object(forKey: "Kernel") as? NSMutableDictionary ?? NSMutableDictionary()
         kernelAddArray = kernelDict.object(forKey: "Add") as? NSMutableArray ?? NSMutableArray()
         
-        for i in 0...(kernelAddArray.count - 1) {
-            let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-            if (tempDict.value(forKey: "Enabled") as! Bool) == false {
-                tempDict.setValue("0", forKey: "Enabled")
-            } else {
-                tempDict.setValue("1", forKey: "Enabled")
+        if kernelAddArray.count > 0 {
+            for i in 0...(kernelAddArray.count - 1) {
+                let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+                if (tempDict.value(forKey: "Enabled") as! Bool) == false {
+                    tempDict.setValue("0", forKey: "Enabled")
+                } else {
+                    tempDict.setValue("1", forKey: "Enabled")
+                }
+                kernelAddArray[i] = tempDict
             }
-            kernelAddArray[i] = tempDict
         }
         
         kernelBlockArray = kernelDict.object(forKey: "Block") as? NSMutableArray ?? NSMutableArray()
@@ -589,14 +613,16 @@ class ViewController: NSViewController {
         
         //SHF.saveArrayOfDictData(table: kernelAddTable, array: &kernelAddArray)
         kernelAddArray = (tableLookup[kernelAddTable]! as NSArray).mutableCopy() as! NSMutableArray
-        for i in 0...(kernelAddArray.count - 1) {
-            let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-            if (tempDict.value(forKey: "Enabled") as! String) == "0" {
-                tempDict.setValue(false, forKey: "Enabled")
-            } else {
-                tempDict.setValue(true, forKey: "Enabled")
+        if kernelAddArray.count > 0 {
+            for i in 0...(kernelAddArray.count - 1) {
+                let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+                if (tempDict.value(forKey: "Enabled") as! String) == "0" {
+                    tempDict.setValue(false, forKey: "Enabled")
+                } else {
+                    tempDict.setValue(true, forKey: "Enabled")
+                }
+                kernelAddArray[i] = tempDict
             }
-            kernelAddArray[i] = tempDict
         }
         SHF.saveArrayOfDictData(table: kernelBlockTable, array: &kernelBlockArray)
         SHF.saveArrayOfDictData(table: kernelPatchTable, array: &kernelPatchArray)
@@ -811,13 +837,13 @@ class ViewController: NSViewController {
         removeEntryFromTable(table: &acpiAddTable)
     }
     @IBAction func blockAcpiBtn(_ sender: Any) {
-        addEntryToTable(table: &acpiBlockTable, appendix: ["Comment": "", "OemTableId": "", "TableLength": "", "TableSignature": "","Enabled": "", "All": ""])
+        addEntryToTable(table: &acpiBlockTable, appendix: ["Comment": "", "OemTableId": "", "TableLength": "", "TableSignature": "44534454","Enabled": "", "All": ""])
     }
     @IBAction func remBlockAcpiBtn(_ sender: Any) {
         removeEntryFromTable(table: &acpiBlockTable)
     }
     @IBAction func addPatchAcpiBtn(_ sender: Any) {
-        addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": ""])
+        addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "44534454", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": "", "Count": ""])
     }
     @IBAction func remPatchAcpiBtn(_ sender: Any) {
         removeEntryFromTable(table: &acpiPatchTable)
@@ -884,31 +910,46 @@ class ViewController: NSViewController {
     }
     
     @IBAction func autoAddAcpi(_ sender: Any) {
-        let fileManager = FileManager.default
-        let acpiUrl = URL(fileURLWithPath: "/Volumes/EFI/EFI/OC/ACPI/Custom")
-        do {
-            let fileURLs = try fileManager.contentsOfDirectory(at: acpiUrl, includingPropertiesForKeys: nil)
-            var filenames: [String] = [String]()
-            for i in fileURLs {
-                filenames.append(i.lastPathComponent)
+        if mountedESP != "" {
+            let fileManager = FileManager.default
+            let acpiUrl = URL(fileURLWithPath: "\(mountedESP)/EFI/OC/ACPI/Custom")
+            do {
+                let fileURLs = try fileManager.contentsOfDirectory(at: acpiUrl, includingPropertiesForKeys: nil)
+                var filenames: [String] = [String]()
+                for i in fileURLs {
+                    filenames.append(i.lastPathComponent)
+                }
+                
+                for file in filenames {
+                    tableLookup[acpiAddTable]!.append(["Comment": "", "Path": file, "Enabled": "1"])
+                }
+                acpiAddTable.reloadData()
+            } catch {
+                print("Error while enumerating files \(acpiUrl.path): \(error.localizedDescription)")
             }
-            
-            for file in filenames {
-                tableLookup[acpiAddTable]!.append(["Comment": "", "Path": file, "Enabled": "1"])
-            }
-            acpiAddTable.reloadData()
-        } catch {
-            print("Error while enumerating files \(acpiUrl.path): \(error.localizedDescription)")
+        } else {
+            espWarning()
         }
     }
     
     @IBAction func autoAddKernel(_ sender: Any) {
-        let execLookup = recursiveKexts(path: "/Volumes/EFI/EFI/OC/Kexts")
-        for kext in Array(execLookup!.keys) {
-            tableLookup[kernelAddTable]!.append(["Comment": "", "BundlePath": kext, "Enabled": "1", "ExecutablePath": "\(execLookup![kext]!)", "MatchKernel": "", "PlistPath": "Contents/Info.plist"])
+        if mountedESP != "" {
+            let execLookup = recursiveKexts(path: "\(mountedESP)/EFI/OC/Kexts")
+            for kext in Array(execLookup!.keys) {
+                tableLookup[kernelAddTable]!.append(["Comment": "", "BundlePath": kext, "Enabled": "1", "ExecutablePath": "\(execLookup![kext]!)", "MatchKernel": "", "PlistPath": "Contents/Info.plist"])
+            }
+            tableLookup[kernelAddTable]! = tableLookup[kernelAddTable]!.sorted { $0.values[$0.keys.firstIndex(of: "BundlePath")!] < $1.values[$1.keys.firstIndex(of: "BundlePath")!] }
+            kernelAddTable.reloadData()
+        } else {
+            espWarning()
         }
-        tableLookup[kernelAddTable]! = tableLookup[kernelAddTable]!.sorted { $0.values[$0.keys.firstIndex(of: "BundlePath")!] < $1.values[$1.keys.firstIndex(of: "BundlePath")!] }
-        kernelAddTable.reloadData()
+    }
+    
+    func espWarning() {
+        let alert = NSAlert()
+        alert.messageText = "No EFI partition selected!"
+        alert.informativeText = "Please select an EFI partition from the drop down."
+        alert.runModal()
     }
     
     @IBAction func genSmbios(_ sender: NSButton) {
@@ -928,6 +969,19 @@ class ViewController: NSViewController {
         }
         let p = NSPoint(x: sender.frame.origin.x, y: sender.frame.origin.y + 48)
         menu.popUp(positioning: menu.items.last, at: p, in: sender.superview)
+    }
+    
+    @IBAction func mountEsp(_ sender: NSPopUpButton) {
+        if sender.selectedItem!.title != "Select an EFI partition..." {
+            let driveToMount = drivesDict[sender.selectedItem!.title]
+            let driveIsMounted = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mounted\" | awk '{ print $2 }'"])
+            
+            if driveIsMounted == "No" {
+                NSAppleScript(source: "do shell script \"sudo diskutil mount /dev/\(String(describing: driveToMount))\" with administrator privileges")!.executeAndReturnError(nil)
+            }
+            
+            //mountedESP = (shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mount Point\" | awk '{ print $3 }'"])?.replacingOccurrences(of: "\n", with: ""))!
+        }
     }
     
     @objc func onSmbiosSelect(_ sender: NSMenuItem) {

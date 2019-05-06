@@ -691,14 +691,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="48" horizontalPageScroll="10" verticalLineScroll="48" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5l-7z-hpP">
-                                <rect key="frame" x="0.0" y="0.0" width="295" height="800"/>
+                                <rect key="frame" x="0.0" y="50" width="295" height="750"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="Eqk-BQ-pMz">
-                                    <rect key="frame" x="0.0" y="0.0" width="295" height="800"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="295" height="750"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="46" rowSizeStyle="automatic" viewBased="YES" id="0tr-Oi-AS9">
-                                            <rect key="frame" x="0.0" y="0.0" width="295" height="800"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="295" height="750"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -757,7 +757,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Add" identifier="" id="mOQ-fp-wmM">
-                                        <view key="view" ambiguous="YES" id="LWh-HS-hL3">
+                                        <view key="view" id="LWh-HS-hL3">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -932,7 +932,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Block" identifier="" id="xA2-ni-Yhk">
-                                        <view key="view" id="e43-7G-fNz">
+                                        <view key="view" ambiguous="YES" id="e43-7G-fNz">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -941,7 +941,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="q0X-bY-sg1">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="oga-kR-oJQ" viewBased="YES" id="fm8-vT-HkQ" userLabel="ACPI Block Table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
@@ -1547,7 +1547,7 @@
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="Euu-Br-19R" viewBased="YES" id="m77-4H-hd5" userLabel="Device Add Table">
-                                                                <rect key="frame" x="0.0" y="0.0" width="747" height="659"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="2"/>
                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1661,7 +1661,7 @@
                                                                             </tableCellView>
                                                                         </prototypeCellViews>
                                                                     </tableColumn>
-                                                                    <tableColumn identifier="edit" width="30" minWidth="10" maxWidth="3.4028234663852886e+38" id="8c0-3l-TP2">
+                                                                    <tableColumn identifier="edit" width="28" minWidth="10" maxWidth="3.4028234663852886e+38" id="8c0-3l-TP2">
                                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title=" ">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1675,7 +1675,7 @@
                                                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         <prototypeCellViews>
                                                                             <tableCellView id="0Vz-jG-Drc">
-                                                                                <rect key="frame" x="715" y="1" width="30" height="17"/>
+                                                                                <rect key="frame" x="715" y="1" width="28" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             </tableCellView>
                                                                         </prototypeCellViews>
@@ -1684,7 +1684,7 @@
                                                             </tableView>
                                                         </subviews>
                                                     </clipView>
-                                                    <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="2Rx-50-X0W">
+                                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="2Rx-50-X0W">
                                                         <rect key="frame" x="1" y="668" width="745" height="16"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
@@ -1693,7 +1693,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                     <tableHeaderView key="headerView" id="Euu-Br-19R">
-                                                        <rect key="frame" x="0.0" y="0.0" width="747" height="25"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="745" height="25"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </tableHeaderView>
                                                 </scrollView>
@@ -1863,7 +1863,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Add" identifier="" id="BjJ-Rq-gji">
-                                        <view key="view" id="Cfp-8b-j8o">
+                                        <view key="view" ambiguous="YES" id="Cfp-8b-j8o">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -2519,7 +2519,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Patch" identifier="" id="2RJ-VC-Os8">
-                                        <view key="view" ambiguous="YES" id="kCk-sc-XJU">
+                                        <view key="view" id="kCk-sc-XJU">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -2528,7 +2528,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="mNw-YF-hmR">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="nBL-oO-qi0" viewBased="YES" id="Tem-Ee-8s6" userLabel="Kernel Patch Table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
@@ -4307,7 +4307,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Drivers" identifier="" id="ja6-aw-l6L">
-                                        <view key="view" id="Nw6-F0-wsW">
+                                        <view key="view" ambiguous="YES" id="Nw6-F0-wsW">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -4421,7 +4421,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Quirks" identifier="" id="xgU-NW-kru">
-                                        <view key="view" ambiguous="YES" id="iHd-Vo-d7W">
+                                        <view key="view" id="iHd-Vo-d7W">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -4533,6 +4533,23 @@
                                     </tabViewItem>
                                 </tabViewItems>
                             </tabView>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kF3-sy-f34">
+                                <rect key="frame" x="45" y="12" width="205" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Select an EFI partition..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Kdd-Er-J0A" id="xgB-pI-gLw">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="0ma-b8-L1Z">
+                                        <items>
+                                            <menuItem title="Select an EFI partition..." state="on" id="Kdd-Er-J0A"/>
+                                            <menuItem isSeparatorItem="YES" id="lKi-wp-wxe"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="mountEsp:" target="XfG-lQ-9wD" id="3DU-fI-LIB"/>
+                                </connections>
+                            </popUpButton>
                         </subviews>
                     </view>
                     <connections>
@@ -4566,6 +4583,7 @@
                         <outlet property="deviceBlockTable" destination="I3p-A0-LU5" id="kY1-KA-1kh"/>
                         <outlet property="deviceTab" destination="KsM-u3-nT9" id="hrX-08-Xoe"/>
                         <outlet property="disableWatchdog" destination="t68-da-MQB" id="Ps6-4p-SBm"/>
+                        <outlet property="espPopup" destination="kF3-sy-f34" id="fHW-af-JwZ"/>
                         <outlet property="hideSelf" destination="BLc-wZ-Rld" id="6ME-4M-9KZ"/>
                         <outlet property="kernelAddTable" destination="1hE-Db-oCb" id="pev-Yk-H7E"/>
                         <outlet property="kernelBlockTable" destination="biq-A9-dCu" id="fOA-4G-Nfj"/>
@@ -4613,9 +4631,35 @@
             <objects>
                 <viewController storyboardIdentifier="AcpiPopoverController" id="IbP-E4-hAN" customClass="AcpiPopoverController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="GRu-qX-vcT">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="210"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="240"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ygR-3E-203">
+                                <rect key="frame" x="18" y="199" width="48" height="19"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Count" id="8ZE-5T-bSo">
+                                    <font key="font" metaFont="system" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField identifier="Count" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8du-JB-kZm">
+                                <rect key="frame" x="138" y="198" width="142" height="22"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="im9-g1-lEZ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="sendCount:" target="IbP-E4-hAN" id="9oQ-Kd-tdX"/>
+                                    <binding destination="iT3-1W-kTh" name="displayPatternValue1" keyPath="values.Limit" id="Ssg-xa-ag6">
+                                        <dictionary key="options">
+                                            <string key="NSDisplayPattern">%{value1}@</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cHg-T1-ssO">
                                 <rect key="frame" x="18" y="170" width="40" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -4775,6 +4819,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="Count" destination="8du-JB-kZm" id="hYv-hD-8GV"/>
                         <outlet property="Limit" destination="ebj-QU-WOy" id="ipT-M5-QCt"/>
                         <outlet property="Mask" destination="gP5-OG-Ftv" id="h5x-Hg-8sl"/>
                         <outlet property="OemTableId" destination="HhR-Ur-Yeg" id="gy4-lz-I1Q"/>
@@ -4786,7 +4831,7 @@
                 <customObject id="Vx6-tS-z07" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="iT3-1W-kTh"/>
             </objects>
-            <point key="canvasLocation" x="283" y="1559"/>
+            <point key="canvasLocation" x="283" y="1571"/>
         </scene>
         <!--Kernel Popover Controller-->
         <scene sceneID="clW-6O-C6f">

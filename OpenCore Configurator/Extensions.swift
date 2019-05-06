@@ -171,19 +171,20 @@ extension ViewController: NSTableViewDelegate {
                 let cell = NSPopUpButton()
 
                 cell.isBordered = false
-                cell.addItems(withTitles: ["DSDT", "SSDT", "", "APIC", "ASF!", "BATB", "BGRT", "BOOT", "DBG2", "DBGP", "ECDT", "FACS", "FPDT", "HPET", "MCFG", "MSDM", "RSDT", "TPM2", "UEFI", "", "Other..."])
+                cell.addItems(withTitles: ["DSDT", "SSDT", "APIC", "ASF!", "BATB", "BGRT", "BOOT", "DBG2", "DBGP", "ECDT", "FACS", "FPDT", "HPET", "MCFG", "MSDM", "RSDT", "TPM2", "UEFI", "", "Other..."])
                 cell.selectItem(withTitle: "DSDT")      // otherwise new empty item is created and selected
                 cell.action = #selector(dropDownHandler)
                 cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
                 
                 let table = String(decoding: Data(hexString: tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!]!)!, as: UTF8.self)
                 
-                if table != "" {
-                    if !cell.itemTitles.contains(table) {
-                        cell.addItem(withTitle: table)
-                    }
-                    cell.selectItem(withTitle: table)
+                if tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] == "44534454" {
+                    tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] = "DSDT"
                 }
+                if !cell.itemTitles.contains(table) {
+                    cell.addItem(withTitle: table)
+                }
+                cell.selectItem(withTitle: table)
                 return cell
                 
             case "Enabled", "All":

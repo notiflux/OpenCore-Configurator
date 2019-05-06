@@ -16,7 +16,7 @@ class saveHandlerFunctions {
         "All": "Bool",
         "OemTableId": "Data",
         "TableLength": "Int",
-        "TableSignature": "Data",
+        "TableSignature": "Stringdata",
         "Count": "Int",
         "Find": "Data",
         "Limit": "Int",
@@ -48,7 +48,9 @@ class saveHandlerFunctions {
         for entry in tableLookup[table]! {
             let tempDict: NSMutableDictionary = NSMutableDictionary()
             for (key, value) in entry {
-                tempDict.addEntries(from: [key: value.toType(type: dataTypeLookup[key] ?? "String")])
+                if key != "advanced", key != "kernelAdvanced" {
+                    tempDict.addEntries(from: [key: value.toType(type: dataTypeLookup[key] ?? "String")])
+                }
             }
             array.add(tempDict)
         }
@@ -109,12 +111,9 @@ class saveHandlerFunctions {
     func saveNvramBlockData(table: NSTableView, dict: inout NSMutableDictionary) {
         dict.removeAllObjects()
         for entry in tableLookup[table]! {
-            print(entry)
             if dict.object(forKey: entry["guid"]!) as? NSArray != nil {
                 var guidArray = dict.object(forKey: entry["guid"]!) as! [Any]
-                print(guidArray)
                 guidArray.append(entry["property"]!)
-                print(guidArray)
                 dict.removeObject(forKey: entry["guid"]!)
                 dict.addEntries(from: [entry["guid"]!: guidArray])
             }
@@ -182,6 +181,8 @@ extension String {
             switch type {
             case "Data":
                 return Data(hexString: self) ?? Data()
+            case "Stringdata":
+                return self.data(using: .ascii) ?? Data()
             case "Bool":
                 if self == "1" {
                     return true
