@@ -381,6 +381,17 @@ class ViewController: NSViewController {
         
         kernelDict = plistDict?.object(forKey: "Kernel") as? NSMutableDictionary ?? NSMutableDictionary()
         kernelAddArray = kernelDict.object(forKey: "Add") as? NSMutableArray ?? NSMutableArray()
+        
+        for i in 0...(kernelAddArray.count - 1) {
+            let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+            if (tempDict.value(forKey: "Enabled") as! Bool) == false {
+                tempDict.setValue("0", forKey: "Enabled")
+            } else {
+                tempDict.setValue("1", forKey: "Enabled")
+            }
+            kernelAddArray[i] = tempDict
+        }
+        
         kernelBlockArray = kernelDict.object(forKey: "Block") as? NSMutableArray ?? NSMutableArray()
         kernelPatchArray = kernelDict.object(forKey: "Patch") as? NSMutableArray ?? NSMutableArray()
         kernelQuirksDict = kernelDict.object(forKey: "Quirks") as? NSMutableDictionary ?? NSMutableDictionary()
@@ -544,7 +555,7 @@ class ViewController: NSViewController {
         
         OHF.createData(input: deviceAddDict, table: &deviceAddTable)
         OHF.createData(input: deviceBlockDict, table: &deviceBlockTable)
-        // OHF.createQuirksData(input: deviceQuirksDict, quirksDict: deviceQuirks)          // device properties don't exist anymore. leaving this here in case they come back
+        // OHF.createQuirksData(input: deviceQuirksDict, quirksDict: deviceQuirks)          // device properties quirks don't exist anymore. leaving this here in case they come back
         
         //OHF.createData(input: kernelAddArray, table: &kernelAddTable)
         tableLookup[kernelAddTable] = kernelAddArray as? Array ?? Array()
@@ -578,6 +589,15 @@ class ViewController: NSViewController {
         
         //SHF.saveArrayOfDictData(table: kernelAddTable, array: &kernelAddArray)
         kernelAddArray = (tableLookup[kernelAddTable]! as NSArray).mutableCopy() as! NSMutableArray
+        for i in 0...(kernelAddArray.count - 1) {
+            let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+            if (tempDict.value(forKey: "Enabled") as! String) == "0" {
+                tempDict.setValue(false, forKey: "Enabled")
+            } else {
+                tempDict.setValue(true, forKey: "Enabled")
+            }
+            kernelAddArray[i] = tempDict
+        }
         SHF.saveArrayOfDictData(table: kernelBlockTable, array: &kernelBlockArray)
         SHF.saveArrayOfDictData(table: kernelPatchTable, array: &kernelPatchArray)
         SHF.saveQuirksData(dict: kernelQuirks, quirksDict: &kernelQuirksDict)
