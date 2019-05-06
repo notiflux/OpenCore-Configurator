@@ -17,16 +17,6 @@ extension ViewController:NSTableViewDataSource {
 
 extension ViewController: NSTableViewDelegate {
     
-    /*func tableCiew(_ tableViewName: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-     if tableLookup[tableViewName]!.count > 0 {
-     if tableColumn?.identifier.rawValue == "TableSignature" {
-     return String(decoding: Data(hexString: tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!]!)!, as: UTF8.self)
-     }
-     else { return "" }
-     }
-     else { return "" }
-     }*/
-    
     @objc func dropDownHandler(_ sender: NSPopUpButton) {
         guard let parentRowView = sender.superview as? NSTableRowView,
             let parentTableView = parentRowView.superview as? NSTableView else { debugPrint("Failed to assign parent values"); return }
@@ -229,6 +219,16 @@ extension ViewController: NSTableViewDelegate {
                 else {
                     cell.selectItem(withTitle: "No")
                 }
+                return cell
+                
+            case "edit":
+                let cell = NSButton()
+                
+                cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
+                cell.image = NSImage.init(named: "NSQuickLookTemplate")
+                cell.isBordered = false
+                cell.action = #selector(ViewController.deviceEdit)
+                
                 return cell
                 
             default:

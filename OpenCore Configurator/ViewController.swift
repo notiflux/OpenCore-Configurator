@@ -306,6 +306,26 @@ class ViewController: NSViewController {
         tableLookup[kernelPatchTable]![kernelPatchTable.selectedRow][(kernelCurrentTextField.identifier?.rawValue)!] = kernelCurrentTextField.stringValue
     }
     
+    @objc func deviceEdit(_ sender: NSButton) {
+        let customItem = NSAlert()
+        customItem.addButton(withTitle: "OK")      // 1st button
+        customItem.addButton(withTitle: "Cancel")  // 2nd button
+        customItem.messageText = "Edit value as String"
+        customItem.informativeText = ""
+
+        let txt = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+        
+        txt.stringValue = String(decoding: Data(hexString: tableLookup[deviceAddTable]![Int(sender.identifier!.rawValue)!]["value"]!)!, as: UTF8.self)
+        
+        customItem.accessoryView = txt
+        let response: NSApplication.ModalResponse = customItem.runModal()
+        
+        if (response == NSApplication.ModalResponse.alertFirstButtonReturn) {
+            tableLookup[deviceAddTable]![Int(sender.identifier!.rawValue)!]["value"] = txt.stringValue.data(using: .ascii)?.hexEncodedString(options: .upperCase)
+            deviceAddTable.reloadData()
+        }
+    }
+    
      var acpiDict: NSMutableDictionary = NSMutableDictionary()
      var acpiQuirksDict: NSMutableDictionary = NSMutableDictionary()
      var acpiAddArray: NSMutableArray = NSMutableArray()
@@ -783,7 +803,7 @@ class ViewController: NSViewController {
         removeEntryFromTable(table: &acpiPatchTable)
     }
     @IBAction func addDeviceAddBtn(_ sender: Any) {
-        addEntryToTable(table: &deviceAddTable, appendix: ["device": "", "property": "", "value": ""])
+        addEntryToTable(table: &deviceAddTable, appendix: ["device": "", "property": "", "value": "", "edit": ""])
     }
     @IBAction func remDeviceAddBtn(_ sender: Any) {
         removeEntryFromTable(table: &deviceAddTable)

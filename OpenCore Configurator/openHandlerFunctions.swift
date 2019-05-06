@@ -53,6 +53,7 @@ class openHandlerFunctions {
             default:
                 break
             }
+            tempDict["edit"] = ""
             tempArray.append(tempDict)
         }
         return tempArray
