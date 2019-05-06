@@ -97,7 +97,16 @@ extension ViewController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
         let item = NSPasteboardItem()
-        item.setString(String(row), forType: self.dragDropType)
+        switch tableView {
+        case kernelAddTable:
+            item.setString(String(row), forType: self.dragDropKernelAdd)
+        case acpiPatchTable:
+            item.setString(String(row), forType: self.dragDropAcpiPatch)
+        case kernelPatchTable:
+            item.setString(String(row), forType: self.dragDropKernelPatch)
+        default:
+            break
+        }
         return item
     }
     
@@ -111,31 +120,46 @@ extension ViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
         
         var oldIndexes = [Int]()
-        info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
-            if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropType), let index = Int(str) {
-                oldIndexes.append(index)
+        switch tableView {
+        case kernelAddTable:
+            info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
+                if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropKernelAdd), let index = Int(str) {
+                    oldIndexes.append(index)
+                }
             }
+        case acpiPatchTable:
+            info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
+                if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropAcpiPatch), let index = Int(str) {
+                    oldIndexes.append(index)
+                }
+            }
+        case kernelPatchTable:
+            info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
+                if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropKernelPatch), let index = Int(str) {
+                    oldIndexes.append(index)
+                }
+            }
+        default:
+            break
         }
         
         var oldIndexOffset = 0
         var newIndexOffset = 0
         
-        // For simplicity, the code below uses `tableView.moveRowAtIndex` to move rows around directly.
-        // You may want to move rows in your content array and then call `tableView.reloadData()` instead.
         tableView.beginUpdates()
         for oldIndex in oldIndexes {
             if oldIndex < row {
                 tableView.moveRow(at: oldIndex + oldIndexOffset, to: row - 1)
-                tableLookup[tableView]!.insert(tableLookup[tableView]![oldIndex + oldIndexOffset], at: row - 1)
+                tableLookup[tableView]!.insert(tableLookup[tableView]![oldIndex + oldIndexOffset], at: row)
                 oldIndexOffset -= 1
+                tableLookup[tableView]!.remove(at: oldIndex)
             } else {
                 tableView.moveRow(at: oldIndex, to: row + newIndexOffset)
                 tableLookup[tableView]!.insert(tableLookup[tableView]![oldIndex], at: row + newIndexOffset)
                 newIndexOffset += 1
+                tableLookup[tableView]!.remove(at: oldIndex + 1)
             }
-            tableLookup[tableView]!.remove(at: oldIndex + 1)
         }
-        
         tableView.endUpdates()
         
         return true

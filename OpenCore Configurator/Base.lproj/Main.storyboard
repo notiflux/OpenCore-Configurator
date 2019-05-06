@@ -932,7 +932,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Block" identifier="" id="xA2-ni-Yhk">
-                                        <view key="view" ambiguous="YES" id="e43-7G-fNz">
+                                        <view key="view" id="e43-7G-fNz">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -941,7 +941,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="q0X-bY-sg1">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="oga-kR-oJQ" viewBased="YES" id="fm8-vT-HkQ" userLabel="ACPI Block Table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
@@ -1217,7 +1217,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Patch" identifier="" id="3Ed-4c-07T">
-                                        <view key="view" id="KtI-jf-YhN">
+                                        <view key="view" ambiguous="YES" id="KtI-jf-YhN">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1226,7 +1226,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="m1g-Ar-jof">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="Ff4-PL-s6m" viewBased="YES" id="P1q-5j-cM6" userLabel="ACPI Patch Table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>

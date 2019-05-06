@@ -141,7 +141,9 @@ class ViewController: NSViewController {
         
     }
     
-    var dragDropType = NSPasteboard.PasteboardType(rawValue: "private.table-row")
+    var dragDropKernelAdd = NSPasteboard.PasteboardType(rawValue: "private.table-row.kernelAdd")
+    var dragDropAcpiPatch = NSPasteboard.PasteboardType(rawValue: "private.table-row.acpiPatch")
+    var dragDropKernelPatch = NSPasteboard.PasteboardType(rawValue: "private.table-row.kernelPatch")
     var drivesDict: [String: String] = [:]
     
     override func viewDidLoad() {
@@ -169,7 +171,9 @@ class ViewController: NSViewController {
             table.dataSource = self
         }
         
-        kernelAddTable.registerForDraggedTypes([dragDropType])      // allow row reordering for kexts table
+        kernelAddTable.registerForDraggedTypes([dragDropKernelAdd])      // allow row reordering for kexts + acpi pactches table
+        acpiPatchTable.registerForDraggedTypes([dragDropAcpiPatch])
+        kernelPatchTable.registerForDraggedTypes([dragDropKernelPatch])
         
         sectionsTable.action = #selector(onItemClicked)     // on section selection
         
@@ -396,6 +400,28 @@ class ViewController: NSViewController {
         acpiBlockArray = acpiDict.object(forKey: "Block") as? NSMutableArray ?? NSMutableArray()
         acpiPatchArray = acpiDict.object(forKey: "Patch") as? NSMutableArray ?? NSMutableArray()
         
+        if acpiPatchArray.count > 0 {
+            for i in 0...(acpiPatchArray.count - 1) {
+                let tempDict = (acpiPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+                if (tempDict.value(forKey: "Enabled") as! Bool) == false {
+                    tempDict.setValue("0", forKey: "Enabled")
+                } else {
+                    tempDict.setValue("1", forKey: "Enabled")
+                }
+                tempDict.setValue(String(tempDict.value(forKey: "Count") as! Int), forKey: "Count")
+                tempDict.setValue(String(tempDict.value(forKey: "Limit") as! Int), forKey: "Limit")
+                tempDict.setValue(String(tempDict.value(forKey: "Skip") as! Int), forKey: "Skip")
+                tempDict.setValue(String(tempDict.value(forKey: "TableLength") as! Int), forKey: "TableLength")
+                tempDict.setValue((tempDict.value(forKey: "Find") as! Data).hexEncodedString(options: .upperCase), forKey: "Find")
+                tempDict.setValue((tempDict.value(forKey: "Replace") as! Data).hexEncodedString(options: .upperCase), forKey: "Replace")
+                tempDict.setValue((tempDict.value(forKey: "Mask") as! Data).hexEncodedString(options: .upperCase), forKey: "Mask")
+                tempDict.setValue((tempDict.value(forKey: "OemTableId") as! Data).hexEncodedString(options: .upperCase), forKey: "OemTableId")
+                tempDict.setValue((tempDict.value(forKey: "ReplaceMask") as! Data).hexEncodedString(options: .upperCase), forKey: "ReplaceMask")
+                tempDict.setValue((tempDict.value(forKey: "TableSignature") as! Data).hexEncodedString(options: .upperCase), forKey: "TableSignature")
+                acpiPatchArray[i] = tempDict
+            }
+        }
+        
         deviceDict = plistDict?.object(forKey: "DeviceProperties") as? NSMutableDictionary ?? NSMutableDictionary()
         deviceAddDict = deviceDict.object(forKey: "Add") as? NSMutableDictionary ?? NSMutableDictionary()
         deviceBlockDict = deviceDict.object(forKey: "Block") as? NSMutableDictionary ?? NSMutableDictionary()
@@ -418,6 +444,26 @@ class ViewController: NSViewController {
         
         kernelBlockArray = kernelDict.object(forKey: "Block") as? NSMutableArray ?? NSMutableArray()
         kernelPatchArray = kernelDict.object(forKey: "Patch") as? NSMutableArray ?? NSMutableArray()
+        
+        if kernelPatchArray.count > 0 {
+            for i in 0...(kernelPatchArray.count - 1) {
+                let tempDict = (kernelPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+                if (tempDict.value(forKey: "Enabled") as! Bool) == false {
+                    tempDict.setValue("0", forKey: "Enabled")
+                } else {
+                    tempDict.setValue("1", forKey: "Enabled")
+                }
+                tempDict.setValue(String(tempDict.value(forKey: "Count") as! Int), forKey: "Count")
+                tempDict.setValue(String(tempDict.value(forKey: "Limit") as! Int), forKey: "Limit")
+                tempDict.setValue(String(tempDict.value(forKey: "Skip") as! Int), forKey: "Skip")
+                tempDict.setValue((tempDict.value(forKey: "Find") as! Data).hexEncodedString(options: .upperCase), forKey: "Find")
+                tempDict.setValue((tempDict.value(forKey: "Replace") as! Data).hexEncodedString(options: .upperCase), forKey: "Replace")
+                tempDict.setValue((tempDict.value(forKey: "Mask") as! Data).hexEncodedString(options: .upperCase), forKey: "Mask")
+                tempDict.setValue((tempDict.value(forKey: "ReplaceMask") as! Data).hexEncodedString(options: .upperCase), forKey: "ReplaceMask")
+                kernelPatchArray[i] = tempDict
+            }
+        }
+        
         kernelQuirksDict = kernelDict.object(forKey: "Quirks") as? NSMutableDictionary ?? NSMutableDictionary()
         
         miscDict = plistDict?.object(forKey: "Misc") as? NSMutableDictionary ?? NSMutableDictionary()
@@ -574,7 +620,9 @@ class ViewController: NSViewController {
         
         OHF.createData(input: acpiAddArray, table: &acpiAddTable, predefinedKey: "acpiAdd")
         OHF.createData(input: acpiBlockArray, table: &acpiBlockTable)
-        OHF.createData(input: acpiPatchArray, table: &acpiPatchTable)
+        //OHF.createData(input: acpiPatchArray, table: &acpiPatchTable)
+        tableLookup[acpiPatchTable] = acpiPatchArray as? Array ?? Array()
+        acpiPatchTable.reloadData()
         OHF.createQuirksData(input: acpiQuirksDict, quirksDict: acpiQuirks)
         
         OHF.createData(input: deviceAddDict, table: &deviceAddTable)
@@ -585,7 +633,9 @@ class ViewController: NSViewController {
         tableLookup[kernelAddTable] = kernelAddArray as? Array ?? Array()
         kernelAddTable.reloadData()
         OHF.createData(input: kernelBlockArray, table: &kernelBlockTable)
-        OHF.createData(input: kernelPatchArray, table: &kernelPatchTable)
+        //OHF.createData(input: kernelPatchArray, table: &kernelPatchTable)
+        tableLookup[kernelPatchTable] = kernelPatchArray as? Array ?? Array()
+        kernelPatchTable.reloadData()
         OHF.createQuirksData(input: kernelQuirksDict, quirksDict: kernelQuirks)
         
         OHF.createData(input: uefiDriverArray, table: &uefiDriverTable, predefinedKey: "driver")
@@ -608,7 +658,30 @@ class ViewController: NSViewController {
         
         SHF.saveArrayOfDictData(table: acpiAddTable, array: &acpiAddArray)
         SHF.saveArrayOfDictData(table: acpiBlockTable, array: &acpiBlockArray)
-        SHF.saveArrayOfDictData(table: acpiPatchTable, array: &acpiPatchArray)
+        //SHF.saveArrayOfDictData(table: acpiPatchTable, array: &acpiPatchArray)
+        acpiPatchArray = (tableLookup[acpiPatchTable]! as NSArray).mutableCopy() as! NSMutableArray
+        if acpiPatchArray.count > 0 {
+            for i in 0...(acpiPatchArray.count - 1) {
+                let tempDict = (acpiPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+                if (tempDict.value(forKey: "Enabled") as! String) == "0" {
+                    tempDict.setValue(false, forKey: "Enabled")
+                } else {
+                    tempDict.setValue(true, forKey: "Enabled")
+                }
+                tempDict.setValue(Int(tempDict.value(forKey: "Count") as! String), forKey: "Count")
+                tempDict.setValue(Int(tempDict.value(forKey: "Limit") as! String), forKey: "Limit")
+                tempDict.setValue(Int(tempDict.value(forKey: "Skip") as! String), forKey: "Skip")
+                tempDict.setValue(Int(tempDict.value(forKey: "TableLength") as! String), forKey: "TableLength")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "Find") as! String), forKey: "Find")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "Replace") as! String), forKey: "Replace")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "Mask") as! String), forKey: "Mask")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "OemTableId") as! String), forKey: "OemTableId")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "ReplaceMask") as! String), forKey: "ReplaceMask")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "TableSignature") as! String), forKey: "TableSignature")
+                acpiPatchArray[i] = tempDict
+            }
+        }
+        
         SHF.saveQuirksData(dict: acpiQuirks, quirksDict: &acpiQuirksDict)
         
         //SHF.saveArrayOfDictData(table: kernelAddTable, array: &kernelAddArray)
@@ -625,7 +698,26 @@ class ViewController: NSViewController {
             }
         }
         SHF.saveArrayOfDictData(table: kernelBlockTable, array: &kernelBlockArray)
-        SHF.saveArrayOfDictData(table: kernelPatchTable, array: &kernelPatchArray)
+        //SHF.saveArrayOfDictData(table: kernelPatchTable, array: &kernelPatchArray)
+        kernelPatchArray = (tableLookup[kernelPatchTable]! as NSArray).mutableCopy() as! NSMutableArray
+        if kernelPatchArray.count > 0 {
+            for i in 0...(kernelPatchArray.count - 1) {
+                let tempDict = (kernelPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+                if (tempDict.value(forKey: "Enabled") as! String) == "0" {
+                    tempDict.setValue(false, forKey: "Enabled")
+                } else {
+                    tempDict.setValue(true, forKey: "Enabled")
+                }
+                tempDict.setValue(Int(tempDict.value(forKey: "Count") as! String), forKey: "Count")
+                tempDict.setValue(Int(tempDict.value(forKey: "Limit") as! String), forKey: "Limit")
+                tempDict.setValue(Int(tempDict.value(forKey: "Skip") as! String), forKey: "Skip")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "Find") as! String), forKey: "Find")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "Replace") as! String), forKey: "Replace")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "Mask") as! String), forKey: "Mask")
+                tempDict.setValue(Data(hexString: tempDict.value(forKey: "ReplaceMask") as! String), forKey: "ReplaceMask")
+                kernelPatchArray[i] = tempDict
+            }
+        }
         SHF.saveQuirksData(dict: kernelQuirks, quirksDict: &kernelQuirksDict)
         
         SHF.saveDeviceData(table: deviceAddTable, dict: &deviceAddDict)
