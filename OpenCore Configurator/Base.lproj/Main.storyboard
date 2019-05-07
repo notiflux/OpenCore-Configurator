@@ -1288,7 +1288,7 @@
                                                                                 <rect key="frame" x="146" y="1" width="195" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
-                                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x2g-R1-coi">
+                                                                                    <textField identifier="hex" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x2g-R1-coi">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="195" height="17"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Find data" id="1wf-3k-b5V">
@@ -1324,7 +1324,7 @@
                                                                                 <rect key="frame" x="344" y="1" width="195" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
-                                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HnY-Z4-A9g">
+                                                                                    <textField identifier="hex" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HnY-Z4-A9g">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="195" height="17"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Replace Data" id="fuY-p0-I4Q">
@@ -1642,7 +1642,7 @@
                                                                                 <rect key="frame" x="477" y="1" width="235" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
-                                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lE-Kx-SqB">
+                                                                                    <textField identifier="hex" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lE-Kx-SqB">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="235" height="17"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Porperty value" id="L5s-dd-KJ2">
@@ -1863,7 +1863,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Add" identifier="" id="BjJ-Rq-gji">
-                                        <view key="view" ambiguous="YES" id="Cfp-8b-j8o">
+                                        <view key="view" id="Cfp-8b-j8o">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -2519,7 +2519,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Patch" identifier="" id="2RJ-VC-Os8">
-                                        <view key="view" id="kCk-sc-XJU">
+                                        <view key="view" ambiguous="YES" id="kCk-sc-XJU">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -2528,7 +2528,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="mNw-YF-hmR">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="nBL-oO-qi0" viewBased="YES" id="Tem-Ee-8s6" userLabel="Kernel Patch Table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
@@ -2590,7 +2590,7 @@
                                                                                 <rect key="frame" x="146" y="1" width="195" height="42"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
-                                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qxj-Lh-4Nm">
+                                                                                    <textField identifier="hex" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qxj-Lh-4Nm">
                                                                                         <rect key="frame" x="0.0" y="25" width="195" height="17"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Find data" id="mKN-lW-sf4">
@@ -2626,7 +2626,7 @@
                                                                                 <rect key="frame" x="344" y="1" width="195" height="42"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
-                                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSb-lq-SbB">
+                                                                                    <textField identifier="hex" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSb-lq-SbB">
                                                                                         <rect key="frame" x="0.0" y="25" width="195" height="17"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Replace Data" id="LD8-yI-paL">

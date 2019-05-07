@@ -403,21 +403,21 @@ class ViewController: NSViewController {
         if acpiPatchArray.count > 0 {
             for i in 0...(acpiPatchArray.count - 1) {
                 let tempDict = (acpiPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! Bool) == false {
-                    tempDict.setValue("0", forKey: "Enabled")
-                } else {
+                if (tempDict.value(forKey: "Enabled") as! Bool) == true {
                     tempDict.setValue("1", forKey: "Enabled")
+                } else {
+                    tempDict.setValue("0", forKey: "Enabled")
                 }
-                tempDict.setValue(String(tempDict.value(forKey: "Count") as! Int), forKey: "Count")
-                tempDict.setValue(String(tempDict.value(forKey: "Limit") as! Int), forKey: "Limit")
-                tempDict.setValue(String(tempDict.value(forKey: "Skip") as! Int), forKey: "Skip")
+                tempDict.setValue(String(tempDict.value(forKey: "Count") as? Int ?? Int()), forKey: "Count")
+                tempDict.setValue(String(tempDict.value(forKey: "Limit") as? Int ?? Int()), forKey: "Limit")
+                tempDict.setValue(String(tempDict.value(forKey: "Skip") as? Int ?? Int()), forKey: "Skip")
                 tempDict.setValue(String(tempDict.value(forKey: "TableLength") as! Int), forKey: "TableLength")
-                tempDict.setValue((tempDict.value(forKey: "Find") as! Data).hexEncodedString(options: .upperCase), forKey: "Find")
-                tempDict.setValue((tempDict.value(forKey: "Replace") as! Data).hexEncodedString(options: .upperCase), forKey: "Replace")
-                tempDict.setValue((tempDict.value(forKey: "Mask") as! Data).hexEncodedString(options: .upperCase), forKey: "Mask")
-                tempDict.setValue((tempDict.value(forKey: "OemTableId") as! Data).hexEncodedString(options: .upperCase), forKey: "OemTableId")
-                tempDict.setValue((tempDict.value(forKey: "ReplaceMask") as! Data).hexEncodedString(options: .upperCase), forKey: "ReplaceMask")
-                tempDict.setValue((tempDict.value(forKey: "TableSignature") as! Data).hexEncodedString(options: .upperCase), forKey: "TableSignature")
+                tempDict.setValue((tempDict.value(forKey: "Find") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "Find")
+                tempDict.setValue((tempDict.value(forKey: "Replace") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "Replace")
+                tempDict.setValue((tempDict.value(forKey: "Mask") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "Mask")
+                tempDict.setValue((tempDict.value(forKey: "OemTableId") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "OemTableId")
+                tempDict.setValue((tempDict.value(forKey: "ReplaceMask") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "ReplaceMask")
+                tempDict.setValue(String(data: tempDict.value(forKey: "TableSignature") as? Data ?? Data(), encoding: .ascii), forKey: "TableSignature")
                 acpiPatchArray[i] = tempDict
             }
         }
@@ -433,10 +433,10 @@ class ViewController: NSViewController {
         if kernelAddArray.count > 0 {
             for i in 0...(kernelAddArray.count - 1) {
                 let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! Bool) == false {
-                    tempDict.setValue("0", forKey: "Enabled")
-                } else {
+                if (tempDict.value(forKey: "Enabled") as! Bool) == true {
                     tempDict.setValue("1", forKey: "Enabled")
+                } else {
+                    tempDict.setValue("0", forKey: "Enabled")
                 }
                 kernelAddArray[i] = tempDict
             }
@@ -448,18 +448,18 @@ class ViewController: NSViewController {
         if kernelPatchArray.count > 0 {
             for i in 0...(kernelPatchArray.count - 1) {
                 let tempDict = (kernelPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! Bool) == false {
-                    tempDict.setValue("0", forKey: "Enabled")
-                } else {
+                if (tempDict.value(forKey: "Enabled") as! Bool) == true {
                     tempDict.setValue("1", forKey: "Enabled")
+                } else {
+                    tempDict.setValue("0", forKey: "Enabled")
                 }
-                tempDict.setValue(String(tempDict.value(forKey: "Count") as! Int), forKey: "Count")
-                tempDict.setValue(String(tempDict.value(forKey: "Limit") as! Int), forKey: "Limit")
-                tempDict.setValue(String(tempDict.value(forKey: "Skip") as! Int), forKey: "Skip")
-                tempDict.setValue((tempDict.value(forKey: "Find") as! Data).hexEncodedString(options: .upperCase), forKey: "Find")
-                tempDict.setValue((tempDict.value(forKey: "Replace") as! Data).hexEncodedString(options: .upperCase), forKey: "Replace")
-                tempDict.setValue((tempDict.value(forKey: "Mask") as! Data).hexEncodedString(options: .upperCase), forKey: "Mask")
-                tempDict.setValue((tempDict.value(forKey: "ReplaceMask") as! Data).hexEncodedString(options: .upperCase), forKey: "ReplaceMask")
+                tempDict.setValue(String(tempDict.value(forKey: "Count") as? Int ?? Int()), forKey: "Count")
+                tempDict.setValue(String(tempDict.value(forKey: "Limit") as? Int ?? Int()), forKey: "Limit")
+                tempDict.setValue(String(tempDict.value(forKey: "Skip") as? Int ?? Int()), forKey: "Skip")
+                tempDict.setValue((tempDict.value(forKey: "Find") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "Find")
+                tempDict.setValue((tempDict.value(forKey: "Replace") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "Replace")
+                tempDict.setValue((tempDict.value(forKey: "Mask") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "Mask")
+                tempDict.setValue((tempDict.value(forKey: "ReplaceMask") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "ReplaceMask")
                 kernelPatchArray[i] = tempDict
             }
         }
@@ -663,10 +663,10 @@ class ViewController: NSViewController {
         if acpiPatchArray.count > 0 {
             for i in 0...(acpiPatchArray.count - 1) {
                 let tempDict = (acpiPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! String) == "0" {
-                    tempDict.setValue(false, forKey: "Enabled")
-                } else {
+                if (tempDict.value(forKey: "Enabled") as! String) == "1" {
                     tempDict.setValue(true, forKey: "Enabled")
+                } else {
+                    tempDict.setValue(false, forKey: "Enabled")
                 }
                 tempDict.setValue(Int(tempDict.value(forKey: "Count") as! String), forKey: "Count")
                 tempDict.setValue(Int(tempDict.value(forKey: "Limit") as! String), forKey: "Limit")
@@ -677,7 +677,8 @@ class ViewController: NSViewController {
                 tempDict.setValue(Data(hexString: tempDict.value(forKey: "Mask") as! String), forKey: "Mask")
                 tempDict.setValue(Data(hexString: tempDict.value(forKey: "OemTableId") as! String), forKey: "OemTableId")
                 tempDict.setValue(Data(hexString: tempDict.value(forKey: "ReplaceMask") as! String), forKey: "ReplaceMask")
-                tempDict.setValue(Data(hexString: tempDict.value(forKey: "TableSignature") as! String), forKey: "TableSignature")
+                tempDict.setValue((tempDict.value(forKey: "TableSignature") as! String).data(using: .ascii), forKey: "TableSignature")
+                tempDict.removeObject(forKey: "advanced")
                 acpiPatchArray[i] = tempDict
             }
         }
@@ -689,10 +690,10 @@ class ViewController: NSViewController {
         if kernelAddArray.count > 0 {
             for i in 0...(kernelAddArray.count - 1) {
                 let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! String) == "0" {
-                    tempDict.setValue(false, forKey: "Enabled")
-                } else {
+                if (tempDict.value(forKey: "Enabled") as! String) == "1" {
                     tempDict.setValue(true, forKey: "Enabled")
+                } else {
+                    tempDict.setValue(false, forKey: "Enabled")
                 }
                 kernelAddArray[i] = tempDict
             }
@@ -703,10 +704,10 @@ class ViewController: NSViewController {
         if kernelPatchArray.count > 0 {
             for i in 0...(kernelPatchArray.count - 1) {
                 let tempDict = (kernelPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! String) == "0" {
-                    tempDict.setValue(false, forKey: "Enabled")
-                } else {
+                if (tempDict.value(forKey: "Enabled") as! String) == "1" {
                     tempDict.setValue(true, forKey: "Enabled")
+                } else {
+                    tempDict.setValue(false, forKey: "Enabled")
                 }
                 tempDict.setValue(Int(tempDict.value(forKey: "Count") as! String), forKey: "Count")
                 tempDict.setValue(Int(tempDict.value(forKey: "Limit") as! String), forKey: "Limit")
@@ -715,6 +716,7 @@ class ViewController: NSViewController {
                 tempDict.setValue(Data(hexString: tempDict.value(forKey: "Replace") as! String), forKey: "Replace")
                 tempDict.setValue(Data(hexString: tempDict.value(forKey: "Mask") as! String), forKey: "Mask")
                 tempDict.setValue(Data(hexString: tempDict.value(forKey: "ReplaceMask") as! String), forKey: "ReplaceMask")
+                tempDict.removeObject(forKey: "kernelAdvanced")
                 kernelPatchArray[i] = tempDict
             }
         }
@@ -929,13 +931,13 @@ class ViewController: NSViewController {
         removeEntryFromTable(table: &acpiAddTable)
     }
     @IBAction func blockAcpiBtn(_ sender: Any) {
-        addEntryToTable(table: &acpiBlockTable, appendix: ["Comment": "", "OemTableId": "", "TableLength": "", "TableSignature": "44534454","Enabled": "", "All": ""])
+        addEntryToTable(table: &acpiBlockTable, appendix: ["Comment": "", "OemTableId": "", "TableLength": "", "TableSignature": "DSDT","Enabled": "", "All": ""])
     }
     @IBAction func remBlockAcpiBtn(_ sender: Any) {
         removeEntryFromTable(table: &acpiBlockTable)
     }
     @IBAction func addPatchAcpiBtn(_ sender: Any) {
-        addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "44534454", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": "", "Count": ""])
+        addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "DSDT", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": "", "Count": ""])
     }
     @IBAction func remPatchAcpiBtn(_ sender: Any) {
         removeEntryFromTable(table: &acpiPatchTable)

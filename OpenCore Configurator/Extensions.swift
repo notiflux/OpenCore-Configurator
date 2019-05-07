@@ -200,11 +200,8 @@ extension ViewController: NSTableViewDelegate {
                 cell.action = #selector(dropDownHandler)
                 cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
                 
-                let table = String(decoding: Data(hexString: tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!]!)!, as: UTF8.self)
+                let table = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!]!
                 
-                if tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] == "44534454" {
-                    tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] = "DSDT"
-                }
                 if !cell.itemTitles.contains(table) {
                     cell.addItem(withTitle: table)
                 }
