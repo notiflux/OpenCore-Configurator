@@ -25,7 +25,8 @@ public var kernelMaskString: String = String()
 public var kernelReplaceString: String = String()
 public var kernelSkipString: String = String()
 
-public var mountedESP: String = "/Volumes/EFI"
+public var mountedESP: String = String()
+public var mountedESPID: String = String()
 
 public var tableLookup: [NSTableView: [[String: String]]] = [NSTableView: [[String: String]]]()
 
@@ -149,21 +150,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let efiScript = Bundle.main.url(forResource: "MountEFI", withExtension: "py")!.path
-        let drives = shell(launchPath: efiScript, arguments: [])
-        let tempDrivesArray = drives?.components(separatedBy: "\n")
-        for drive in tempDrivesArray! {
-            var tempArray = drive.components(separatedBy: " ")
-            tempArray = Array(tempArray.dropFirst())
-            if tempArray.count > 1 {
-                drivesDict[tempArray[0]] = tempArray[1].replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "")
-            }
-        }
-        
-        for drive in Array(drivesDict.keys) {
-            espPopup.addItem(withTitle: drive)
-        }
-        
+        reloadEsps()
         resetTables()   // initialize table datasources
         
         for table in Array(tableLookup.keys) {              // setup table delegate and datasource
@@ -216,6 +203,73 @@ class ViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onAcpiSyncPopover(_:)), name: .syncAcpiPopoverAndDict, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onKernelSyncPopover(_:)), name: .syncKernelPopoverAndDict, object: nil)
         
+    }
+    
+    func reloadEsps() {
+        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil list -plist > /tmp/diskutil.plist"])
+        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil apfs list -plist > /tmp/apfs.plist"])
+        let disks = shell(launchPath: "/bin/bash", arguments: ["-c", "ls /Volumes | grep -v EFI"])?.components(separatedBy: "\n")
+        let diskutil = NSDictionary(contentsOfFile: "/tmp/diskutil.plist")
+        let allDisksAndPartitioins = diskutil?.object(forKey: "AllDisksAndPartitions") as! NSArray
+        
+        for disk in disks! {
+            if disk != "" {
+                for diskEntry in allDisksAndPartitioins {
+                    let diskEntryDict = diskEntry as! NSDictionary
+                    let partitionsForDisk = diskEntryDict.object(forKey: "Partitions") as! NSArray
+                    if partitionsForDisk.count > 0 {
+                        for partition in partitionsForDisk {
+                            let partitionDict = partition as! NSDictionary
+                            if disk == partitionDict.value(forKey: "VolumeName") as? String ?? String() {
+                                for innerPartition in partitionsForDisk {
+                                    let innerPartitionDict = innerPartition as! NSDictionary
+                                    if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
+                                        drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        let apfsDict = NSDictionary(contentsOfFile: "/tmp/apfs.plist")
+                        let apfsVolumesForDisk = diskEntryDict.object(forKey: "APFSVolumes") as! NSArray
+                        for volume in apfsVolumesForDisk {
+                            let volumeDict = volume as! NSDictionary
+                            if disk == volumeDict.value(forKey: "VolumeName") as? String ?? String() {
+                                let apfsIdentifier = String((volumeDict.value(forKey: "DeviceIdentifier") as! String).dropLast(2))
+                                let apfsContainers = apfsDict?.object(forKey: "Containers") as! NSArray
+                                for container in apfsContainers {
+                                    let containerDict = container as! NSDictionary
+                                    if containerDict.value(forKey: "ContainerReference") as? String ?? String() == apfsIdentifier {
+                                        let containerDriveIdentifier = String((containerDict.value(forKey: "DesignatedPhysicalStore") as! String).dropLast(2))
+                                        for innerDiskEntry in allDisksAndPartitioins {
+                                            let innerDiskEntryDict = innerDiskEntry as! NSDictionary
+                                            if innerDiskEntryDict.value(forKey: "DeviceIdentifier") as? String ?? String() == containerDriveIdentifier {
+                                                let innerPartitions = innerDiskEntryDict.object(forKey: "Partitions") as! NSArray
+                                                for innerPartition in innerPartitions {
+                                                    let innerPartitionDict = innerPartition as! NSDictionary
+                                                    if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
+                                                        drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        espPopup.removeAllItems()
+        espPopup.addItem(withTitle: "Select an EFI partition...")
+        espPopup.menu?.addItem(NSMenuItem.separator())
+        
+        
+        for drive in Array(drivesDict.keys) {
+            espPopup.addItem(withTitle: drive)
+        }
     }
     
     func resetTables() {
@@ -1046,6 +1100,23 @@ class ViewController: NSViewController {
         alert.runModal()
     }
     
+    @objc func onSmbiosSelect(_ sender: NSMenuItem) {
+        tableLookup[platformGenericTable] = [["property": "SystemUUID", "value": ""],
+                                              ["property": "MLB", "value": ""],
+                                              ["property": "ROM", "value": ""],
+                                              ["property": "SystemProductName", "value": ""],
+                                              ["property": "SystemSerialNumber", "value": ""]]
+        
+        let mac = String((shell(launchPath: "/bin/bash", arguments: ["-c", "ifconfig en0 | grep ether"])?.dropFirst(6))!).replacingOccurrences(of: ":", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "").uppercased()
+        
+        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "SystemSerialNumber", "value": ""])!] = ["property": "SystemSerialNumber", "value": serialDict[sender.title]![0]]
+        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "SystemProductName", "value": ""])!] = ["property": "SystemProductName", "value": sender.title]
+        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "MLB", "value": ""])!] = ["property": "MLB", "value": serialDict[sender.title]![1]]
+        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "SystemUUID", "value": ""])!] = ["property": "SystemUUID", "value": UUID().uuidString]
+        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "ROM", "value": ""])!] = ["property": "ROM", "value": mac]
+        platformGenericTable.reloadData()
+    }
+    
     @IBAction func genSmbios(_ sender: NSButton) {
         let macSerial = Bundle.main.url(forResource: "macserial", withExtension: "")!.path
         let serialMess = shell(launchPath: macSerial, arguments: ["-a"])?.components(separatedBy: "\n")
@@ -1065,34 +1136,38 @@ class ViewController: NSViewController {
         menu.popUp(positioning: menu.items.last, at: p, in: sender.superview)
     }
     
+    var wasMounted = false
+    
     @IBAction func mountEsp(_ sender: NSPopUpButton) {
         if sender.selectedItem!.title != "Select an EFI partition..." {
             let driveToMount = drivesDict[sender.selectedItem!.title]
             let driveIsMounted = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mounted\" | awk '{ print $2 }'"])
-            
-            if driveIsMounted == "No" {
-                NSAppleScript(source: "do shell script \"sudo diskutil mount /dev/\(String(describing: driveToMount))\" with administrator privileges")!.executeAndReturnError(nil)
+
+            if !self.wasMounted {
+                if mountedESP != "" {
+                    DispatchQueue.global(qos: .background).async {
+                        let _ = (self.shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil unmount \(mountedESPID)"]))!
+                    }
+                }
             }
             
-            //mountedESP = (shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mount Point\" | awk '{ print $3 }'"])?.replacingOccurrences(of: "\n", with: ""))!
+            if driveIsMounted == "No\n" {
+                //let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "osascript -e 'do shell script \"sudo diskutil mount /dev/\(driveToMount!)\" with administrator privileges'"])
+                NSAppleScript(source: "do shell script \"diskutil mount /dev/\(driveToMount!)\" with administrator privileges")!.executeAndReturnError(nil)
+                wasMounted = false
+            } else {
+                wasMounted = true
+            }
+            
+            mountedESPID = driveToMount!
+            mountedESP = (shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mount Point\" | awk '{ print $3 }'"])?.replacingOccurrences(of: "\n", with: ""))!
+        } else {
+            mountedESP = ""
         }
     }
-    
-    @objc func onSmbiosSelect(_ sender: NSMenuItem) {
-        tableLookup[platformGenericTable]! = [["property": "SystemUUID", "value": ""],
-                                              ["property": "MLB", "value": ""],
-                                              ["property": "ROM", "value": ""],
-                                              ["property": "SystemProductName", "value": ""],
-                                              ["property": "SystemSerialNumber", "value": ""]]
-        
-        let mac = String((shell(launchPath: "/bin/bash", arguments: ["-c", "ifconfig en0 | grep ether"])?.dropFirst(6))!).replacingOccurrences(of: ":", with: "").replacingOccurrences(of: " ", with: "").uppercased()
-        
-        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "SystemSerialNumber", "value": ""])!] = ["property": "SystemSerialNumber", "value": serialDict[sender.title]![0]]
-        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "SystemProductName", "value": ""])!] = ["property": "SystemProductName", "value": sender.title]
-        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "MLB", "value": ""])!] = ["property": "MLB", "value": serialDict[sender.title]![1]]
-        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "SystemUUID", "value": ""])!] = ["property": "SystemUUID", "value": UUID().uuidString]
-        tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "ROM", "value": ""])!] = ["property": "ROM", "value": mac]
-        platformGenericTable.reloadData()
+
+    @IBAction func reloadEfiPartitions(_ sender: Any) {
+        reloadEsps()
     }
     
     func shell(launchPath: String, arguments: [String]) -> String?

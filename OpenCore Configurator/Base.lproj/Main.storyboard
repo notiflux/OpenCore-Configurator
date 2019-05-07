@@ -757,7 +757,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Add" identifier="" id="mOQ-fp-wmM">
-                                        <view key="view" id="LWh-HS-hL3">
+                                        <view key="view" ambiguous="YES" id="LWh-HS-hL3">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1217,7 +1217,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Patch" identifier="" id="3Ed-4c-07T">
-                                        <view key="view" ambiguous="YES" id="KtI-jf-YhN">
+                                        <view key="view" id="KtI-jf-YhN">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1226,7 +1226,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="m1g-Ar-jof">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="Ff4-PL-s6m" viewBased="YES" id="P1q-5j-cM6" userLabel="ACPI Patch Table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
@@ -1863,7 +1863,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Add" identifier="" id="BjJ-Rq-gji">
-                                        <view key="view" id="Cfp-8b-j8o">
+                                        <view key="view" ambiguous="YES" id="Cfp-8b-j8o">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -2519,7 +2519,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Patch" identifier="" id="2RJ-VC-Os8">
-                                        <view key="view" ambiguous="YES" id="kCk-sc-XJU">
+                                        <view key="view" id="kCk-sc-XJU">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -2528,7 +2528,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="mNw-YF-hmR">
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="nBL-oO-qi0" viewBased="YES" id="Tem-Ee-8s6" userLabel="Kernel Patch Table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
@@ -4536,20 +4536,26 @@
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kF3-sy-f34">
                                 <rect key="frame" x="45" y="12" width="205" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Select an EFI partition..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Kdd-Er-J0A" id="xgB-pI-gLw">
+                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="xgB-pI-gLw">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="0ma-b8-L1Z">
-                                        <items>
-                                            <menuItem title="Select an EFI partition..." state="on" id="Kdd-Er-J0A"/>
-                                            <menuItem isSeparatorItem="YES" id="lKi-wp-wxe"/>
-                                        </items>
-                                    </menu>
+                                    <menu key="menu" id="0ma-b8-L1Z"/>
                                 </popUpButtonCell>
                                 <connections>
                                     <action selector="mountEsp:" target="XfG-lQ-9wD" id="3DU-fI-LIB"/>
                                 </connections>
                             </popUpButton>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zD6-WM-Xq2">
+                                <rect key="frame" x="255" y="15" width="28" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="2Lj-Nv-ygT">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="reloadEfiPartitions:" target="XfG-lQ-9wD" id="Jbx-6j-0IG"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -5043,6 +5049,7 @@
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSListViewTemplate" width="14" height="10"/>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
 </document>
