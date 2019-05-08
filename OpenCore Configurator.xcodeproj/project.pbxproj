@@ -10,12 +10,12 @@
 		7F3AAC182279BB55006644AD /* saveHandlerFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */; };
 		7F4C29DE2269FD2900720E68 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C29DD2269FD2900720E68 /* Extensions.swift */; };
 		7F4C29E2226A130A00720E68 /* AcpiPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */; };
+		7F8A7D722283605900EEB165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 810042471ECA33DF009FE633 /* Assets.xcassets */; };
 		7F961CCC2270974E007F0BBE /* KernelPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */; };
 		7F9EE208227F24BC0070CB8F /* macserial in Resources */ = {isa = PBXBuildFile; fileRef = 7F9EE207227F24BC0070CB8F /* macserial */; };
 		7FF918A9227226A60081891E /* openHandlerFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF918A8227226A60081891E /* openHandlerFunctions.swift */; };
 		810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042431ECA33DF009FE633 /* AppDelegate.swift */; };
 		810042461ECA33DF009FE633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042451ECA33DF009FE633 /* ViewController.swift */; };
-		810042481ECA33DF009FE633 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 810042471ECA33DF009FE633 /* Assets.xcassets */; };
 		8100424B1ECA33DF009FE633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 810042491ECA33DF009FE633 /* Main.storyboard */; settings = {ASSET_TAGS = (0, ); }; };
 /* End PBXBuildFile section */
 
@@ -141,8 +141,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F8A7D722283605900EEB165 /* Assets.xcassets in Resources */,
 				7F9EE208227F24BC0070CB8F /* macserial in Resources */,
-				810042481ECA33DF009FE633 /* Assets.xcassets in Resources */,
 				8100424B1ECA33DF009FE633 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

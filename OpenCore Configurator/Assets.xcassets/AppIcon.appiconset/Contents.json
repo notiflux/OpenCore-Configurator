@@ -3,61 +3,61 @@
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "OCC-16.png",
+      "filename" : "OCC2-16.png",
       "scale" : "1x"
     },
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "OCC-32.png",
+      "filename" : "OCC2-33.png",
       "scale" : "2x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "OCC-33.png",
+      "filename" : "OCC2-32.png",
       "scale" : "1x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "OCC-64.png",
+      "filename" : "OCC2-64.png",
       "scale" : "2x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "OCC-128.png",
+      "filename" : "OCC2-128.png",
       "scale" : "1x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "OCC-256.png",
+      "filename" : "OCC2-257.png",
       "scale" : "2x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "OCC-257.png",
+      "filename" : "OCC2-256.png",
       "scale" : "1x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "OCC-512.png",
+      "filename" : "OCC2-513.png",
       "scale" : "2x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "OCC-513.png",
+      "filename" : "OCC2-512.png",
       "scale" : "1x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "OCC-1024.png",
+      "filename" : "OCC2-1024.png",
       "scale" : "2x"
     }
   ],
