@@ -465,7 +465,7 @@ class ViewController: NSViewController {
                 tempDict.setValue(String(tempDict.value(forKey: "Count") as? Int ?? Int()), forKey: "Count")
                 tempDict.setValue(String(tempDict.value(forKey: "Limit") as? Int ?? Int()), forKey: "Limit")
                 tempDict.setValue(String(tempDict.value(forKey: "Skip") as? Int ?? Int()), forKey: "Skip")
-                tempDict.setValue(String(tempDict.value(forKey: "TableLength") as! Int), forKey: "TableLength")
+                tempDict.setValue(String(tempDict.value(forKey: "TableLength") as? Int ?? Int()), forKey: "TableLength")
                 tempDict.setValue((tempDict.value(forKey: "Find") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "Find")
                 tempDict.setValue((tempDict.value(forKey: "Replace") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "Replace")
                 tempDict.setValue((tempDict.value(forKey: "Mask") as? Data)?.hexEncodedString(options: .upperCase) ?? String(), forKey: "Mask")
@@ -1152,7 +1152,6 @@ class ViewController: NSViewController {
             }
             
             if driveIsMounted == "No\n" {
-                //let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "osascript -e 'do shell script \"sudo diskutil mount /dev/\(driveToMount!)\" with administrator privileges'"])
                 NSAppleScript(source: "do shell script \"diskutil mount /dev/\(driveToMount!)\" with administrator privileges")!.executeAndReturnError(nil)
                 wasMounted = false
             } else {
