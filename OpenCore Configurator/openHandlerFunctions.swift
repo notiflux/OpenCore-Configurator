@@ -43,13 +43,13 @@ class openHandlerFunctions {
             tempDict["property"] = innerKey as? String
             switch innerValue {
             case is String:
-                tempDict["value"] = (innerValue as! String).data(using: .ascii)!.hexEncodedString(options: .upperCase)
+                tempDict["value"] = (innerValue as? String ?? String()).data(using: .ascii)!.hexEncodedString(options: .upperCase)
             case is Int:
-                tempDict["value"] = String(innerValue as! Int).data(using: .ascii)!.hexEncodedString(options: .upperCase)
+                tempDict["value"] = String(innerValue as? Int ?? Int()).data(using: .ascii)!.hexEncodedString(options: .upperCase)
             case is Bool:
-                tempDict["value"] = String(innerValue as! Bool).data(using: .ascii)!.hexEncodedString(options: .upperCase)
+                tempDict["value"] = String(innerValue as? Bool ?? false).data(using: .ascii)!.hexEncodedString(options: .upperCase)
             case is Data:
-                tempDict["value"] = (innerValue as! Data).hexEncodedString(options: .upperCase)
+                tempDict["value"] = (innerValue as? Data ?? Data()).hexEncodedString(options: .upperCase)
             default:
                 break
             }
@@ -69,15 +69,17 @@ class openHandlerFunctions {
     }
 
     func dictionaryOfDataTypes(table: NSTableView, key: String, value: Any) {
-        switch value {
-        case is String:
-            tableLookup[table]![tableLookup[table]!.firstIndex(of: ["property": key, "value": "" ])!] = ["property": key, "value": value as! String]
-        case is Int:
-            tableLookup[table]![tableLookup[table]!.firstIndex(of: ["property": key, "value": "" ])!] = ["property": key, "value": String(value as! Int)]
-        case is Data:
-            tableLookup[table]![tableLookup[table]!.firstIndex(of: ["property": key, "value": "" ])!] = ["property": key, "value": (value as! Data).hexEncodedString(options: .upperCase)]
-        default:
-            break
+        if tableLookup[table]!.firstIndex(of: ["property": key, "value": "" ]) != nil {
+            switch value {
+            case is String:
+                tableLookup[table]![tableLookup[table]!.firstIndex(of: ["property": key, "value": "" ])!] = ["property": key, "value": value as? String ?? String()]
+            case is Int:
+                tableLookup[table]![tableLookup[table]!.firstIndex(of: ["property": key, "value": "" ])!] = ["property": key, "value": String(value as? Int ?? Int())]
+            case is Data:
+                tableLookup[table]![tableLookup[table]!.firstIndex(of: ["property": key, "value": "" ])!] = ["property": key, "value": (value as? Data ?? Data()).hexEncodedString(options: .upperCase)]
+            default:
+                break
+            }
         }
     }
 
@@ -149,11 +151,11 @@ class openHandlerFunctions {
                 case is String:
                     tempDict["value"] = innerValue as? String
                 case is Int:
-                    tempDict["value"] = String(innerValue as! Int).data(using: .ascii)!.hexEncodedString(options: .upperCase)
+                    tempDict["value"] = String(innerValue as? Int ?? Int()).data(using: .ascii)!.hexEncodedString(options: .upperCase)
                 case is Bool:
-                    tempDict["value"] = String(innerValue as! Bool).data(using: .ascii)!.hexEncodedString(options: .upperCase)
+                    tempDict["value"] = String(innerValue as? Bool ?? false).data(using: .ascii)!.hexEncodedString(options: .upperCase)
                 case is Data:
-                    tempDict["value"] = (innerValue as! Data).hexEncodedString(options: .upperCase)
+                    tempDict["value"] = (innerValue as? Data ?? Data()).hexEncodedString(options: .upperCase)
                 default:
                     break
                 }
