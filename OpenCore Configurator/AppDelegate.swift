@@ -123,6 +123,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
+    @IBAction func onPaste(_ sender: Any) {
+        NotificationCenter.default.post(name: .paste, object: nil)
+    }
 }
 
 class window: NSWindow {

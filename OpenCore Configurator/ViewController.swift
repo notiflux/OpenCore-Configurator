@@ -32,6 +32,8 @@ public var tableLookup: [NSTableView: [[String: String]]] = [NSTableView: [[Stri
 
 public var serialDict: [String: [String]] = [String: [String]]()
 
+public var viewLookup: [Int: NSTabView] = [Int: NSTabView]()
+
 class ViewController: NSViewController {
 
     // tabs
@@ -145,6 +147,7 @@ class ViewController: NSViewController {
     var dragDropKernelAdd = NSPasteboard.PasteboardType(rawValue: "private.table-row.kernelAdd")
     var dragDropAcpiPatch = NSPasteboard.PasteboardType(rawValue: "private.table-row.acpiPatch")
     var dragDropKernelPatch = NSPasteboard.PasteboardType(rawValue: "private.table-row.kernelPatch")
+    var dragDropAcpiAdd = NSPasteboard.PasteboardType(rawValue: "private.table-row.acpiAdd")
     var drivesDict: [String: String] = [:]
     
     override func viewDidLoad() {
@@ -161,8 +164,19 @@ class ViewController: NSViewController {
         kernelAddTable.registerForDraggedTypes([dragDropKernelAdd])      // allow row reordering for kexts + acpi pactches table
         acpiPatchTable.registerForDraggedTypes([dragDropAcpiPatch])
         kernelPatchTable.registerForDraggedTypes([dragDropKernelPatch])
+        acpiAddTable.registerForDraggedTypes([dragDropAcpiAdd])
         
         sectionsTable.action = #selector(onItemClicked)     // on section selection
+        
+        viewLookup = [
+            0: acpiTab,
+            1: deviceTab,
+            2: kernelTab,
+            3: miscTab,
+            4: nvramTab,
+            5: platformTab,
+            6: uefiTab
+        ]
         
         acpiQuirks = [
             "FadtEnableReset": self.FadtEnableReset,
@@ -202,6 +216,7 @@ class ViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onPlistSave(_:)), name: .plistSave, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onAcpiSyncPopover(_:)), name: .syncAcpiPopoverAndDict, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onKernelSyncPopover(_:)), name: .syncKernelPopoverAndDict, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onPasteVC(_:)), name: .paste, object: nil)
         
     }
     
@@ -386,6 +401,66 @@ class ViewController: NSViewController {
         tableLookup[kernelPatchTable]![kernelPatchTable.selectedRow][(kernelCurrentTextField.identifier?.rawValue)!] = kernelCurrentTextField.stringValue
     }
     
+    @objc func onPasteVC(_ notification: Notification) {
+        if sectionsTable.selectedRow == 0, (viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as! NSTableView) == acpiPatchTable {
+            let currentTable = viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as! NSTableView
+            let pastedDictString = NSPasteboard.general.string(forType: .string) ?? ""
+            do {
+                if let pastedPlist = try PropertyListSerialization.propertyList(from: pastedDictString.data(using: .utf8)!, format: .none)
+                    as? NSMutableDictionary  {
+                    // Successfully read property list.
+                    parsePastedPlist(currentTable: currentTable, pastedPlist: pastedPlist)
+                    
+                } else if let pastedPlist = try PropertyListSerialization.propertyList(from: pastedDictString.data(using: .utf8)!, format: .none)
+                    as? NSMutableArray {
+                    for dict in pastedPlist {
+                        parsePastedPlist(currentTable: currentTable, pastedPlist: dict as! NSMutableDictionary)
+                    }
+                } else {
+                    print("not a dictionary")
+                }
+            } catch let error {
+                print("not a plist:", error.localizedDescription)
+            }
+        }
+    }
+    
+    func parsePastedPlist(currentTable: NSTableView, pastedPlist: NSMutableDictionary) {
+        let tempDict: NSMutableDictionary = NSMutableDictionary()
+        if (pastedPlist.allKeys as! [String]).contains("Find") {
+            tempDict.addEntries(from: ["Comment": pastedPlist.value(forKey: "Comment") as? String ?? String()])
+            tempDict.addEntries(from: ["Count": String(pastedPlist.value(forKey: "Count") as? Int ?? Int())])
+            tempDict.addEntries(from: ["Limit": String(pastedPlist.value(forKey: "Limit") as? Int ?? Int())])
+            tempDict.addEntries(from: ["Skip": String(pastedPlist.value(forKey: "Skip") as? Int ?? Int())])
+            tempDict.addEntries(from: ["TableLength": String(pastedPlist.value(forKey: "TableLength") as? Int ?? Int())])
+            tempDict.addEntries(from: ["Find": (pastedPlist.value(forKey: "Find") as? Data)?.hexEncodedString(options: .upperCase) ?? String()])
+            tempDict.addEntries(from: ["Replace": (pastedPlist.value(forKey: "Replace") as? Data)?.hexEncodedString(options: .upperCase) ?? String()])
+            tempDict.addEntries(from: ["Mask": (pastedPlist.value(forKey: "Mask") as? Data)?.hexEncodedString(options: .upperCase) ?? String()])
+            tempDict.addEntries(from: ["OemTableId": (pastedPlist.value(forKey: "OemTableId") as? Data)?.hexEncodedString(options: .upperCase) ?? String()])
+            tempDict.addEntries(from: ["ReplaceMask": (pastedPlist.value(forKey: "ReplaceMask") as? Data)?.hexEncodedString(options: .upperCase) ?? String()])
+            tempDict.addEntries(from: ["TableSignature": String(data: pastedPlist.value(forKey: "Count") as? Data ?? Data(), encoding: .ascii) ?? String()])
+        }
+
+        if (pastedPlist.value(forKey: "Enabled") as? Bool ?? false) == true {
+            tempDict.setValue("1", forKey: "Enabled")
+        } else {
+            tempDict.setValue("0", forKey: "Enabled")
+        }
+        
+        if (pastedPlist.allKeys as! [String]).contains("Disabled") {
+            if (pastedPlist.value(forKey: "Disabled") as? Bool ?? true) == false {
+                tempDict.setValue("1", forKey: "Enabled")
+            } else {
+                tempDict.setValue("0", forKey: "Enabled")
+            }
+        }
+        
+        if tempDict != ["Find": ""] {
+            tableLookup[currentTable]?.append(tempDict as! [String: String])
+            currentTable.reloadData()
+        }
+    }
+    
     @objc func deviceEdit(_ sender: NSButton) {
         let customItem = NSAlert()
         customItem.addButton(withTitle: "OK")      // 1st button
@@ -451,11 +526,33 @@ class ViewController: NSViewController {
         acpiDict = plistDict?.object(forKey: "ACPI") as? NSMutableDictionary ?? NSMutableDictionary()            // for now we're manually extracting each individual dict entry, this should be changed to doing this in a loop in the future,
         acpiQuirksDict = acpiDict.object(forKey: "Quirks") as? NSMutableDictionary ?? NSMutableDictionary()
         acpiAddArray = acpiDict.object(forKey: "Add") as? NSMutableArray ?? NSMutableArray()
+        
+        if acpiAddArray.count > 0 {
+            for i in 0...(acpiAddArray.count - 1) {
+                let tempDict = (acpiAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+                if (tempDict.value(forKey: "Enabled") as! Bool) == true {
+                    tempDict.setValue("1", forKey: "Enabled")
+                } else {
+                    tempDict.setValue("0", forKey: "Enabled")
+                }
+                acpiAddArray[i] = tempDict
+            }
+        }
+        
         acpiBlockArray = acpiDict.object(forKey: "Block") as? NSMutableArray ?? NSMutableArray()
+        
+        if acpiBlockArray.count > 0 {
+            for i in 0...(acpiBlockArray.count - 1) {
+                let tempDict = (acpiBlockArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+                tempDict.setValue(String(data: tempDict.value(forKey: "TableSignature") as? Data ?? Data(), encoding: .ascii), forKey: "TableSignature")    // since the popup button is now reading the value directly instead of decoding it, we need to decode it here manually
+                acpiBlockArray[i] = tempDict
+            }
+        }
+        
         acpiPatchArray = acpiDict.object(forKey: "Patch") as? NSMutableArray ?? NSMutableArray()
         
-        if acpiPatchArray.count > 0 {
-            for i in 0...(acpiPatchArray.count - 1) {
+        if acpiPatchArray.count > 0 {                                                                       // decode all non-String data into Strings. Not using the openHander function because these tables need support
+            for i in 0...(acpiPatchArray.count - 1) {                                                       // for reordering and the openHanderfunctions don't ensure the correct order
                 let tempDict = (acpiPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
                 if (tempDict.value(forKey: "Enabled") as! Bool) == true {
                     tempDict.setValue("1", forKey: "Enabled")
@@ -672,7 +769,9 @@ class ViewController: NSViewController {
             smbioUpdateModePopup.selectItem(withTitle: "Auto")
         }
         
-        OHF.createData(input: acpiAddArray, table: &acpiAddTable, predefinedKey: "acpiAdd")
+        //OHF.createData(input: acpiAddArray, table: &acpiAddTable, predefinedKey: "acpiAdd")
+        tableLookup[acpiAddTable] = acpiAddArray as? Array ?? Array()
+        acpiAddTable.reloadData()
         OHF.createData(input: acpiBlockArray, table: &acpiBlockTable)
         //OHF.createData(input: acpiPatchArray, table: &acpiPatchTable)
         tableLookup[acpiPatchTable] = acpiPatchArray as? Array ?? Array()

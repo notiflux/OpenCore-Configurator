@@ -104,6 +104,8 @@ extension ViewController: NSTableViewDelegate {
             item.setString(String(row), forType: self.dragDropAcpiPatch)
         case kernelPatchTable:
             item.setString(String(row), forType: self.dragDropKernelPatch)
+        case acpiAddTable:
+            item.setString(String(row), forType: self.dragDropAcpiAdd)
         default:
             break
         }
@@ -136,6 +138,12 @@ extension ViewController: NSTableViewDelegate {
         case kernelPatchTable:
             info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
                 if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropKernelPatch), let index = Int(str) {
+                    oldIndexes.append(index)
+                }
+            }
+        case acpiAddTable:
+            info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
+                if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropAcpiAdd), let index = Int(str) {
                     oldIndexes.append(index)
                 }
             }
@@ -200,7 +208,7 @@ extension ViewController: NSTableViewDelegate {
                 cell.action = #selector(dropDownHandler)
                 cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
                 
-                let table = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!]!
+                let table = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] ?? ""
                 
                 if !cell.itemTitles.contains(table) {
                     cell.addItem(withTitle: table)
@@ -268,4 +276,5 @@ extension Notification.Name {
     static let plistSave = Notification.Name("plistSave")
     static let syncAcpiPopoverAndDict = Notification.Name("syncAcpiPopoverAndDict")
     static let syncKernelPopoverAndDict = Notification.Name("syncKernelPopoverAndDict")
+    static let paste = Notification.Name("paste")
 }
