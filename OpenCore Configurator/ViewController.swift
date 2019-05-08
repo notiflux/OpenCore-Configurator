@@ -554,7 +554,7 @@ class ViewController: NSViewController {
         if acpiPatchArray.count > 0 {                                                                       // decode all non-String data into Strings. Not using the openHander function because these tables need support
             for i in 0...(acpiPatchArray.count - 1) {                                                       // for reordering and the openHanderfunctions don't ensure the correct order
                 let tempDict = (acpiPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! Bool) == true {
+                if (tempDict.value(forKey: "Enabled") as? Bool ?? false) == true {
                     tempDict.setValue("1", forKey: "Enabled")
                 } else {
                     tempDict.setValue("0", forKey: "Enabled")
@@ -584,7 +584,7 @@ class ViewController: NSViewController {
         if kernelAddArray.count > 0 {
             for i in 0...(kernelAddArray.count - 1) {
                 let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! Bool) == true {
+                if (tempDict.value(forKey: "Enabled") as? Bool ?? false) == true {
                     tempDict.setValue("1", forKey: "Enabled")
                 } else {
                     tempDict.setValue("0", forKey: "Enabled")
@@ -599,7 +599,7 @@ class ViewController: NSViewController {
         if kernelPatchArray.count > 0 {
             for i in 0...(kernelPatchArray.count - 1) {
                 let tempDict = (kernelPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! Bool) == true {
+                if (tempDict.value(forKey: "Enabled") as? Bool ?? false) == true {
                     tempDict.setValue("1", forKey: "Enabled")
                 } else {
                     tempDict.setValue("0", forKey: "Enabled")

@@ -238,7 +238,7 @@ extension ViewController: NSTableViewDelegate {
                 cell.action = #selector(dropDownHandler)
                 cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
                 
-                let kernelVersion = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!]!
+                let kernelVersion = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] ?? ""
                 
                 if !cell.itemTitles.contains(kernelVersion), kernelVersion != "" {
                     cell.addItem(withTitle: kernelVersion)
