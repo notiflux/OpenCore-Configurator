@@ -98,6 +98,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var IgnoreForWindows: NSButton!
     @IBOutlet weak var NormalizeHeaders: NSButton!
     @IBOutlet weak var RebaseRegions: NSButton!
+    @IBOutlet weak var ResetLogoStatus: NSButton!
     
     // device quirks
     // @IBOutlet weak var ReinstallProtocol: NSButton!
@@ -182,7 +183,8 @@ class ViewController: NSViewController {
             "FadtEnableReset": self.FadtEnableReset,
             "IgnoreForWindows": self.IgnoreForWindows,
             "NormalizeHeaders": self.NormalizeHeaders,
-            "RebaseRegions": self.RebaseRegions
+            "RebaseRegions": self.RebaseRegions,
+            "ResetLogoStatus": self.ResetLogoStatus
         ]
         
         /*deviceQuirks = [

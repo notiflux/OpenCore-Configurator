@@ -757,7 +757,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Add" identifier="" id="mOQ-fp-wmM">
-                                        <view key="view" ambiguous="YES" id="LWh-HS-hL3">
+                                        <view key="view" id="LWh-HS-hL3">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1488,7 +1488,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Quirks" identifier="" id="kMG-wa-6hh">
-                                        <view key="view" id="9Dp-mK-4t4">
+                                        <view key="view" ambiguous="YES" id="9Dp-mK-4t4">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1520,6 +1520,14 @@
                                                     <rect key="frame" x="20" y="610" width="116" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <buttonCell key="cell" type="check" title="RebaseRegions" bezelStyle="regularSquare" imagePosition="left" inset="2" id="zVy-u6-AWD">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </button>
+                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Ux-jC-zCG">
+                                                    <rect key="frame" x="20" y="580" width="126" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" title="ResetLogoStatus" bezelStyle="regularSquare" imagePosition="left" inset="2" id="nBf-E0-ADh">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
@@ -4576,6 +4584,7 @@
                         <outlet property="RebaseRegions" destination="EuP-lW-yux" id="yaE-ML-8WB"/>
                         <outlet property="ReleaseUsbOwnership" destination="nFi-vf-SfU" id="gCk-zO-l6s"/>
                         <outlet property="RequestBootVarRouting" destination="dCh-Rj-7KD" id="UYj-1J-5aJ"/>
+                        <outlet property="ResetLogoStatus" destination="8Ux-jC-zCG" id="m7o-ZR-Hl3"/>
                         <outlet property="SanitiseClearScreen" destination="pwt-fj-Rym" id="Jel-aL-lXC"/>
                         <outlet property="ThirdPartyTrim" destination="b9t-EQ-9WY" id="hli-OP-seI"/>
                         <outlet property="UiBehavior" destination="5vh-ud-peO" id="XEo-DP-MKT"/>
