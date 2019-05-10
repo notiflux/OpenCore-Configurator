@@ -223,49 +223,52 @@ class ViewController: NSViewController {
     }
     
     func reloadEsps() {
-        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil list -plist > /tmp/diskutil.plist"])
-        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil apfs list -plist > /tmp/apfs.plist"])
-        let disks = shell(launchPath: "/bin/bash", arguments: ["-c", "ls /Volumes | grep -v EFI"])?.components(separatedBy: "\n")
-        let diskutil = NSDictionary(contentsOfFile: "/tmp/diskutil.plist")
-        let allDisksAndPartitioins = diskutil?.object(forKey: "AllDisksAndPartitions") as! NSArray
-        
-        for disk in disks! {
-            if disk != "" {
-                for diskEntry in allDisksAndPartitioins {
-                    let diskEntryDict = diskEntry as! NSDictionary
-                    let partitionsForDisk = diskEntryDict.object(forKey: "Partitions") as! NSArray
-                    if partitionsForDisk.count > 0 {
-                        for partition in partitionsForDisk {
-                            let partitionDict = partition as! NSDictionary
-                            if disk == partitionDict.value(forKey: "VolumeName") as? String ?? String() {
-                                for innerPartition in partitionsForDisk {
-                                    let innerPartitionDict = innerPartition as! NSDictionary
-                                    if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
-                                        drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
+        if let tempDir = createTempDirectory() {
+            print(tempDir)
+            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil list -plist > \(tempDir)/diskutil.plist"])
+            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil apfs list -plist > \(tempDir)/apfs.plist"])
+            let disks = shell(launchPath: "/bin/bash", arguments: ["-c", "ls /Volumes | grep -v EFI"])?.components(separatedBy: "\n")
+            let diskutil = NSDictionary(contentsOfFile: "\(tempDir)/diskutil.plist")
+            let allDisksAndPartitioins = diskutil?.object(forKey: "AllDisksAndPartitions") as! NSArray
+            
+            for disk in disks! {
+                if disk != "" {
+                    for diskEntry in allDisksAndPartitioins {
+                        let diskEntryDict = diskEntry as! NSDictionary
+                        let partitionsForDisk = diskEntryDict.object(forKey: "Partitions") as! NSArray
+                        if partitionsForDisk.count > 0 {
+                            for partition in partitionsForDisk {
+                                let partitionDict = partition as! NSDictionary
+                                if disk == partitionDict.value(forKey: "VolumeName") as? String ?? String() {
+                                    for innerPartition in partitionsForDisk {
+                                        let innerPartitionDict = innerPartition as! NSDictionary
+                                        if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
+                                            drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
+                                        }
                                     }
                                 }
                             }
-                        }
-                    } else {
-                        let apfsDict = NSDictionary(contentsOfFile: "/tmp/apfs.plist")
-                        let apfsVolumesForDisk = diskEntryDict.object(forKey: "APFSVolumes") as! NSArray
-                        for volume in apfsVolumesForDisk {
-                            let volumeDict = volume as! NSDictionary
-                            if disk == volumeDict.value(forKey: "VolumeName") as? String ?? String() {
-                                let apfsIdentifier = String((volumeDict.value(forKey: "DeviceIdentifier") as! String).dropLast(2))
-                                let apfsContainers = apfsDict?.object(forKey: "Containers") as! NSArray
-                                for container in apfsContainers {
-                                    let containerDict = container as! NSDictionary
-                                    if containerDict.value(forKey: "ContainerReference") as? String ?? String() == apfsIdentifier {
-                                        let containerDriveIdentifier = String((containerDict.value(forKey: "DesignatedPhysicalStore") as! String).dropLast(2))
-                                        for innerDiskEntry in allDisksAndPartitioins {
-                                            let innerDiskEntryDict = innerDiskEntry as! NSDictionary
-                                            if innerDiskEntryDict.value(forKey: "DeviceIdentifier") as? String ?? String() == containerDriveIdentifier {
-                                                let innerPartitions = innerDiskEntryDict.object(forKey: "Partitions") as! NSArray
-                                                for innerPartition in innerPartitions {
-                                                    let innerPartitionDict = innerPartition as! NSDictionary
-                                                    if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
-                                                        drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
+                        } else {
+                            let apfsDict = NSDictionary(contentsOfFile: "\(tempDir)/apfs.plist")
+                            let apfsVolumesForDisk = diskEntryDict.object(forKey: "APFSVolumes") as! NSArray
+                            for volume in apfsVolumesForDisk {
+                                let volumeDict = volume as! NSDictionary
+                                if disk == volumeDict.value(forKey: "VolumeName") as? String ?? String() {
+                                    let apfsIdentifier = String((volumeDict.value(forKey: "DeviceIdentifier") as! String).dropLast(2))
+                                    let apfsContainers = apfsDict?.object(forKey: "Containers") as! NSArray
+                                    for container in apfsContainers {
+                                        let containerDict = container as! NSDictionary
+                                        if containerDict.value(forKey: "ContainerReference") as? String ?? String() == apfsIdentifier {
+                                            let containerDriveIdentifier = String((containerDict.value(forKey: "DesignatedPhysicalStore") as! String).dropLast(2))
+                                            for innerDiskEntry in allDisksAndPartitioins {
+                                                let innerDiskEntryDict = innerDiskEntry as! NSDictionary
+                                                if innerDiskEntryDict.value(forKey: "DeviceIdentifier") as? String ?? String() == containerDriveIdentifier {
+                                                    let innerPartitions = innerDiskEntryDict.object(forKey: "Partitions") as! NSArray
+                                                    for innerPartition in innerPartitions {
+                                                        let innerPartitionDict = innerPartition as! NSDictionary
+                                                        if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
+                                                            drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
+                                                        }
                                                     }
                                                 }
                                             }
@@ -368,13 +371,13 @@ class ViewController: NSViewController {
         acpiPatchTable.selectRowIndexes(IndexSet(integer: Int(sender.identifier!.rawValue)!), byExtendingSelection: false)      // select row the button belongs to for the code below to work
                                                                                                                                 // TODO: rely only on button identifier, not selected row, so we can allow an empty selection like in all other tables
         
-        acpiLimitString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Limit"]!        // fill variables with contents of plist file
-        acpiMaskString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Mask"]!
-        acpiOemTableIdString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["OemTableId"]!
-        acpiReplaceMaskString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["ReplaceMask"]!
-        acpiSkipString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Skip"]!
-        acpiTableLengthString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["TableLength"]!
-        acpiCountString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Count"]!
+        acpiLimitString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Limit"] ?? ""        // fill variables with contents of plist file
+        acpiMaskString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Mask"] ?? ""
+        acpiOemTableIdString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["OemTableId"] ?? ""
+        acpiReplaceMaskString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["ReplaceMask"] ?? ""
+        acpiSkipString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Skip"] ?? ""
+        acpiTableLengthString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["TableLength"] ?? ""
+        acpiCountString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Count"] ?? ""
         
         acpiVc.showPopover(button: sender)
     }
@@ -384,13 +387,13 @@ class ViewController: NSViewController {
         
         kernelPatchTable.selectRowIndexes(IndexSet(integer: Int(sender.identifier!.rawValue)!), byExtendingSelection: false)
         
-        kernelBaseString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Base"]!
-        kernelCountString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Count"]!
-        kernelIdentifierString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Identifier"]!
-        kernelLimitString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Limit"]!
-        kernelMaskString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Mask"]!
-        kernelReplaceString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["ReplaceMask"]!
-        kernelSkipString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Skip"]!
+        kernelBaseString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Base"] ?? ""
+        kernelCountString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Count"] ?? ""
+        kernelIdentifierString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Identifier"] ?? ""
+        kernelLimitString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Limit"] ?? ""
+        kernelMaskString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Mask"] ?? ""
+        kernelReplaceString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["ReplaceMask"] ?? ""
+        kernelSkipString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Skip"] ?? ""
         
         kernelVc.showPopover(button: sender)
     }
@@ -519,6 +522,17 @@ class ViewController: NSViewController {
      var platformUpdateNvramBool: Bool = Bool()
      var platformUpdateSmbiosBool: Bool = Bool()
      var platformUpdateSmbiosModeStr: String = String()
+    
+    func createTempDirectory() -> String? {
+        let tempDirectoryTemplate = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("OpenCore-Configurator")
+        let fileManager = FileManager.default
+        do {
+            try fileManager.createDirectory(at: tempDirectoryTemplate, withIntermediateDirectories: true, attributes: nil)
+            return tempDirectoryTemplate.path
+        } catch {
+            return nil
+        }
+    }
     
     @objc func onPlistOpen(_ notification: Notification) {
         resetTables()       // clear tables before adding new data to them
@@ -966,6 +980,26 @@ class ViewController: NSViewController {
         plistDict.addEntries(from: ["NVRAM": nvramDict])
         plistDict.addEntries(from: ["Misc": miscDict])
         plistDict.write(toFile: path, atomically: true)
+        let plistString = shell(launchPath: "/bin/cat", arguments: [path]) ?? ""
+        let plistArray = plistString.components(separatedBy: "\n")
+        var entriesContainingData: [Int] = [Int]()
+        var newPlistString = ""
+        for x in 0...(plistArray.count - 1) {
+            if plistArray[x].trimmingCharacters(in: .whitespacesAndNewlines) == "<data>" {
+                entriesContainingData.append(x)
+            }
+        }
+        
+        for x in 0...(plistArray.count - 1) {
+            if entriesContainingData.contains(x) {
+                newPlistString += plistArray[x] + plistArray[x + 1].trimmingCharacters(in: .whitespacesAndNewlines) + plistArray[x + 2].trimmingCharacters(in: .whitespacesAndNewlines) + "\n"
+            }
+            else if !entriesContainingData.contains(x - 1), !entriesContainingData.contains(x - 2) {
+                newPlistString += plistArray[x] + "\n"
+            }
+        }
+        
+        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "echo \"\(newPlistString)\" > \(path)"])
         
         self.view.window?.isDocumentEdited = false
         editedState = false
