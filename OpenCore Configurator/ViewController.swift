@@ -990,14 +990,29 @@ class ViewController: NSViewController {
             }
         }
         
-        for x in 0...(plistArray.count - 1) {
-            if entriesContainingData.contains(x) {
-                newPlistString += plistArray[x] + plistArray[x + 1].trimmingCharacters(in: .whitespacesAndNewlines) + plistArray[x + 2].trimmingCharacters(in: .whitespacesAndNewlines) + "\n"
-            }
-            else if !entriesContainingData.contains(x - 1), !entriesContainingData.contains(x - 2) {
-                newPlistString += plistArray[x] + "\n"
+        for x in 0...(plistArray.count - 2) {
+            if plistArray[x + 1].trimmingCharacters(in: .whitespacesAndNewlines) == "</data>" {
+                if entriesContainingData.contains(x) {
+                    newPlistString += plistArray[x] + plistArray[x + 1].trimmingCharacters(in: .whitespacesAndNewlines) + "\n" + plistArray[x + 2] + "\n"
+                    
+                }
+                else if !entriesContainingData.contains(x - 1) {
+                    newPlistString += plistArray[x] + "\n"
+                }
+            } else {
+                if entriesContainingData.contains(x) {
+                    newPlistString += plistArray[x] + plistArray[x + 1].trimmingCharacters(in: .whitespacesAndNewlines) + plistArray[x + 2].trimmingCharacters(in: .whitespacesAndNewlines) + "\n"
+
+                }
+                else if !entriesContainingData.contains(x - 1), !entriesContainingData.contains(x - 2) {
+                    newPlistString += plistArray[x] + "\n"
+                }
             }
         }
+        
+        newPlistString += plistArray[plistArray.count - 1]
+        
+        newPlistString = newPlistString.replacingOccurrences(of: "\"", with: "\\\"")
         
         let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "echo \"\(newPlistString)\" > \(path)"])
         
