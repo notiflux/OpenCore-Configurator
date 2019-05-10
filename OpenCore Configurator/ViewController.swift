@@ -895,10 +895,11 @@ class ViewController: NSViewController {
         SHF.saveDeviceData(table: deviceBlockTable, dict: &deviceBlockDict)
         SHF.saveQuirksData(dict: deviceQuirks, quirksDict: &deviceQuirksDict)
         
-        SHF.saveDictOfDictData(table: platformGenericTable, dict: &platformGenericDict)
-        SHF.saveDictOfDictData(table: platformNvramTable, dict: &platformNvramDict)
-        SHF.saveDictOfDictData(table: platformSmbiosTable, dict: &platformSmbiosDict)
-        SHF.saveDictOfDictData(table: platformDatahubTable, dict: &platformDatahubDict)
+            // only process platform dicts if they're not empty. This is not necessary because we're checking this when appending to the platform dict too, but this is cleaner because we don't do unnecessary work
+        if isNotEmpty(platformGenericDict) { SHF.saveDictOfDictData(table: platformGenericTable, dict: &platformGenericDict) }
+        if isNotEmpty(platformNvramDict) { SHF.saveDictOfDictData(table: platformNvramTable, dict: &platformNvramDict) }
+        if isNotEmpty(platformSmbiosDict) { SHF.saveDictOfDictData(table: platformSmbiosTable, dict: &platformSmbiosDict) }
+        if isNotEmpty(platformDatahubDict) { SHF.saveDictOfDictData(table: platformDatahubTable, dict: &platformDatahubDict) }
         
         SHF.saveStringData(table: uefiDriverTable, array: &uefiDriverArray)
         SHF.saveQuirksData(dict: uefiQuirks, quirksDict: &uefiQuirksDict)
@@ -933,11 +934,11 @@ class ViewController: NSViewController {
             platformInfoDict.addEntries(from: ["Automatic": true])
         } else {
             platformInfoDict.addEntries(from: ["Automatic": false])
-        }
-        platformInfoDict.addEntries(from: ["DataHub": platformDatahubDict])
-        platformInfoDict.addEntries(from: ["Generic": platformGenericDict])
-        platformInfoDict.addEntries(from: ["PlatformNVRAM": platformNvramDict])
-        platformInfoDict.addEntries(from: ["SMBIOS": platformSmbiosDict])
+        }                                                                // only add platform dicts if they're not empty
+        if isNotEmpty(platformDatahubDict) { platformInfoDict.addEntries(from: ["DataHub": platformDatahubDict]) }
+        if isNotEmpty(platformGenericDict) { platformInfoDict.addEntries(from: ["Generic": platformGenericDict]) }
+        if isNotEmpty(platformNvramDict) { platformInfoDict.addEntries(from: ["PlatformNVRAM": platformNvramDict]) }
+        if isNotEmpty(platformSmbiosDict) { platformInfoDict.addEntries(from: ["SMBIOS": platformSmbiosDict]) }
         if updateDatahub.state == .on {
             platformInfoDict.addEntries(from: ["UpdateDataHub": true])
         } else {
@@ -980,44 +981,57 @@ class ViewController: NSViewController {
         plistDict.addEntries(from: ["NVRAM": nvramDict])
         plistDict.addEntries(from: ["Misc": miscDict])
         plistDict.write(toFile: path, atomically: true)
-        let plistString = shell(launchPath: "/bin/cat", arguments: [path]) ?? ""
-        let plistArray = plistString.components(separatedBy: "\n")
+        
+            // open the file as a string to strip newlines from <data></data> entries.
+            // Idea from CorpNewt's ProperTree commit in which he fixed the same issue
+        
+        let plistString = shell(launchPath: "/bin/cat", arguments: [path]) ?? ""    // load plist as a string
+        let plistArray = plistString.components(separatedBy: "\n")                  // split it into an array by newlines
         var entriesContainingData: [Int] = [Int]()
         var newPlistString = ""
+        
         for x in 0...(plistArray.count - 1) {
-            if plistArray[x].trimmingCharacters(in: .whitespacesAndNewlines) == "<data>" {
+            if plistArray[x].trimmingCharacters(in: .whitespacesAndNewlines) == "<data>" {      // fill array with item numbers that contain contain "<data>"
                 entriesContainingData.append(x)
             }
         }
         
-        for x in 0...(plistArray.count - 2) {
-            if plistArray[x + 1].trimmingCharacters(in: .whitespacesAndNewlines) == "</data>" {
-                if entriesContainingData.contains(x) {
+        for x in 0...(plistArray.count - 3) {
+            if plistArray[x + 1].trimmingCharacters(in: .whitespacesAndNewlines) == "</data>" {     // some data fields are empty. In that case we only need to trim
+                if entriesContainingData.contains(x) {                                              // newlines for the next line, not the next two
                     newPlistString += plistArray[x] + plistArray[x + 1].trimmingCharacters(in: .whitespacesAndNewlines) + "\n" + plistArray[x + 2] + "\n"
                     
                 }
-                else if !entriesContainingData.contains(x - 1) {
-                    newPlistString += plistArray[x] + "\n"
-                }
             } else {
-                if entriesContainingData.contains(x) {
+                if entriesContainingData.contains(x) {              // here we're dealing with data fields that actually hold data, so we need to trim newlines from the next *two* lines
                     newPlistString += plistArray[x] + plistArray[x + 1].trimmingCharacters(in: .whitespacesAndNewlines) + plistArray[x + 2].trimmingCharacters(in: .whitespacesAndNewlines) + "\n"
 
                 }
-                else if !entriesContainingData.contains(x - 1), !entriesContainingData.contains(x - 2) {
+                else if !entriesContainingData.contains(x - 1), !entriesContainingData.contains(x - 2) {     // for all other lines, we just want to append them to the string
                     newPlistString += plistArray[x] + "\n"
                 }
             }
         }
         
-        newPlistString += plistArray[plistArray.count - 1]
+        newPlistString += plistArray[plistArray.count - 2]      // since we're only iterating over 0...(plistArray.count - 3) because we don't want a newline at EOF,
+                                                                // we need to manually append it here
+        newPlistString = newPlistString.replacingOccurrences(of: "\"", with: "\\\"")    // escape quotes so bash doesn't strip them
         
-        newPlistString = newPlistString.replacingOccurrences(of: "\"", with: "\\\"")
-        
-        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "echo \"\(newPlistString)\" > \(path)"])
+        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "printf \"\(newPlistString)\" > \(path)"])   // write the new plist back to path. Using printf instead of echo because echo appends a final newline
         
         self.view.window?.isDocumentEdited = false
         editedState = false
+    }
+    
+    func isNotEmpty(_ dict: NSMutableDictionary) -> Bool {
+        var isNotEmpty = false
+        for entry in Array(dict.allValues) {
+            let entryString = entry as? String ?? ""
+            if entryString != "" {
+                isNotEmpty = true
+            }
+        }
+        return isNotEmpty
     }
     
     func saveMisc() {
