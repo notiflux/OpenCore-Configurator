@@ -6,6 +6,6 @@ osx_image: xcode10.2
 script:
   - wget https://github.com/acidanthera/MacInfoPkg/releases/download/2.0.5/macserial-2.0.5-mac.zip
   - unzip macserial-2.0.5-mac.zip
-  - rm macserial-2.0.5.zip
-  - ls
+  - rm macserial-2.0.5-mac.zip
   - set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator build archive | xcpretty
+  - ls
