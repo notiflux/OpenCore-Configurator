@@ -8,4 +8,5 @@ script:
   - unzip macserial-2.0.5-mac.zip
   - rm macserial-2.0.5-mac.zip
   - set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator build archive | xcpretty
-  - ls
+  - ls "OpenCore Configurator"
+  - ls "OpenCore Configurator/Release"
