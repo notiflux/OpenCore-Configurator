@@ -3,8 +3,10 @@ A tool for creating and editing OpenCore configuration files.
 
 ## Features
 
+* Paste ACPI patches from either OC or Clover in plist format
 * Auto-add entries for ACPI files in OC/ACPI/Custom
 * Auto-add entries for kexts in OC/Kexts
+* Auto-add entries for UEFI drivers in OC/Drivers
 * Generate SMBIOS with macserial
 * EFI partition mounter
 
