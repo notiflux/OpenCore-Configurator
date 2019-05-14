@@ -156,7 +156,6 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        reloadEsps()
         resetTables()   // initialize table datasources
         
         for table in Array(tableLookup.keys) {              // setup table delegate and datasource
@@ -223,6 +222,60 @@ class ViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onKernelSyncPopover(_:)), name: .syncKernelPopoverAndDict, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onPasteVC(_:)), name: .paste, object: nil)
         
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        reloadEsps()
+        
+            // I stole this from MaciASL
+            // TODO: write tables to file (xxd -r -p) and show differences
+        let expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert"))
+        let table = IORegistryEntryCreateCFProperty(expert, ("ACPI Tables" as CFString), kCFAllocatorDefault, 0)?.takeRetainedValue() as! NSDictionary
+        //print(table.allKeys)
+        
+        
+        let officialOcVersions = [
+            "REL-001-2019-05-03"
+        ]
+        
+        let supportedOcVersions = [
+            "REL-002-2019-05-08"
+        ]
+        
+        let currentOcVersion = (shell(launchPath: "/bin/bash", arguments: ["-c", "nvram 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:opencore-version | awk '{print $2}'"]) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        let alert = NSAlert()
+        
+        if currentOcVersion != "" {
+            if !officialOcVersions.contains(currentOcVersion) {
+                if supportedOcVersions.contains(currentOcVersion) {
+                    alert.messageText = "You are running a prerelease version of OpenCore."
+                    alert.runModal()
+                } else {
+                    alert.messageText = "You are running a prerelease version of OpenCore."
+                    alert.informativeText = "This App was not designed to work with this version. It may not contain all options or use a different format. Use at your own risk!"
+                    alert.runModal()
+                }
+            } else {
+                if !officialOcVersions.contains(currentOcVersion) {
+                    alert.messageText = "You're running a version of OpenCore that this app does not currently support"
+                    alert.informativeText = "It may not contain all options or use a different format. Use at your own risk!\nThese versions are officially supported:"
+                    for version in supportedOcVersions {
+                        alert.informativeText += "\n\(version)"
+                    }
+                    alert.runModal()
+                }
+            }
+        } else {
+            alert.messageText = "Could not get OpenCore version!"
+            alert.informativeText = "Make sure you are creating a configuration file for a supported version.\nThese versions are officially supported:"
+            for version in supportedOcVersions {
+                alert.informativeText += "\n\(version)"
+            }
+            alert.runModal()
+        }
     }
     
     func reloadEsps() {
@@ -822,6 +875,8 @@ class ViewController: NSViewController {
         
         OHF.createData(input: platformNvramDict, table: &platformNvramTable)
 
+        togglePlatformAutomatic()
+        
         self.view.window?.title = "\((path as NSString).lastPathComponent) - OpenCore Configurator"
         self.view.window?.representedURL = URL(fileURLWithPath: path)
     }
@@ -1292,6 +1347,29 @@ class ViewController: NSViewController {
             espWarning()
         }
     }
+    @IBAction func platformAutomaticAction(_ sender: NSButton) {
+        togglePlatformAutomatic()
+    }
+    
+    func togglePlatformAutomatic() {
+        if smbiosAutomatic.state == .on {
+            platformDatahubTable.isEnabled = false
+            platformNvramTable.isEnabled = false
+            platformSmbiosTable.isEnabled = false
+            platformGenericTable.isEnabled = true
+            spoofVendor.isEnabled = true
+        } else {
+            platformDatahubTable.isEnabled = true
+            platformNvramTable.isEnabled = true
+            platformSmbiosTable.isEnabled = true
+            platformGenericTable.isEnabled = false
+            spoofVendor.isEnabled = false
+        }
+    }
+    
+    @IBAction func helpButtonAction(_ sender: Any) {
+        NSWorkspace.shared.open(URL(string: "https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf")!)
+    }
     
     func espWarning() {
         let alert = NSAlert()
@@ -1393,24 +1471,49 @@ class ViewController: NSViewController {
             var execLookup: [String: String] =  [String: String]()
             if fileURLs != nil {
                 for i in fileURLs! {
-                    if fileManager.fileExists(atPath: "\(i.path)/Contents/Info.plist") {
-                        let execUrl = URL(fileURLWithPath: "Contents/MacOS", relativeTo: i)
-                        do {
-                            let executable = try fileManager.contentsOfDirectory(at: execUrl, includingPropertiesForKeys: nil)
-                            execLookup[i.lastPathComponent] = "Contents/MacOS/\((executable.first?.lastPathComponent)!)"
-                        } catch {
-                            execLookup[i.lastPathComponent] = ""
-                        }
-                        let recursiveLookup = recursiveKexts(path: "\(i.path)/Contents/PlugIns")
-                        if recursiveLookup != nil {
-                            for recursiveKext in Array(recursiveLookup!.keys) {
-                                execLookup["\(i.lastPathComponent)/Contents/PlugIns/\(recursiveKext)"] = recursiveLookup![recursiveKext]!
+                    var kextIsDirObjcBool: ObjCBool = ObjCBool(true)
+                    let _: Bool = fileManager.fileExists(atPath: "\(i.path)", isDirectory: &kextIsDirObjcBool)  // ensure the kext is a directory
+                    if i.lastPathComponent.hasSuffix(".kext"), kextIsDirObjcBool.boolValue {                    // ensure it has the ".kext" suffix
+                        var contentsExistObjcBool: ObjCBool = ObjCBool(true)
+                        let contentsExists: Bool = fileManager.fileExists(atPath: "\(i.path)/Contents", isDirectory: &contentsExistObjcBool)    // ensure it has a "Contents" directory
+                        if contentsExists, contentsExistObjcBool.boolValue{
+                            if fileManager.fileExists(atPath: "\(i.path)/Contents/Info.plist") {                    // ensure it has an Info.plist
+                                let execUrl = URL(fileURLWithPath: "Contents/MacOS", relativeTo: i)
+                                do {
+                                    let executable = try fileManager.contentsOfDirectory(at: execUrl, includingPropertiesForKeys: nil)
+                                    if executable.count <= 1 {
+                                        execLookup[i.lastPathComponent] = "Contents/MacOS/\((executable.first?.lastPathComponent)!)"    // add the executable to the dict. Making sure it only contains one executable
+                                    } else {
+                                        let alert = NSAlert()
+                                        alert.messageText = "\"\(i.lastPathComponent)\" contains more than one executable."
+                                        alert.informativeText = "Either get a version of this kext that only has one executable or add it manually at your own risk."
+                                        alert.runModal()
+                                        continue
+                                    }
+                                } catch {
+                                    execLookup[i.lastPathComponent] = ""
+                                }
+                                let recursiveLookup = recursiveKexts(path: "\(i.path)/Contents/PlugIns")
+                                if recursiveLookup != nil {
+                                    for recursiveKext in Array(recursiveLookup!.keys) {
+                                        execLookup["\(i.lastPathComponent)/Contents/PlugIns/\(recursiveKext)"] = recursiveLookup![recursiveKext]!
+                                    }
+                                }
+                            } else {
+                                let alert = NSAlert()
+                                alert.messageText = "\"\(i.lastPathComponent)\" does not have an Info.plist"
+                                alert.informativeText = "Re-download the kext or contact the developer about this issue."
+                                alert.runModal()
                             }
+                        } else {
+                            let alert = NSAlert()
+                            alert.messageText = "\"\(i.lastPathComponent)\" is a malformed kext"
+                            alert.informativeText = "It does not contain a \"Contents\" directory."
+                            alert.runModal()
                         }
                     } else {
                         let alert = NSAlert()
-                        alert.messageText = "\(i.lastPathComponent) does not have an Info.plist"
-                        alert.informativeText = "Re-download the kext or contact the developer about this issue."
+                        alert.messageText = "\"\(i.lastPathComponent)\" is not a kext."
                         alert.runModal()
                     }
                 }
