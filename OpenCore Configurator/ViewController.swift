@@ -84,7 +84,6 @@ class ViewController: NSViewController {
     // misc debug options
     @IBOutlet weak var miscDelayText: NSTextField!
     @IBOutlet weak var miscDisplayLevelText: NSTextField!
-    @IBOutlet weak var miscExposeBootPath: NSButton!
     @IBOutlet weak var miscTargetText: NSTextField!
     @IBOutlet weak var disableWatchdog: NSButton!
     
@@ -92,6 +91,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var miscRequireSignature: NSButton!
     @IBOutlet weak var miscRequireVault: NSButton!
     @IBOutlet weak var miscHaltlevel: NSTextField!
+    @IBOutlet weak var miscExposeSensitiveData: NSTextField!
     
     // acpi quirks
     @IBOutlet weak var FadtEnableReset: NSButton!
@@ -115,7 +115,6 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var IgnoreTextInGraphics: NSButton!
     @IBOutlet weak var IgnoreInvalidFlexRatio: NSButton!
-    @IBOutlet weak var ProvideConsoleControl: NSButton!
     @IBOutlet weak var ProvideConsoleGop: NSButton!
     @IBOutlet weak var ReleaseUsbOwnership: NSButton!
     @IBOutlet weak var RequestBootVarRouting: NSButton!
@@ -123,6 +122,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var ExitBootServicesDelay: NSTextField!
     
     @IBOutlet weak var AppleBootPolicy: NSButton!
+    @IBOutlet weak var ConsoleControl: NSButton!
+    @IBOutlet weak var DataHub: NSButton!
     @IBOutlet weak var DeviceProperties: NSButton!
     
     // smbios options
@@ -131,6 +132,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var updateNvram: NSButton!
     @IBOutlet weak var updateSmbios: NSButton!
     @IBOutlet weak var smbioUpdateModePopup: NSPopUpButton!
+    @IBOutlet weak var spoofVendor: NSButton!
     
     @IBOutlet weak var espPopup: NSPopUpButton!
     
@@ -202,7 +204,6 @@ class ViewController: NSViewController {
         uefiQuirks = [
             "IgnoreTextInGraphics": self.IgnoreTextInGraphics,
             "IgnoreInvalidFlexRatio": self.IgnoreInvalidFlexRatio,
-            "ProvideConsoleControl": self.ProvideConsoleControl,
             "ProvideConsoleGop": self.ProvideConsoleGop,
             "ReleaseUsbOwnership": self.ReleaseUsbOwnership,
             "RequestBootVarRouting": self.RequestBootVarRouting,
@@ -211,6 +212,8 @@ class ViewController: NSViewController {
         
         uefiProtocols = [
             "AppleBootPolicy": self.AppleBootPolicy,
+            "ConsoleControl": self.ConsoleControl,
+            "DataHub": self.DataHub,
             "DeviceProperties": self.DeviceProperties
         ]
         
@@ -223,51 +226,52 @@ class ViewController: NSViewController {
     }
     
     func reloadEsps() {
+        // The dict layout is [mountedDrive: correspondingEspIdentifier]
+        
         if let tempDir = createTempDirectory() {
-            print(tempDir)
-            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil list -plist > \(tempDir)/diskutil.plist"])
-            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil apfs list -plist > \(tempDir)/apfs.plist"])
-            let disks = shell(launchPath: "/bin/bash", arguments: ["-c", "ls /Volumes | grep -v EFI"])?.components(separatedBy: "\n")
-            let diskutil = NSDictionary(contentsOfFile: "\(tempDir)/diskutil.plist")
+            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil list -plist > \(tempDir)/diskutil.plist"])   // write disk plist to temporary folder
+            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil apfs list -plist > \(tempDir)/apfs.plist"])  // write apfs plist to temporary folder
+            let disks = shell(launchPath: "/bin/bash", arguments: ["-c", "ls /Volumes | grep -v EFI"])?.components(separatedBy: "\n")   // get list of mounted drives
+            let diskutil = NSDictionary(contentsOfFile: "\(tempDir)/diskutil.plist")                    // open the diskutil plist as an NSDictionary
             let allDisksAndPartitioins = diskutil?.object(forKey: "AllDisksAndPartitions") as! NSArray
             
-            for disk in disks! {
+            for disk in disks! {        // iterate over all mounted disks
                 if disk != "" {
-                    for diskEntry in allDisksAndPartitioins {
-                        let diskEntryDict = diskEntry as! NSDictionary
+                    for diskEntry in allDisksAndPartitioins {       // iterate over all disks to find the identifier of the parent drive
+                        let diskEntryDict = diskEntry as? NSDictionary ?? NSDictionary()
                         let partitionsForDisk = diskEntryDict.object(forKey: "Partitions") as! NSArray
-                        if partitionsForDisk.count > 0 {
-                            for partition in partitionsForDisk {
-                                let partitionDict = partition as! NSDictionary
-                                if disk == partitionDict.value(forKey: "VolumeName") as? String ?? String() {
-                                    for innerPartition in partitionsForDisk {
-                                        let innerPartitionDict = innerPartition as! NSDictionary
+                        if partitionsForDisk.count > 0 {            // this means we have an HFS or other common type of file system
+                            for partition in partitionsForDisk {        // iterate over all partitions on the drive to find the one allDisksAndPartitions is currently at
+                                let partitionDict = partition as? NSDictionary ?? NSDictionary()
+                                if disk == partitionDict.value(forKey: "VolumeName") as? String ?? String() {       // found it
+                                    for innerPartition in partitionsForDisk {       // now we iterate over the thing again to find one with the name "EFI"
+                                        let innerPartitionDict = innerPartition as? NSDictionary ?? NSDictionary()
                                         if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
-                                            drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
+                                            drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)    // found it. Adding it to the dict
                                         }
                                     }
                                 }
                             }
-                        } else {
-                            let apfsDict = NSDictionary(contentsOfFile: "\(tempDir)/apfs.plist")
-                            let apfsVolumesForDisk = diskEntryDict.object(forKey: "APFSVolumes") as! NSArray
+                        } else {            // this means we're dealing with an APFS volume
+                            let apfsDict = NSDictionary(contentsOfFile: "\(tempDir)/apfs.plist")        // open the apfs plist as an NSDictionary
+                            let apfsVolumesForDisk = diskEntryDict.object(forKey: "APFSVolumes") as? NSArray ?? NSArray()   // this is still in the disk plist. we need to identify the APFS disk there
                             for volume in apfsVolumesForDisk {
-                                let volumeDict = volume as! NSDictionary
-                                if disk == volumeDict.value(forKey: "VolumeName") as? String ?? String() {
-                                    let apfsIdentifier = String((volumeDict.value(forKey: "DeviceIdentifier") as! String).dropLast(2))
-                                    let apfsContainers = apfsDict?.object(forKey: "Containers") as! NSArray
+                                let volumeDict = volume as? NSDictionary ?? NSDictionary()
+                                if disk == volumeDict.value(forKey: "VolumeName") as? String ?? String() {      // found our mounted disk
+                                    let apfsIdentifier = String((volumeDict.value(forKey: "DeviceIdentifier") as! String).dropLast(2))      // get its identifier and drop the last two chars to get the parent drive
+                                    let apfsContainers = apfsDict?.object(forKey: "Containers") as! NSArray     // now checking the apfs plist
                                     for container in apfsContainers {
-                                        let containerDict = container as! NSDictionary
-                                        if containerDict.value(forKey: "ContainerReference") as? String ?? String() == apfsIdentifier {
-                                            let containerDriveIdentifier = String((containerDict.value(forKey: "DesignatedPhysicalStore") as! String).dropLast(2))
-                                            for innerDiskEntry in allDisksAndPartitioins {
-                                                let innerDiskEntryDict = innerDiskEntry as! NSDictionary
-                                                if innerDiskEntryDict.value(forKey: "DeviceIdentifier") as? String ?? String() == containerDriveIdentifier {
+                                        let containerDict = container as? NSDictionary ?? NSDictionary()
+                                        if containerDict.value(forKey: "ContainerReference") as? String ?? String() == apfsIdentifier {     // find the reference to the apfs container
+                                            let containerDriveIdentifier = String((containerDict.value(forKey: "DesignatedPhysicalStore") as! String).dropLast(2))      // getting the device identifier of the real hardware disk
+                                            for innerDiskEntry in allDisksAndPartitioins {      // iterate over the disks plist again, this time to find the ESP of the real hardware disk containing the APFS container
+                                                let innerDiskEntryDict = innerDiskEntry as? NSDictionary ?? NSDictionary()
+                                                if innerDiskEntryDict.value(forKey: "DeviceIdentifier") as? String ?? String() == containerDriveIdentifier {    // found the physical drive
                                                     let innerPartitions = innerDiskEntryDict.object(forKey: "Partitions") as! NSArray
                                                     for innerPartition in innerPartitions {
-                                                        let innerPartitionDict = innerPartition as! NSDictionary
-                                                        if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
-                                                            drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
+                                                        let innerPartitionDict = innerPartition as? NSDictionary ?? NSDictionary()
+                                                        if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {         // look for the EFI partition on that drive
+                                                            drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)    // found it. Adding it to the dict
                                                         }
                                                     }
                                                 }
@@ -546,7 +550,7 @@ class ViewController: NSViewController {
         if acpiAddArray.count > 0 {
             for i in 0...(acpiAddArray.count - 1) {
                 let tempDict = (acpiAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! Bool) == true {
+                if (tempDict.value(forKey: "Enabled") as? Bool ?? false) == true {
                     tempDict.setValue("1", forKey: "Enabled")
                 } else {
                     tempDict.setValue("0", forKey: "Enabled")
@@ -669,9 +673,9 @@ class ViewController: NSViewController {
         ]
         
         for (key, value) in miscBootDict {      // we're not dealing with tables here so it's easier to just parse the data manually. This sucks but I don't have a better idea for this atm
-            switch key as! String {
+            switch key as? String ?? "" {
             case "ShowPicker":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     showPicker.state = .on
                 }
                 else {
@@ -679,57 +683,50 @@ class ViewController: NSViewController {
                 }
                 
             case "Timeout":
-                timeoutStepper.stringValue = String(value as! Int)
-                timeoutTextfield.stringValue = String(value as! Int)
+                timeoutStepper.stringValue = String(value as? Int ?? Int())
+                timeoutTextfield.stringValue = String(value as? Int ?? Int())
             case "ConsoleMode":
-                consoleMode.stringValue = value as! String
+                consoleMode.stringValue = value as? String ?? ""
             case "ConsoleBehaviourOs":
-                if value as! String != "" {
-                    if OsBehavior.itemTitles.contains(value as! String) {
-                        OsBehavior.selectItem(withTitle: value as! String)
+                if value as? String ?? "" != "" {
+                    if OsBehavior.itemTitles.contains(value as? String ?? "") {
+                        OsBehavior.selectItem(withTitle: value as? String ?? "")
                     }
                 } else {
                     OsBehavior.selectItem(withTitle: "Don't change")
                 }
             case "ConsoleBehaviourUi":
-                if value as! String != "" {
-                    if UiBehavior.itemTitles.contains(value as! String) {
-                        UiBehavior.selectItem(withTitle: value as! String)
+                if value as? String ?? "" != "" {
+                    if UiBehavior.itemTitles.contains(value as? String ?? "") {
+                        UiBehavior.selectItem(withTitle: value as? String ?? "")
                     }
                 } else {
                     UiBehavior.selectItem(withTitle: "Don't change")
                 }
             case "HideSelf":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     hideSelf.state = .on
                 }
                 else {
                     hideSelf.state = .off
                 }
             case "Resolution":
-                resolution.stringValue = value as! String
+                resolution.stringValue = value as? String ?? ""
             default:
                 break
             }
         }
         
         for (key, value) in miscDebugDict {
-            switch key as! String {
+            switch key as? String ?? "" {
             case "DisplayDelay":
-                miscDelayText.stringValue = String(value as! Int)
+                miscDelayText.stringValue = String(value as? Int ?? Int())
             case "DisplayLevel":
-                miscDisplayLevelText.stringValue = String(value as! Int)
-            case "ExposeBootPath":
-                if value as! Bool {
-                    miscExposeBootPath.state = .on
-                }
-                else {
-                    miscExposeBootPath.state = .off
-                }
+                miscDisplayLevelText.stringValue = String(value as? Int ?? Int())
             case "Target":
-                miscTargetText.stringValue = String(value as! Int)
+                miscTargetText.stringValue = String(value as? Int ?? Int())
             case "DisableWatchDog":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     disableWatchdog.state = .on
                 } else {
                     disableWatchdog.state = .off
@@ -740,41 +737,43 @@ class ViewController: NSViewController {
         }
         
         for (key, value) in miscSecurityDict {
-            switch key as! String {
+            switch key as? String ?? "" {
             case "HaltLevel":
-                miscHaltlevel.stringValue = String(value as! Int)
+                miscHaltlevel.stringValue = String(value as? Int ?? Int())
             case "RequireSignature":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     miscRequireSignature.state = .on
                 }
                 else {
                     miscRequireSignature.state = .off
                 }
             case "RequireVault":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     miscRequireVault.state = .on
                 }
                 else {
                     miscRequireVault.state = .off
                 }
+            case "ExposeSensitiveData":
+                miscExposeSensitiveData.stringValue = String(value as? Int ?? Int())
             default:
                 break
             }
         }
         
         for (key, value) in nvramAddDict {
-            switch key as! String {
+            switch key as? String ?? "" {
             case "7C436110-AB2A-4BBB-A880-FE41995C9F82":
-                OHF.createNvramData(value: value as! NSMutableDictionary, table: &nvramBootTable)
+                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramBootTable)
             case "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14":
-                OHF.createNvramData(value: value as! NSMutableDictionary, table: &nvramVendorTable)
+                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramVendorTable)
             default:
-                OHF.createNvramData(value: value as! NSMutableDictionary, table: &nvramCustomTable, guidString: key as? String)
+                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramCustomTable, guidString: key as? String)
             }
         }
         
         for (key, value) in nvramBlockDict {
-            OHF.createNvramData(value: value as! NSMutableArray, table: &nvramBlockTable, guidString: key as? String)
+            OHF.createNvramData(value: value as? NSMutableArray ?? NSMutableArray(), table: &nvramBlockTable, guidString: key as? String)
         }
         
         OHF.createTopLevelBools(buttonDict: &topLevelBools)
@@ -782,7 +781,7 @@ class ViewController: NSViewController {
         if smbioUpdateModePopup.itemTitles.contains(platformUpdateSmbiosModeStr) {
             smbioUpdateModePopup.selectItem(withTitle: platformUpdateSmbiosModeStr)
         } else {
-            smbioUpdateModePopup.selectItem(withTitle: "Auto")
+            smbioUpdateModePopup.selectItem(withTitle: "Create")
         }
         
         //OHF.createData(input: acpiAddArray, table: &acpiAddTable, predefinedKey: "acpiAdd")
@@ -815,6 +814,12 @@ class ViewController: NSViewController {
         OHF.createData(input: platformSmbiosDict, table: &platformSmbiosTable)
         OHF.createData(input: platformDatahubDict, table: &platformDatahubTable)
         OHF.createData(input: platformGenericDict, table: &platformGenericTable)
+        if platformGenericDict.value(forKey: "SpoofVendor") as? Bool ?? false {
+            spoofVendor.state = .on
+        } else {
+            spoofVendor.state = .off
+        }
+        
         OHF.createData(input: platformNvramDict, table: &platformNvramTable)
 
         self.view.window?.title = "\((path as NSString).lastPathComponent) - OpenCore Configurator"
@@ -937,8 +942,16 @@ class ViewController: NSViewController {
         }                                                                // only add platform dicts if they're not empty
         if isNotEmpty(platformDatahubDict) { platformInfoDict.addEntries(from: ["DataHub": platformDatahubDict]) }
         if isNotEmpty(platformGenericDict) { platformInfoDict.addEntries(from: ["Generic": platformGenericDict]) }
+        if spoofVendor.state == .on {
+            platformGenericDict.addEntries(from: ["SpoofVendor": true])
+        } else {
+            platformGenericDict.addEntries(from: ["SpoofVendor": false])
+        }
+        
         if isNotEmpty(platformNvramDict) { platformInfoDict.addEntries(from: ["PlatformNVRAM": platformNvramDict]) }
         if isNotEmpty(platformSmbiosDict) { platformInfoDict.addEntries(from: ["SMBIOS": platformSmbiosDict]) }
+        
+        // set all button values
         if updateDatahub.state == .on {
             platformInfoDict.addEntries(from: ["UpdateDataHub": true])
         } else {
@@ -1015,7 +1028,7 @@ class ViewController: NSViewController {
         
         newPlistString += plistArray[plistArray.count - 2]      // since we're only iterating over 0...(plistArray.count - 3) because we don't want a newline at EOF,
                                                                 // we need to manually append it here
-        newPlistString = newPlistString.replacingOccurrences(of: "\"", with: "\\\"")    // escape quotes so bash doesn't strip them
+        newPlistString = newPlistString.replacingOccurrences(of: "\"", with: "\\\"")    // escape quotes so bash doesn't strip them (for readability: replacing " with \")
         
         let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "printf \"\(newPlistString)\" > \(path)"])   // write the new plist back to path. Using printf instead of echo because echo appends a final newline
         
@@ -1056,10 +1069,10 @@ class ViewController: NSViewController {
         miscDebugDict.addEntries(from: ["DisableWatchDog": checkboxState(button: disableWatchdog)])
         miscDebugDict.addEntries(from: ["DisplayDelay": Int(miscDelayText.stringValue) ?? 0])
         miscDebugDict.addEntries(from: ["DisplayLevel": Int(miscDisplayLevelText.stringValue) ?? 0])
-        miscDebugDict.addEntries(from: ["ExposeBootPath": checkboxState(button: miscExposeBootPath)])
         miscDebugDict.addEntries(from: ["Target": Int(miscTargetText.stringValue) ?? 0])
         
         miscSecurityDict.removeAllObjects()
+        miscSecurityDict.addEntries(from: ["ExposeSensitiveData": Int(miscExposeSensitiveData.stringValue) ?? 0])
         miscSecurityDict.addEntries(from: ["HaltLevel": Int(miscHaltlevel.stringValue) ?? 0])
         miscSecurityDict.addEntries(from: ["RequireSignature": checkboxState(button: miscRequireSignature)])
         miscSecurityDict.addEntries(from: ["RequireVault": checkboxState(button: miscRequireVault)])
