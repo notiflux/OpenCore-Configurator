@@ -1270,6 +1270,29 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBAction func autoAddUefi(_ sender: Any) {
+        if mountedESP != "" {
+            let fileManager = FileManager.default
+            let acpiUrl = URL(fileURLWithPath: "\(mountedESP)/EFI/OC/Drivers")
+            do {
+                let fileURLs = try fileManager.contentsOfDirectory(at: acpiUrl, includingPropertiesForKeys: nil)
+                var filenames: [String] = [String]()
+                for i in fileURLs {
+                    filenames.append(i.lastPathComponent)
+                }
+                
+                for file in filenames {
+                    tableLookup[uefiDriverTable]!.append(["driver": file])
+                }
+                uefiDriverTable.reloadData()
+            } catch {
+                print("Error while enumerating files \(acpiUrl.path): \(error.localizedDescription)")
+            }
+        } else {
+            espWarning()
+        }
+    }
+    
     func espWarning() {
         let alert = NSAlert()
         alert.messageText = "No EFI partition selected!"
@@ -1306,7 +1329,7 @@ class ViewController: NSViewController {
         }
         
         let menu = NSMenu()
-        for model in Array(serialDict.keys).sorted(by: <) {
+        for model in Array(serialDict.keys).sorted(by:{$0.localizedStandardCompare($1) == .orderedAscending} ) {
             menu.addItem(withTitle: model, action: #selector(onSmbiosSelect), keyEquivalent: "")
         }
         let p = NSPoint(x: sender.frame.origin.x, y: sender.frame.origin.y + 48)

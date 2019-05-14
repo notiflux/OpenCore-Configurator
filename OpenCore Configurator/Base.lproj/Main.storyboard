@@ -3797,7 +3797,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="General" identifier="" id="EjP-un-MsJ">
-                                        <view key="view" id="Zqi-aZ-UP9">
+                                        <view key="view" ambiguous="YES" id="Zqi-aZ-UP9">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -3845,15 +3845,15 @@
                                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bQ1-PR-YaS">
                                                     <rect key="frame" x="168" y="576" width="105" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <popUpButtonCell key="cell" type="push" title="Auto" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="lpe-TM-yHK" id="lzg-mh-R28">
+                                                    <popUpButtonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zNu-I4-xZj" id="lzg-mh-R28">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="menu"/>
                                                         <menu key="menu" id="u2o-pY-Fbp">
                                                             <items>
-                                                                <menuItem title="Auto" state="on" id="lpe-TM-yHK"/>
                                                                 <menuItem title="Create" id="zNu-I4-xZj"/>
                                                                 <menuItem title="Overwrite" id="AHe-M3-zgS"/>
                                                                 <menuItem title="Custom" id="WB6-H4-zzR"/>
+                                                                <menuItem title="Auto" state="on" id="lpe-TM-yHK"/>
                                                             </items>
                                                         </menu>
                                                     </popUpButtonCell>
@@ -3973,7 +3973,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Generic" identifier="" id="qFF-ip-se2">
-                                        <view key="view" ambiguous="YES" id="Hvo-fR-Av5">
+                                        <view key="view" id="Hvo-fR-Av5">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -4333,7 +4333,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Drivers" identifier="" id="ja6-aw-l6L">
-                                        <view key="view" id="Nw6-F0-wsW">
+                                        <view key="view" ambiguous="YES" id="Nw6-F0-wsW">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -4442,12 +4442,15 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <accessibility description="Auto-add entries for all files in OC/ACPI/Add" help="Auto-add entries for all files in OC/ACPI/Add"/>
+                                                    <connections>
+                                                        <action selector="autoAddUefi:" target="XfG-lQ-9wD" id="EmY-jr-WfR"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Quirks" identifier="" id="xgU-NW-kru">
-                                        <view key="view" ambiguous="YES" id="iHd-Vo-d7W">
+                                        <view key="view" id="iHd-Vo-d7W">
                                             <rect key="frame" x="10" y="33" width="781" height="738"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
