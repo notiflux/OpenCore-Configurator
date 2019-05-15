@@ -17,11 +17,6 @@ var shouldExit = false
 class AppDelegate: NSObject, NSApplicationDelegate {
 
 
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
-        
-    }
     
     func application(_ sender: NSApplication, openFile filename: String) -> Bool {
         path = filename
@@ -58,10 +53,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return NSApplication.TerminateReply.terminateCancel
     }
     
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-
     @IBAction func newFile(_ sender: Any) {
         let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "mainVC") as! ViewController
         let newWindow = NSWindow(contentViewController: vc)
