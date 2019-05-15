@@ -17,6 +17,14 @@
 		810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042431ECA33DF009FE633 /* AppDelegate.swift */; };
 		810042461ECA33DF009FE633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042451ECA33DF009FE633 /* ViewController.swift */; };
 		8100424B1ECA33DF009FE633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 810042491ECA33DF009FE633 /* Main.storyboard */; settings = {ASSET_TAGS = (0, ); }; };
+		901FF74B228C322B0068449B /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FF74A228C322B0068449B /* Configuration.swift */; };
+		901FF74D228C35870068449B /* ACPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FF74C228C35870068449B /* ACPI.swift */; };
+		901FF74F228C360F0068449B /* DeviceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FF74E228C360F0068449B /* DeviceProperties.swift */; };
+		901FF751228C36190068449B /* Kernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FF750228C36190068449B /* Kernel.swift */; };
+		901FF753228C36280068449B /* Miscellaneous.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FF752228C36280068449B /* Miscellaneous.swift */; };
+		901FF755228C363D0068449B /* NVRAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FF754228C363D0068449B /* NVRAM.swift */; };
+		901FF757228C36440068449B /* PlatformInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FF756228C36440068449B /* PlatformInfo.swift */; };
+		901FF759228C364B0068449B /* UEFI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FF758228C364B0068449B /* UEFI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +40,14 @@
 		810042471ECA33DF009FE633 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8100424A1ECA33DF009FE633 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8100424C1ECA33DF009FE633 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		901FF74A228C322B0068449B /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		901FF74C228C35870068449B /* ACPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACPI.swift; sourceTree = "<group>"; };
+		901FF74E228C360F0068449B /* DeviceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceProperties.swift; sourceTree = "<group>"; };
+		901FF750228C36190068449B /* Kernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kernel.swift; sourceTree = "<group>"; };
+		901FF752228C36280068449B /* Miscellaneous.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Miscellaneous.swift; sourceTree = "<group>"; };
+		901FF754228C363D0068449B /* NVRAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVRAM.swift; sourceTree = "<group>"; };
+		901FF756228C36440068449B /* PlatformInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformInfo.swift; sourceTree = "<group>"; };
+		901FF758228C364B0068449B /* UEFI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UEFI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +85,7 @@
 				810042451ECA33DF009FE633 /* ViewController.swift */,
 				810042471ECA33DF009FE633 /* Assets.xcassets */,
 				810042491ECA33DF009FE633 /* Main.storyboard */,
+				901FF749228C32190068449B /* Model */,
 				8100424C1ECA33DF009FE633 /* Info.plist */,
 				7F4C29DD2269FD2900720E68 /* Extensions.swift */,
 				7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */,
@@ -77,6 +94,21 @@
 				7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */,
 			);
 			path = "OpenCore Configurator";
+			sourceTree = "<group>";
+		};
+		901FF749228C32190068449B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				901FF74A228C322B0068449B /* Configuration.swift */,
+				901FF74C228C35870068449B /* ACPI.swift */,
+				901FF74E228C360F0068449B /* DeviceProperties.swift */,
+				901FF750228C36190068449B /* Kernel.swift */,
+				901FF752228C36280068449B /* Miscellaneous.swift */,
+				901FF754228C363D0068449B /* NVRAM.swift */,
+				901FF756228C36440068449B /* PlatformInfo.swift */,
+				901FF758228C364B0068449B /* UEFI.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,13 +186,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				901FF757228C36440068449B /* PlatformInfo.swift in Sources */,
+				901FF74F228C360F0068449B /* DeviceProperties.swift in Sources */,
 				7FF918A9227226A60081891E /* openHandlerFunctions.swift in Sources */,
+				901FF753228C36280068449B /* Miscellaneous.swift in Sources */,
 				810042461ECA33DF009FE633 /* ViewController.swift in Sources */,
+				901FF755228C363D0068449B /* NVRAM.swift in Sources */,
 				7F3AAC182279BB55006644AD /* saveHandlerFunctions.swift in Sources */,
 				7F961CCC2270974E007F0BBE /* KernelPopoverController.swift in Sources */,
 				7F4C29DE2269FD2900720E68 /* Extensions.swift in Sources */,
 				7F4C29E2226A130A00720E68 /* AcpiPopoverController.swift in Sources */,
+				901FF74D228C35870068449B /* ACPI.swift in Sources */,
+				901FF74B228C322B0068449B /* Configuration.swift in Sources */,
 				810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */,
+				901FF759228C364B0068449B /* UEFI.swift in Sources */,
+				901FF751228C36190068449B /* Kernel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
