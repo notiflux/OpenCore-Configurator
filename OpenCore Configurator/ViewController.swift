@@ -142,11 +142,7 @@ class ViewController: NSViewController {
     var uefiQuirks: [String: NSButton] = [String: NSButton]()
     var topLevelBools: [NSButton: Bool] = [NSButton: Bool]()
     var uefiProtocols: [String: NSButton] = [String: NSButton]()
-    
-    func windowShouldClose() {
-        
-    }
-    
+
     var dragDropKernelAdd = NSPasteboard.PasteboardType(rawValue: "private.table-row.kernelAdd")
     var dragDropAcpiPatch = NSPasteboard.PasteboardType(rawValue: "private.table-row.acpiPatch")
     var dragDropKernelPatch = NSPasteboard.PasteboardType(rawValue: "private.table-row.kernelPatch")
