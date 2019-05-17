@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,9 +17,13 @@
 		810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042431ECA33DF009FE633 /* AppDelegate.swift */; };
 		810042461ECA33DF009FE633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042451ECA33DF009FE633 /* ViewController.swift */; };
 		8100424B1ECA33DF009FE633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 810042491ECA33DF009FE633 /* Main.storyboard */; settings = {ASSET_TAGS = (0, ); }; };
+		CFEF3BB85F962F0F02DFE7E3 /* Pods_OpenCore_Configurator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F83CEADD24F93BEB253CBE /* Pods_OpenCore_Configurator.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14232A69587BDAE19BF7F016 /* Pods-OpenCore Configurator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenCore Configurator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenCore Configurator/Pods-OpenCore Configurator.debug.xcconfig"; sourceTree = "<group>"; };
+		26F83CEADD24F93BEB253CBE /* Pods_OpenCore_Configurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenCore_Configurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E07747DCCF76DA04FC627D5 /* Pods-OpenCore Configurator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenCore Configurator.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenCore Configurator/Pods-OpenCore Configurator.release.xcconfig"; sourceTree = "<group>"; };
 		7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saveHandlerFunctions.swift; sourceTree = "<group>"; };
 		7F4C29DD2269FD2900720E68 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcpiPopoverController.swift; sourceTree = "<group>"; };
@@ -39,18 +43,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFEF3BB85F962F0F02DFE7E3 /* Pods_OpenCore_Configurator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45C7472352543E47D12D15F4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				14232A69587BDAE19BF7F016 /* Pods-OpenCore Configurator.debug.xcconfig */,
+				3E07747DCCF76DA04FC627D5 /* Pods-OpenCore Configurator.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		810042371ECA33DF009FE633 = {
 			isa = PBXGroup;
 			children = (
 				7F9EE207227F24BC0070CB8F /* macserial */,
 				810042421ECA33DF009FE633 /* OpenCore Configurator */,
 				810042411ECA33DF009FE633 /* Products */,
+				45C7472352543E47D12D15F4 /* Pods */,
+				B15AD329357DD17532A0F46E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +95,14 @@
 			path = "OpenCore Configurator";
 			sourceTree = "<group>";
 		};
+		B15AD329357DD17532A0F46E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				26F83CEADD24F93BEB253CBE /* Pods_OpenCore_Configurator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -86,9 +110,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8100424F1ECA33DF009FE633 /* Build configuration list for PBXNativeTarget "OpenCore Configurator" */;
 			buildPhases = (
+				10690DF6DE217A798B9D53E7 /* [CP] Check Pods Manifest.lock */,
 				8100423C1ECA33DF009FE633 /* Sources */,
 				8100423D1ECA33DF009FE633 /* Frameworks */,
 				8100423E1ECA33DF009FE633 /* Resources */,
+				A7C357519C4425A2C9BA1035 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -119,7 +145,7 @@
 				};
 			};
 			buildConfigurationList = 8100423B1ECA33DF009FE633 /* Build configuration list for PBXProject "OpenCore Configurator" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -148,6 +174,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		10690DF6DE217A798B9D53E7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OpenCore Configurator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A7C357519C4425A2C9BA1035 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-OpenCore Configurator/Pods-OpenCore Configurator-frameworks.sh",
+				"${PODS_ROOT}/Sparkle/Sparkle.framework",
+				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenCore Configurator/Pods-OpenCore Configurator-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8100423C1ECA33DF009FE633 /* Sources */ = {
@@ -291,6 +358,7 @@
 		};
 		810042501ECA33DF009FE633 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14232A69587BDAE19BF7F016 /* Pods-OpenCore Configurator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -307,6 +375,7 @@
 		};
 		810042511ECA33DF009FE633 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E07747DCCF76DA04FC627D5 /* Pods-OpenCore Configurator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
