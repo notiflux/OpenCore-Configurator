@@ -12,7 +12,9 @@
 		7F4C29E2226A130A00720E68 /* AcpiPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */; };
 		7F8A7D722283605900EEB165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 810042471ECA33DF009FE633 /* Assets.xcassets */; };
 		7F961CCC2270974E007F0BBE /* KernelPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */; };
+		7F9A2A6F228D9B7A00CCC12B /* acpiDifferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9A2A6E228D9B7A00CCC12B /* acpiDifferController.swift */; };
 		7F9EE208227F24BC0070CB8F /* macserial in Resources */ = {isa = PBXBuildFile; fileRef = 7F9EE207227F24BC0070CB8F /* macserial */; };
+		7FECCA262290416600CF4B1F /* iasl62 in Resources */ = {isa = PBXBuildFile; fileRef = 7FECCA252290416600CF4B1F /* iasl62 */; };
 		7FF918A9227226A60081891E /* openHandlerFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF918A8227226A60081891E /* openHandlerFunctions.swift */; };
 		810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042431ECA33DF009FE633 /* AppDelegate.swift */; };
 		810042461ECA33DF009FE633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042451ECA33DF009FE633 /* ViewController.swift */; };
@@ -24,7 +26,9 @@
 		7F4C29DD2269FD2900720E68 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcpiPopoverController.swift; sourceTree = "<group>"; };
 		7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelPopoverController.swift; sourceTree = "<group>"; };
+		7F9A2A6E228D9B7A00CCC12B /* acpiDifferController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = acpiDifferController.swift; path = "OpenCore Configurator/acpiDifferController.swift"; sourceTree = "<group>"; };
 		7F9EE207227F24BC0070CB8F /* macserial */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = macserial; sourceTree = "<group>"; };
+		7FECCA252290416600CF4B1F /* iasl62 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl62; sourceTree = "<group>"; };
 		7FF918A8227226A60081891E /* openHandlerFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openHandlerFunctions.swift; sourceTree = "<group>"; };
 		810042401ECA33DF009FE633 /* OpenCore Configurator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OpenCore Configurator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		810042431ECA33DF009FE633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +52,9 @@
 		810042371ECA33DF009FE633 = {
 			isa = PBXGroup;
 			children = (
+				7F9A2A6E228D9B7A00CCC12B /* acpiDifferController.swift */,
 				7F9EE207227F24BC0070CB8F /* macserial */,
+				7FECCA252290416600CF4B1F /* iasl62 */,
 				810042421ECA33DF009FE633 /* OpenCore Configurator */,
 				810042411ECA33DF009FE633 /* Products */,
 			);
@@ -144,6 +150,7 @@
 				7F8A7D722283605900EEB165 /* Assets.xcassets in Resources */,
 				7F9EE208227F24BC0070CB8F /* macserial in Resources */,
 				8100424B1ECA33DF009FE633 /* Main.storyboard in Resources */,
+				7FECCA262290416600CF4B1F /* iasl62 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +167,7 @@
 				7F961CCC2270974E007F0BBE /* KernelPopoverController.swift in Sources */,
 				7F4C29DE2269FD2900720E68 /* Extensions.swift in Sources */,
 				7F4C29E2226A130A00720E68 /* AcpiPopoverController.swift in Sources */,
+				7F9A2A6F228D9B7A00CCC12B /* acpiDifferController.swift in Sources */,
 				810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

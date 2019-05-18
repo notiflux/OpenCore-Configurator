@@ -277,4 +277,5 @@ extension Notification.Name {
     static let syncAcpiPopoverAndDict = Notification.Name("syncAcpiPopoverAndDict")
     static let syncKernelPopoverAndDict = Notification.Name("syncKernelPopoverAndDict")
     static let paste = Notification.Name("paste")
+    static let applyAllPatches = Notification.Name("applyAllPatches")
 }
