@@ -39,8 +39,6 @@ public var currentFind: String = String()
 public var currentReplace: String = String()
 public var allPatchesApplied: String = String()
 
-public var tempDir: String = String()
-
 class ViewController: NSViewController {
 
     // tabs
@@ -160,9 +158,7 @@ class ViewController: NSViewController {
         super.viewDidLoad()
         
         resetTables()   // initialize table datasources
-        
-        tempDir = createTempDirectory()!
-        
+
         for table in Array(tableLookup.keys) {              // setup table delegate and datasource
             table.delegate = self as NSTableViewDelegate
             table.dataSource = self
@@ -236,24 +232,34 @@ class ViewController: NSViewController {
         if (event.keyCode == 49){
             if sectionsTable.selectedRow == 0, (viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as? NSTableView ?? NSTableView()) == acpiPatchTable {
                 if acpiPatchTable.selectedRow != -1 {
-                    let iASL = Bundle.main.url(forResource: "iASL62", withExtension: "")!.path
+                    let iaslPath = Bundle.main.path(forAuxiliaryExecutable: "iasl62")!
                     let currentRow = tableLookup[acpiPatchTable]![acpiPatchTable.selectedRow]
                     if currentRow["Find"]! != "", currentRow["Replace"]! != "", currentRow["TableSignature"]! != "" {       // only show differ if fields aren't empty
                         currentTableData = acpiTables.value(forKey: currentRow["TableSignature"]!) as? Data ?? Data()     // get apci table for patch
                         var beforeString = ""
                         var afterString = ""
+                        let temporaryDirectory = FileManager.default.temporaryDirectory
+                        let beforeURL = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_before.aml", isDirectory: false)
+                        let afterURL = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_after.aml", isDirectory: false)
 
                         do {
-                            try currentTableData.write(to: URL(fileURLWithPath: "\(tempDir)/\(currentRow["TableSignature"]!)_before.aml"))  // write unpatched table to file
-                            try currentTableData.replaceSubranges(of: currentRow["Find"]!, with: currentRow["Replace"]!, skip: Int(currentRow["Skip"]!) ?? 0, count: Int(currentRow["Count"]!) ?? 0, limit: Int(currentRow["Limit"]!) ?? 0).write(to: URL(fileURLWithPath: "\(tempDir)/\(currentRow["TableSignature"]!)_after.aml"))   // write patched table to file
-                            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "\(iASL) \(tempDir)/\(currentRow["TableSignature"]!)_before.aml"])     // decompile with iASL
-                            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "\(iASL) \(tempDir)/\(currentRow["TableSignature"]!)_after.aml"])
-                            beforeString = try String(contentsOfFile: "\(tempDir)/\(currentRow["TableSignature"]!)_before.dsl")     // open decompiled file as String
-                            afterString = try String(contentsOfFile: "\(tempDir)/\(currentRow["TableSignature"]!)_after.dsl")
+                            try currentTableData.write(to: beforeURL) // write unpatched table to file
+                            try currentTableData.replaceSubranges(
+                                of: currentRow["Find"]!,
+                                with: currentRow["Replace"]!,
+                                skip: Int(currentRow["Skip"]!) ?? 0,
+                                count: Int(currentRow["Count"]!) ?? 0,
+                                limit: Int(currentRow["Limit"]!) ?? 0
+                            )
+                            .write(to: afterURL) // write patched table to file
+                            _ = shell(launchPath: "/bin/bash", arguments: ["-c", iaslPath, beforeURL.absoluteURL.path]) // decompile with iASL
+                            _ = shell(launchPath: "/bin/bash", arguments: ["-c", iaslPath, afterURL.absoluteURL.path])
+                            beforeString = try String(contentsOf: beforeURL) // open decompiled file as String
+                            afterString = try String(contentsOf: afterURL)
                         } catch {
                             print("failed to write table data: \(error)")
                         }
-                        
+
                         currentTable = currentRow["TableSignature"]!        // set global variables for use in acpiDifferController
                         currentFind = String(data: Data(hexString: currentRow["Find"]!) ?? Data(), encoding: .ascii) ?? "??"
                         currentReplace = String(data: Data(hexString: currentRow["Replace"]!) ?? Data(), encoding: .ascii) ?? "??"
@@ -267,16 +273,20 @@ class ViewController: NSViewController {
     }
     
     @objc func applyAllPatches(_ notification: Notification) {
-        let iASL = Bundle.main.url(forResource: "iASL62", withExtension: "")!.path
         for entry in tableLookup[acpiPatchTable]! {
             if entry["TableSignature"] == currentTable {
                 currentTableData = currentTableData.replaceSubranges(of: entry["Find"]!, with: entry["Replace"]!, skip: Int(entry["Skip"]!) ?? 0, count: Int(entry["Count"]!) ?? 0, limit: Int(entry["Limit"]!) ?? 0)
             }
         }
+
+        let iaslPath = Bundle.main.path(forAuxiliaryExecutable: "iasl62")!
+        let temporaryDirectory = FileManager.default.temporaryDirectory
+        let allPatchesURL = temporaryDirectory.appendingPathComponent("\(currentTable)_allPatches.aml", isDirectory: false)
+
         do {
-            try currentTableData.write(to: URL(fileURLWithPath: "\(tempDir)/\(currentTable)_allPatches.aml"))
-            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "\(iASL) \(tempDir)/\(currentTable)_allPatches.aml"])
-            allPatchesApplied = try String(contentsOfFile: "\(tempDir)/\(currentTable)_allPatches.dsl")
+            try currentTableData.write(to: allPatchesURL)
+            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", iaslPath, allPatchesURL.absoluteURL.path])
+            allPatchesApplied = try String(contentsOf: allPatchesURL)
         } catch {
             print(error)
         }
@@ -338,10 +348,14 @@ class ViewController: NSViewController {
     
     func reloadEsps() {
         // The dict layout is [mountedDrive: correspondingEspIdentifier]
-        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil list -plist > \(tempDir)/diskutil.plist"])   // write disk plist to temporary folder
-        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil apfs list -plist > \(tempDir)/apfs.plist"])  // write apfs plist to temporary folder
+        let temporaryDirectory = FileManager.default.temporaryDirectory
+        let diskutilPlistURL = temporaryDirectory.appendingPathComponent("diskutil.plist", isDirectory: false)
+        let apfsPlistURL = temporaryDirectory.appendingPathComponent("apfs.plist", isDirectory: false)
+
+        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil", "list", "-plist", ">", diskutilPlistURL.absoluteURL.path])   // write disk plist to temporary folder
+        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil", "apfs", "list", "-plist", ">", apfsPlistURL.absoluteURL.path])  // write apfs plist to temporary folder
         let disks = shell(launchPath: "/bin/bash", arguments: ["-c", "ls /Volumes | grep -v EFI"])?.components(separatedBy: "\n")   // get list of mounted drives
-        let diskutil = NSDictionary(contentsOfFile: "\(tempDir)/diskutil.plist")                    // open the diskutil plist as an NSDictionary
+        let diskutil = NSDictionary(contentsOf: diskutilPlistURL)                    // open the diskutil plist as an NSDictionary
         let allDisksAndPartitioins = diskutil?.object(forKey: "AllDisksAndPartitions") as! NSArray
         
         for disk in disks! {        // iterate over all mounted disks
@@ -362,7 +376,7 @@ class ViewController: NSViewController {
                             }
                         }
                     } else {            // this means we're dealing with an APFS volume
-                        let apfsDict = NSDictionary(contentsOfFile: "\(tempDir)/apfs.plist")        // open the apfs plist as an NSDictionary
+                        let apfsDict = NSDictionary(contentsOf: apfsPlistURL)        // open the apfs plist as an NSDictionary
                         let apfsVolumesForDisk = diskEntryDict.object(forKey: "APFSVolumes") as? NSArray ?? NSArray()   // this is still in the disk plist. we need to identify the APFS disk there
                         for volume in apfsVolumesForDisk {
                             let volumeDict = volume as? NSDictionary ?? NSDictionary()
@@ -634,18 +648,7 @@ class ViewController: NSViewController {
      var platformUpdateNvramBool: Bool = Bool()
      var platformUpdateSmbiosBool: Bool = Bool()
      var platformUpdateSmbiosModeStr: String = String()
-    
-    func createTempDirectory() -> String? {
-        let tempDirectoryTemplate = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("OpenCore-Configurator")
-        let fileManager = FileManager.default
-        do {
-            try fileManager.createDirectory(at: tempDirectoryTemplate, withIntermediateDirectories: true, attributes: nil)
-            return tempDirectoryTemplate.path
-        } catch {
-            return nil
-        }
-    }
-    
+
     @objc func onPlistOpen(_ notification: Notification) {
         resetTables()       // clear tables before adding new data to them
         
