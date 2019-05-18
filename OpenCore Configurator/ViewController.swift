@@ -309,11 +309,11 @@ class ViewController: NSViewController {
             if !officialOcVersions.contains(currentOcVersion) {
                 if supportedOcVersions.contains(currentOcVersion) {
                     alert.messageText = "You are running a prerelease version of OpenCore."
-                    alert.runModal()
+                    alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
                 } else {
                     alert.messageText = "You are running a prerelease version of OpenCore."
                     alert.informativeText = "This App was not designed to work with this version. It may not contain all options or use a different format. Use at your own risk!"
-                    alert.runModal()
+                    alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
                 }
             } else {
                 if !officialOcVersions.contains(currentOcVersion) {
@@ -322,7 +322,7 @@ class ViewController: NSViewController {
                     for version in supportedOcVersions {
                         alert.informativeText += "\n\(version)"
                     }
-                    alert.runModal()
+                    alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
                 }
             }
         } else {
@@ -331,7 +331,7 @@ class ViewController: NSViewController {
             for version in supportedOcVersions {
                 alert.informativeText += "\n\(version)"
             }
-            alert.runModal()
+            alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
         }
         self.view.window?.makeKeyAndOrderFront(self.view.window)
     }
@@ -1430,7 +1430,7 @@ class ViewController: NSViewController {
         let alert = NSAlert()
         alert.messageText = "No EFI partition selected!"
         alert.informativeText = "Please select an EFI partition from the drop down."
-        alert.runModal()
+        alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
     }
     
     @objc func onSmbiosSelect(_ sender: NSMenuItem) {
@@ -1542,7 +1542,7 @@ class ViewController: NSViewController {
                                         let alert = NSAlert()
                                         alert.messageText = "\"\(i.lastPathComponent)\" contains more than one executable."
                                         alert.informativeText = "Either get a version of this kext that only has one executable or add it manually at your own risk."
-                                        alert.runModal()
+                                        alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
                                         continue
                                     }
                                 } catch {
@@ -1558,18 +1558,18 @@ class ViewController: NSViewController {
                                 let alert = NSAlert()
                                 alert.messageText = "\"\(i.lastPathComponent)\" does not have an Info.plist"
                                 alert.informativeText = "Re-download the kext or contact the developer about this issue."
-                                alert.runModal()
+                                alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
                             }
                         } else {
                             let alert = NSAlert()
                             alert.messageText = "\"\(i.lastPathComponent)\" is a malformed kext"
                             alert.informativeText = "It does not contain a \"Contents\" directory."
-                            alert.runModal()
+                            alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
                         }
                     } else {
                         let alert = NSAlert()
                         alert.messageText = "\"\(i.lastPathComponent)\" is not a kext."
-                        alert.runModal()
+                        alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
                     }
                 }
                 return execLookup
