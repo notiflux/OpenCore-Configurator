@@ -17,7 +17,23 @@
 		810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042431ECA33DF009FE633 /* AppDelegate.swift */; };
 		810042461ECA33DF009FE633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042451ECA33DF009FE633 /* ViewController.swift */; };
 		8100424B1ECA33DF009FE633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 810042491ECA33DF009FE633 /* Main.storyboard */; settings = {ASSET_TAGS = (0, ); }; };
+		902199162290CD6F00C7A73D /* iasl62 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 902199102290CD2700C7A73D /* iasl62 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		902199172290CD6F00C7A73D /* macserial in CopyFiles */ = {isa = PBXBuildFile; fileRef = 902199112290CD2700C7A73D /* macserial */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		902199152290CD3300C7A73D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				902199162290CD6F00C7A73D /* iasl62 in CopyFiles */,
+				902199172290CD6F00C7A73D /* macserial in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saveHandlerFunctions.swift; sourceTree = "<group>"; };
@@ -32,6 +48,8 @@
 		810042471ECA33DF009FE633 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8100424A1ECA33DF009FE633 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8100424C1ECA33DF009FE633 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		902199102290CD2700C7A73D /* iasl62 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl62; sourceTree = "<group>"; };
+		902199112290CD2700C7A73D /* macserial */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = macserial; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +93,26 @@
 				7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */,
 				7FF918A8227226A60081891E /* openHandlerFunctions.swift */,
 				7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */,
+				9021990F2290CD2700C7A73D /* Supporting Files */,
 			);
 			path = "OpenCore Configurator";
+			sourceTree = "<group>";
+		};
+		9021990F2290CD2700C7A73D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				902199122290CD2700C7A73D /* Binaries */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		902199122290CD2700C7A73D /* Binaries */ = {
+			isa = PBXGroup;
+			children = (
+				902199102290CD2700C7A73D /* iasl62 */,
+				902199112290CD2700C7A73D /* macserial */,
+			);
+			path = Binaries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -88,6 +124,7 @@
 			buildPhases = (
 				8100423C1ECA33DF009FE633 /* Sources */,
 				8100423D1ECA33DF009FE633 /* Frameworks */,
+				902199152290CD3300C7A73D /* CopyFiles */,
 				8100423E1ECA33DF009FE633 /* Resources */,
 			);
 			buildRules = (
