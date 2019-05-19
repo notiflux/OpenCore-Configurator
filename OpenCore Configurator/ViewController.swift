@@ -241,6 +241,8 @@ class ViewController: NSViewController {
                         let temporaryDirectory = FileManager.default.temporaryDirectory
                         let beforeURL = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_before.aml", isDirectory: false)
                         let afterURL = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_after.aml", isDirectory: false)
+                        let beforeURLDecomp = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_before.dsl", isDirectory: false)
+                        let afterURLDecomp = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_after.dsl", isDirectory: false)
 
                         do {
                             try currentTableData.write(to: beforeURL) // write unpatched table to file
@@ -252,10 +254,10 @@ class ViewController: NSViewController {
                                 limit: Int(currentRow["Limit"]!) ?? 0
                             )
                             .write(to: afterURL) // write patched table to file
-                            _ = shell(launchPath: "/bin/bash", arguments: ["-c", iaslPath, beforeURL.absoluteURL.path]) // decompile with iASL
-                            _ = shell(launchPath: "/bin/bash", arguments: ["-c", iaslPath, afterURL.absoluteURL.path])
-                            beforeString = try String(contentsOf: beforeURL) // open decompiled file as String
-                            afterString = try String(contentsOf: afterURL)
+                            _ = shell(launchPath: iaslPath, arguments: [beforeURL.absoluteURL.path]) // decompile with iASL
+                            _ = shell(launchPath: iaslPath, arguments: [afterURL.absoluteURL.path])
+                            beforeString = try String(contentsOf: beforeURLDecomp) // open decompiled file as String
+                            afterString = try String(contentsOf: afterURLDecomp)
                         } catch {
                             print("failed to write table data: \(error)")
                         }
@@ -359,13 +361,13 @@ class ViewController: NSViewController {
             .compactMap { partition -> (String, String)? in
                 guard
                     let disk = diskList.disk(for: partition),
-                    let partition = disk.mountedPartitions.first(where: { $0.isEFI == false }),
-                    let volumeName = partition.volumeName
+                    let mainPartition = disk.mountedPartitions.first(where: { $0.isEFI == false }),
+                    let efiPartition = disk.efiPartition,
+                    let volumeName = mainPartition.volumeName
                 else {
                     return nil
                 }
-
-                return (volumeName, partition.deviceIdentifier)
+                return (volumeName, efiPartition.deviceIdentifier)
             }
 
         // It's necessary to do a double lookup here that crosses the disk and APFS lists to retrieve the first mounted APFS volume of an APFS container partition that has an EFI sibling partition.
@@ -1461,7 +1463,9 @@ class ViewController: NSViewController {
             if !self.wasMounted {
                 if mountedESP != "" {
                     DispatchQueue.global(qos: .background).async {
-                        let _ = (self.shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil unmount \(mountedESPID)"]))!
+                        if mountedESPID != "" {
+                            let _ = (self.shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil unmount \(mountedESPID)"]))!
+                        }
                     }
                 }
             }
@@ -1477,6 +1481,12 @@ class ViewController: NSViewController {
             mountedESP = (shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mount Point\" | awk '{ print $3 }'"])?.replacingOccurrences(of: "\n", with: ""))!
         } else {
             mountedESP = ""
+            if !wasMounted {
+                DispatchQueue.global(qos: .background).async {
+                    let _ = (self.shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil unmount \(mountedESPID)"]))!
+                    mountedESPID = ""
+                }
+            }
         }
     }
 
@@ -1596,7 +1606,7 @@ extension Data {
         var dataRangesMatching: [Range<Data.Index>?] = [Range<Data.Index>?]()
         dataRangesMatching.append(self.range(of: Data(hexString: of)!))        // add first range to array before looping over it
         
-        if dataRangesMatching.count > 0 {
+        if dataRangesMatching != [nil] {
             while true {    // find all ranges matching "of" and add them to the array
                 let currentRange = self.range(of: Data(hexString: of)!, in: ((dataRangesMatching.last?!.upperBound)!..<self.count) as Range<Data.Index>)
                 
@@ -1642,6 +1652,6 @@ extension Data {
             }
             return newData
         }
-        return Data()
+        return self
     }
 }

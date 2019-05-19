@@ -129,39 +129,43 @@ class acpiDifferController: NSViewController {
     }
     
     @IBAction func previousOccurence(_ sender: Any) {
-        if Int(currentOccurence.stringValue)! > 1 {
-            currentOccurence.stringValue = String(Int(currentOccurence.stringValue)! - 1)
-            afterTextfield.selectedRange = NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count)
-            afterTextfield.scrollRangeToVisible(afterTextfield.selectedRange())
-            afterTextfield.displayIfNeeded()
-            afterTextfield.showFindIndicator(for: NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count))
-            beforeTextfield.showFindIndicator(for: NSRange(location: beforeOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentFind.count))
-        }
-        else if currentOccurence.stringValue == "1" {
-            currentOccurence.stringValue = totalOccurences.stringValue.components(separatedBy: " ").first!
-            afterTextfield.selectedRange = NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count)
-            afterTextfield.scrollRangeToVisible(afterTextfield.selectedRange())
-            afterTextfield.displayIfNeeded()
-            afterTextfield.showFindIndicator(for: NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count))
-            beforeTextfield.showFindIndicator(for: NSRange(location: beforeOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentFind.count))
+        if Int(totalOccurences.stringValue.components(separatedBy: " ").first!)! != 0 {
+            if Int(currentOccurence.stringValue)! > 1 {
+                currentOccurence.stringValue = String(Int(currentOccurence.stringValue)! - 1)
+                afterTextfield.selectedRange = NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count)
+                afterTextfield.scrollRangeToVisible(afterTextfield.selectedRange())
+                afterTextfield.displayIfNeeded()
+                afterTextfield.showFindIndicator(for: NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count))
+                beforeTextfield.showFindIndicator(for: NSRange(location: beforeOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentFind.count))
+            }
+            else if currentOccurence.stringValue == "1" {
+                currentOccurence.stringValue = totalOccurences.stringValue.components(separatedBy: " ").first!
+                afterTextfield.selectedRange = NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count)
+                afterTextfield.scrollRangeToVisible(afterTextfield.selectedRange())
+                afterTextfield.displayIfNeeded()
+                afterTextfield.showFindIndicator(for: NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count))
+                beforeTextfield.showFindIndicator(for: NSRange(location: beforeOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentFind.count))
+            }
         }
     }
     @IBAction func nextOccurence(_ sender: Any) {
-        if Int(currentOccurence.stringValue)! < Int(totalOccurences.stringValue.components(separatedBy: " ").first!)! {
-            currentOccurence.stringValue = String(Int(currentOccurence.stringValue.components(separatedBy: " ").first!)! + 1)
-            afterTextfield.selectedRange = NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count)
-            afterTextfield.scrollRangeToVisible(afterTextfield.selectedRange())
-            afterTextfield.displayIfNeeded()
-            afterTextfield.showFindIndicator(for: NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count))
-            beforeTextfield.showFindIndicator(for: NSRange(location: beforeOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentFind.count))
-        }
-        else if Int(currentOccurence.stringValue)! == Int(totalOccurences.stringValue.components(separatedBy: " ").first!)! {
-            currentOccurence.stringValue = "1"
-            afterTextfield.selectedRange = NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count)
-            afterTextfield.scrollRangeToVisible(afterTextfield.selectedRange())
-            afterTextfield.displayIfNeeded()
-            afterTextfield.showFindIndicator(for: NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count))
-            beforeTextfield.showFindIndicator(for: NSRange(location: beforeOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentFind.count))
+        if Int(totalOccurences.stringValue.components(separatedBy: " ").first!)! != 0 {
+            if Int(currentOccurence.stringValue)! < Int(totalOccurences.stringValue.components(separatedBy: " ").first!)! {
+                currentOccurence.stringValue = String(Int(currentOccurence.stringValue.components(separatedBy: " ").first!)! + 1)
+                afterTextfield.selectedRange = NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count)
+                afterTextfield.scrollRangeToVisible(afterTextfield.selectedRange())
+                afterTextfield.displayIfNeeded()
+                afterTextfield.showFindIndicator(for: NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count))
+                beforeTextfield.showFindIndicator(for: NSRange(location: beforeOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentFind.count))
+            }
+            else if Int(currentOccurence.stringValue)! == Int(totalOccurences.stringValue.components(separatedBy: " ").first!)! {
+                currentOccurence.stringValue = "1"
+                afterTextfield.selectedRange = NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count)
+                afterTextfield.scrollRangeToVisible(afterTextfield.selectedRange())
+                afterTextfield.displayIfNeeded()
+                afterTextfield.showFindIndicator(for: NSRange(location: afterOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentReplace.count))
+                beforeTextfield.showFindIndicator(for: NSRange(location: beforeOccurrencesArray[Int(currentOccurence.stringValue)! - 1], length: currentFind.count))
+            }
         }
     }
     
@@ -182,15 +186,15 @@ class acpiDifferController: NSViewController {
     
     @IBAction func openExt(_ sender: Any) {
         let temporaryDirectory = FileManager.default.temporaryDirectory
-        let beforeURL = temporaryDirectory.appendingPathComponent("\(currentTable)_before.aml", isDirectory: false)
+        let beforeURL = temporaryDirectory.appendingPathComponent("\(currentTable)_before.dsl", isDirectory: false)
 
         if applySelected.state == .on {
-            let afterURL = temporaryDirectory.appendingPathComponent("\(currentTable)_after.aml", isDirectory: false)
+            let afterURL = temporaryDirectory.appendingPathComponent("\(currentTable)_after.dsl", isDirectory: false)
             NSWorkspace.shared.open(beforeURL)
             NSWorkspace.shared.open(afterURL)
         }
         else if applyAll.state == .on {
-            let allPatchesURL = temporaryDirectory.appendingPathComponent("\(currentTable)_allPatches.aml", isDirectory: false)
+            let allPatchesURL = temporaryDirectory.appendingPathComponent("\(currentTable)_allPatches.dsl", isDirectory: false)
             NSWorkspace.shared.open(beforeURL)
             NSWorkspace.shared.open(allPatchesURL)
         }
