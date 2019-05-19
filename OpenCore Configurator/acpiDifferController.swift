@@ -181,13 +181,18 @@ class acpiDifferController: NSViewController {
     }
     
     @IBAction func openExt(_ sender: Any) {
+        let temporaryDirectory = FileManager.default.temporaryDirectory
+        let beforeURL = temporaryDirectory.appendingPathComponent("\(currentTable)_before.aml", isDirectory: false)
+
         if applySelected.state == .on {
-            NSWorkspace.shared.openFile("\(tempDir)/\(currentTable)_before.dsl")
-            NSWorkspace.shared.openFile("\(tempDir)/\(currentTable)_after.dsl")
+            let afterURL = temporaryDirectory.appendingPathComponent("\(currentTable)_after.aml", isDirectory: false)
+            NSWorkspace.shared.open(beforeURL)
+            NSWorkspace.shared.open(afterURL)
         }
         else if applyAll.state == .on {
-            NSWorkspace.shared.openFile("\(tempDir)/\(currentTable)_before.dsl")
-            NSWorkspace.shared.openFile("\(tempDir)/\(currentTable)_allPatches.dsl")
+            let allPatchesURL = temporaryDirectory.appendingPathComponent("\(currentTable)_allPatches.aml", isDirectory: false)
+            NSWorkspace.shared.open(beforeURL)
+            NSWorkspace.shared.open(allPatchesURL)
         }
     }
 }

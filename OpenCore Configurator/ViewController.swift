@@ -39,8 +39,6 @@ public var currentFind: String = String()
 public var currentReplace: String = String()
 public var allPatchesApplied: String = String()
 
-public var tempDir: String = String()
-
 class ViewController: NSViewController {
 
     // tabs
@@ -160,9 +158,7 @@ class ViewController: NSViewController {
         super.viewDidLoad()
         
         resetTables()   // initialize table datasources
-        
-        tempDir = createTempDirectory()!
-        
+
         for table in Array(tableLookup.keys) {              // setup table delegate and datasource
             table.delegate = self as NSTableViewDelegate
             table.dataSource = self
@@ -236,24 +232,34 @@ class ViewController: NSViewController {
         if (event.keyCode == 49){
             if sectionsTable.selectedRow == 0, (viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as? NSTableView ?? NSTableView()) == acpiPatchTable {
                 if acpiPatchTable.selectedRow != -1 {
-                    let iASL = Bundle.main.url(forResource: "iASL62", withExtension: "")!.path
+                    let iaslPath = Bundle.main.path(forAuxiliaryExecutable: "iasl62")!
                     let currentRow = tableLookup[acpiPatchTable]![acpiPatchTable.selectedRow]
                     if currentRow["Find"]! != "", currentRow["Replace"]! != "", currentRow["TableSignature"]! != "" {       // only show differ if fields aren't empty
                         currentTableData = acpiTables.value(forKey: currentRow["TableSignature"]!) as? Data ?? Data()     // get apci table for patch
                         var beforeString = ""
                         var afterString = ""
+                        let temporaryDirectory = FileManager.default.temporaryDirectory
+                        let beforeURL = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_before.aml", isDirectory: false)
+                        let afterURL = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_after.aml", isDirectory: false)
 
                         do {
-                            try currentTableData.write(to: URL(fileURLWithPath: "\(tempDir)/\(currentRow["TableSignature"]!)_before.aml"))  // write unpatched table to file
-                            try currentTableData.replaceSubranges(of: currentRow["Find"]!, with: currentRow["Replace"]!, skip: Int(currentRow["Skip"]!) ?? 0, count: Int(currentRow["Count"]!) ?? 0, limit: Int(currentRow["Limit"]!) ?? 0).write(to: URL(fileURLWithPath: "\(tempDir)/\(currentRow["TableSignature"]!)_after.aml"))   // write patched table to file
-                            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "\(iASL) \(tempDir)/\(currentRow["TableSignature"]!)_before.aml"])     // decompile with iASL
-                            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "\(iASL) \(tempDir)/\(currentRow["TableSignature"]!)_after.aml"])
-                            beforeString = try String(contentsOfFile: "\(tempDir)/\(currentRow["TableSignature"]!)_before.dsl")     // open decompiled file as String
-                            afterString = try String(contentsOfFile: "\(tempDir)/\(currentRow["TableSignature"]!)_after.dsl")
+                            try currentTableData.write(to: beforeURL) // write unpatched table to file
+                            try currentTableData.replaceSubranges(
+                                of: currentRow["Find"]!,
+                                with: currentRow["Replace"]!,
+                                skip: Int(currentRow["Skip"]!) ?? 0,
+                                count: Int(currentRow["Count"]!) ?? 0,
+                                limit: Int(currentRow["Limit"]!) ?? 0
+                            )
+                            .write(to: afterURL) // write patched table to file
+                            _ = shell(launchPath: "/bin/bash", arguments: ["-c", iaslPath, beforeURL.absoluteURL.path]) // decompile with iASL
+                            _ = shell(launchPath: "/bin/bash", arguments: ["-c", iaslPath, afterURL.absoluteURL.path])
+                            beforeString = try String(contentsOf: beforeURL) // open decompiled file as String
+                            afterString = try String(contentsOf: afterURL)
                         } catch {
                             print("failed to write table data: \(error)")
                         }
-                        
+
                         currentTable = currentRow["TableSignature"]!        // set global variables for use in acpiDifferController
                         currentFind = String(data: Data(hexString: currentRow["Find"]!) ?? Data(), encoding: .ascii) ?? "??"
                         currentReplace = String(data: Data(hexString: currentRow["Replace"]!) ?? Data(), encoding: .ascii) ?? "??"
@@ -267,16 +273,20 @@ class ViewController: NSViewController {
     }
     
     @objc func applyAllPatches(_ notification: Notification) {
-        let iASL = Bundle.main.url(forResource: "iASL62", withExtension: "")!.path
         for entry in tableLookup[acpiPatchTable]! {
             if entry["TableSignature"] == currentTable {
                 currentTableData = currentTableData.replaceSubranges(of: entry["Find"]!, with: entry["Replace"]!, skip: Int(entry["Skip"]!) ?? 0, count: Int(entry["Count"]!) ?? 0, limit: Int(entry["Limit"]!) ?? 0)
             }
         }
+
+        let iaslPath = Bundle.main.path(forAuxiliaryExecutable: "iasl62")!
+        let temporaryDirectory = FileManager.default.temporaryDirectory
+        let allPatchesURL = temporaryDirectory.appendingPathComponent("\(currentTable)_allPatches.aml", isDirectory: false)
+
         do {
-            try currentTableData.write(to: URL(fileURLWithPath: "\(tempDir)/\(currentTable)_allPatches.aml"))
-            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "\(iASL) \(tempDir)/\(currentTable)_allPatches.aml"])
-            allPatchesApplied = try String(contentsOfFile: "\(tempDir)/\(currentTable)_allPatches.dsl")
+            try currentTableData.write(to: allPatchesURL)
+            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", iaslPath, allPatchesURL.absoluteURL.path])
+            allPatchesApplied = try String(contentsOf: allPatchesURL)
         } catch {
             print(error)
         }
@@ -284,9 +294,13 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        
-        reloadEsps()
-        
+
+        do {
+            try reloadEsps()
+        } catch let error {
+            NSApplication.shared.presentError(error)
+        }
+
             // I stole this from MaciASL
             // TODO: write tables to file (xxd -r -p) and show differences
         let expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert"))
@@ -336,74 +350,53 @@ class ViewController: NSViewController {
         self.view.window?.makeKeyAndOrderFront(self.view.window)
     }
     
-    func reloadEsps() {
-        // The dict layout is [mountedDrive: correspondingEspIdentifier]
-        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil list -plist > \(tempDir)/diskutil.plist"])   // write disk plist to temporary folder
-        let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil apfs list -plist > \(tempDir)/apfs.plist"])  // write apfs plist to temporary folder
-        let disks = shell(launchPath: "/bin/bash", arguments: ["-c", "ls /Volumes | grep -v EFI"])?.components(separatedBy: "\n")   // get list of mounted drives
-        let diskutil = NSDictionary(contentsOfFile: "\(tempDir)/diskutil.plist")                    // open the diskutil plist as an NSDictionary
-        let allDisksAndPartitioins = diskutil?.object(forKey: "AllDisksAndPartitions") as! NSArray
-        
-        for disk in disks! {        // iterate over all mounted disks
-            if disk != "" {
-                for diskEntry in allDisksAndPartitioins {       // iterate over all disks to find the identifier of the parent drive
-                    let diskEntryDict = diskEntry as? NSDictionary ?? NSDictionary()
-                    let partitionsForDisk = diskEntryDict.object(forKey: "Partitions") as? NSArray ?? NSArray()
-                    if partitionsForDisk.count > 0 {            // this means we have an HFS or other common type of file system
-                        for partition in partitionsForDisk {        // iterate over all partitions on the drive to find the one allDisksAndPartitions is currently at
-                            let partitionDict = partition as? NSDictionary ?? NSDictionary()
-                            if disk == partitionDict.value(forKey: "VolumeName") as? String ?? String() {       // found it
-                                for innerPartition in partitionsForDisk {       // now we iterate over the thing again to find one with the name "EFI"
-                                    let innerPartitionDict = innerPartition as? NSDictionary ?? NSDictionary()
-                                    if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
-                                        drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)    // found it. Adding it to the dict
-                                    }
-                                }
-                            }
-                        }
-                    } else {            // this means we're dealing with an APFS volume
-                        let apfsDict = NSDictionary(contentsOfFile: "\(tempDir)/apfs.plist")        // open the apfs plist as an NSDictionary
-                        let apfsVolumesForDisk = diskEntryDict.object(forKey: "APFSVolumes") as? NSArray ?? NSArray()   // this is still in the disk plist. we need to identify the APFS disk there
-                        for volume in apfsVolumesForDisk {
-                            let volumeDict = volume as? NSDictionary ?? NSDictionary()
-                            if disk == volumeDict.value(forKey: "VolumeName") as? String ?? String() {      // found our mounted disk
-                                let apfsIdentifier = String((volumeDict.value(forKey: "DeviceIdentifier") as! String).dropLast(2))      // get its identifier and drop the last two chars to get the parent drive
-                                let apfsContainers = apfsDict?.object(forKey: "Containers") as! NSArray     // now checking the apfs plist
-                                for container in apfsContainers {
-                                    let containerDict = container as? NSDictionary ?? NSDictionary()
-                                    if containerDict.value(forKey: "ContainerReference") as? String ?? String() == apfsIdentifier {     // find the reference to the apfs container
-                                        let containerDriveIdentifier = String((containerDict.value(forKey: "DesignatedPhysicalStore") as! String).dropLast(2))      // getting the device identifier of the real hardware disk
-                                        for innerDiskEntry in allDisksAndPartitioins {      // iterate over the disks plist again, this time to find the ESP of the real hardware disk containing the APFS container
-                                            let innerDiskEntryDict = innerDiskEntry as? NSDictionary ?? NSDictionary()
-                                            if innerDiskEntryDict.value(forKey: "DeviceIdentifier") as? String ?? String() == containerDriveIdentifier {    // found the physical drive
-                                                let innerPartitions = innerDiskEntryDict.object(forKey: "Partitions") as! NSArray
-                                                for innerPartition in innerPartitions {
-                                                    let innerPartitionDict = innerPartition as? NSDictionary ?? NSDictionary()
-                                                    if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {         // look for the EFI partition on that drive
-                                                        drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)    // found it. Adding it to the dict
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+    func reloadEsps() throws {
+        let diskList = try DiskUtility.listDisks()
+        let containerList = try DiskUtility.listAPFSContainers()
+
+        // Map our list of disks that have EFI partitions and mounted non-APFS volumes
+        let espsForPartitions = diskList.efiPartitions
+            .compactMap { partition -> (String, String)? in
+                guard
+                    let disk = diskList.disk(for: partition),
+                    let partition = disk.mountedPartitions.first(where: { $0.isEFI == false }),
+                    let volumeName = partition.volumeName
+                else {
+                    return nil
                 }
+
+                return (volumeName, partition.deviceIdentifier)
             }
-        }
-        
+
+        // It's necessary to do a double lookup here that crosses the disk and APFS lists to retrieve the first mounted APFS volume of an APFS container partition that has an EFI sibling partition.
+        let espsForVolumes = Set(diskList.disksWithAPFSContainers)
+            .intersection(diskList.disksWithEFIPartitions)
+            .compactMap { disk -> (String, String)? in
+                guard
+                    let efiPartition = disk.efiPartition,
+                    let apfsContainerPartition = disk.partitions.first(where: { $0.isAPFSContainer }),
+                    let apfsVolume = containerList.containerUsingPhysicalStore(for: apfsContainerPartition.diskUUID)?.volumes.first,
+                    let containerDisk = diskList.disk(for: apfsVolume),
+                    let mountedVolume = containerDisk.mountedAPFSVolumes.first
+                else {
+                    return nil
+                }
+
+                return (mountedVolume.volumeName, efiPartition.deviceIdentifier)
+            }
+
+        // Populate the drives dictionary
+        drivesDict = Dictionary(uniqueKeysWithValues: espsForPartitions + espsForVolumes)
+
+        // Reset the ESP pop-up menu
         espPopup.removeAllItems()
-        espPopup.addItem(withTitle: "Select an EFI partition...")
+        espPopup.addItem(withTitle: "Select an EFI partition…")
         espPopup.menu?.addItem(NSMenuItem.separator())
-        
-        
-        for drive in Array(drivesDict.keys) {
-            espPopup.addItem(withTitle: drive)
-        }
+
+        // Populate the pop-up menu
+        drivesDict.keys.forEach(espPopup.addItem(withTitle:))
     }
-    
+
     func resetTables() {
         tableLookup = [             // lookup table holding the datasources to the tableviews
             sectionsTable: [["section": "ACPI"],["section": "Device Properties"],["section": "Kernel"],["section": "Misc"],["section": "NVRAM"],["section": "Platform Info"],["section": "UEFI"]],
@@ -634,18 +627,7 @@ class ViewController: NSViewController {
      var platformUpdateNvramBool: Bool = Bool()
      var platformUpdateSmbiosBool: Bool = Bool()
      var platformUpdateSmbiosModeStr: String = String()
-    
-    func createTempDirectory() -> String? {
-        let tempDirectoryTemplate = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("OpenCore-Configurator")
-        let fileManager = FileManager.default
-        do {
-            try fileManager.createDirectory(at: tempDirectoryTemplate, withIntermediateDirectories: true, attributes: nil)
-            return tempDirectoryTemplate.path
-        } catch {
-            return nil
-        }
-    }
-    
+
     @objc func onPlistOpen(_ notification: Notification) {
         resetTables()       // clear tables before adding new data to them
         
@@ -1472,7 +1454,7 @@ class ViewController: NSViewController {
     var wasMounted = false
     
     @IBAction func mountEsp(_ sender: NSPopUpButton) {
-        if sender.selectedItem!.title != "Select an EFI partition..." {
+        if sender.selectedItem!.title != "Select an EFI partition…" {
             let driveToMount = drivesDict[sender.selectedItem!.title]
             let driveIsMounted = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mounted\" | awk '{ print $2 }'"])
 
@@ -1499,7 +1481,11 @@ class ViewController: NSViewController {
     }
 
     @IBAction func reloadEfiPartitions(_ sender: Any) {
-        reloadEsps()
+        do {
+            try reloadEsps()
+        } catch let error {
+            NSApplication.shared.presentError(error)
+        }
     }
     
     func shell(launchPath: String, arguments: [String]) -> String?
