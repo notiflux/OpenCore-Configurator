@@ -365,7 +365,7 @@ class ViewController: NSViewController {
                     return nil
                 }
 
-                return (volumeName, partition.diskUUID.uuidString)
+                return (volumeName, partition.deviceIdentifier)
             }
 
         // It's necessary to do a double lookup here that crosses the disk and APFS lists to retrieve the first mounted APFS volume of an APFS container partition that has an EFI sibling partition.
@@ -382,7 +382,7 @@ class ViewController: NSViewController {
                     return nil
                 }
 
-                return (mountedVolume.volumeName, efiPartition.diskUUID.uuidString)
+                return (mountedVolume.volumeName, efiPartition.deviceIdentifier)
             }
 
         // Populate the drives dictionary
