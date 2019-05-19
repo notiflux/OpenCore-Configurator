@@ -390,7 +390,7 @@ class ViewController: NSViewController {
 
         // Reset the ESP pop-up menu
         espPopup.removeAllItems()
-        espPopup.addItem(withTitle: "Select an EFI partition...")
+        espPopup.addItem(withTitle: "Select an EFI partition…")
         espPopup.menu?.addItem(NSMenuItem.separator())
 
         // Populate the pop-up menu
@@ -1454,7 +1454,7 @@ class ViewController: NSViewController {
     var wasMounted = false
     
     @IBAction func mountEsp(_ sender: NSPopUpButton) {
-        if sender.selectedItem!.title != "Select an EFI partition..." {
+        if sender.selectedItem!.title != "Select an EFI partition…" {
             let driveToMount = drivesDict[sender.selectedItem!.title]
             let driveIsMounted = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mounted\" | awk '{ print $2 }'"])
 
