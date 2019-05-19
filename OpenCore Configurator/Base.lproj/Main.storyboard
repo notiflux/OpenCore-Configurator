@@ -299,7 +299,13 @@
                                         </menuItem>
                                         <menuItem title="Paste" keyEquivalent="v" id="gVA-U4-sdL">
                                             <connections>
-                                                <action selector="onPaste:" target="Voe-Tx-rLC" id="aTr-aU-KXV"/>
+                                                <action selector="paste:" target="Ady-hI-5gd" id="BuF-FM-f0D"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Paste Table Data" keyEquivalent="v" id="0hb-gg-3S2">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="onTableDataPaste:" target="Voe-Tx-rLC" id="0Jy-Tt-pCA"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Paste and Match Style" keyEquivalent="V" id="WeT-3V-zwk">
@@ -920,7 +926,7 @@
                                                         <rect key="frame" x="1" y="0.0" width="745" height="684"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="oiA-BO-7CT" viewBased="YES" id="Ypf-CH-220" userLabel="ACPI Add Table">
+                                                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="oiA-BO-7CT" viewBased="YES" id="Ypf-CH-220" userLabel="ACPI Add Table">
                                                                 <rect key="frame" x="0.0" y="0.0" width="745" height="659"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -983,7 +989,7 @@
                                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a4R-HY-LM1">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="17"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="Path to ACPI file" id="n6m-wt-F7u">
+                                                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Path to ACPI file" id="n6m-wt-F7u">
                                                                                             <font key="font" metaFont="system"/>
                                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

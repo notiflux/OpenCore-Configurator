@@ -95,6 +95,12 @@ extension ViewController: NSTableViewDelegate {
         editedState = true
     }
     
+    @objc func onTableClick(_ tableView: NSTableView) {
+        if tableView.clickedRow != -1, tableView.clickedColumn != -1 {
+            tableView.editColumn(tableView.clickedColumn, row: tableView.clickedRow, with: nil, select: true)
+        }
+    }
+    
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
         let item = NSPasteboardItem()
         switch tableView {
@@ -174,6 +180,7 @@ extension ViewController: NSTableViewDelegate {
     }
     
     func tableView(_ tableViewName: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        tableViewName.action = #selector(onTableClick)
         if tableLookup[tableViewName]!.count > 0 {
             switch tableColumn?.identifier.rawValue {
             case "advanced":
