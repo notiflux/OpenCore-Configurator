@@ -180,7 +180,9 @@ extension ViewController: NSTableViewDelegate {
     }
     
     func tableView(_ tableViewName: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        tableViewName.action = #selector(onTableClick)
+        if tableViewName != sectionsTable {
+            tableViewName.doubleAction = #selector(onTableClick)
+        }
         if tableLookup[tableViewName]!.count > 0 {
             switch tableColumn?.identifier.rawValue {
             case "advanced":
