@@ -1584,12 +1584,16 @@ class ViewController: NSViewController {
                                 do {
                                     let executable = try fileManager.contentsOfDirectory(at: execUrl, includingPropertiesForKeys: nil)
                                     if executable.count <= 1 {
+                                        let fileType = shell(launchPath: "/usr/bin/file", arguments: ["\(i.path)/Contents/MacOS/\((executable.first?.lastPathComponent)!)"])
+                                        if !fileType!.contains("Mach-O 64-bit kext bundle x86_64") {
+                                            messageBox(message: "\(i.lastPathComponent)'s executable is not a kext bundle",
+                                                        info: "You should either re-download the kext, contact the developer or remove it.")
+                                            continue
+                                        }
                                         execLookup[i.lastPathComponent] = "Contents/MacOS/\((executable.first?.lastPathComponent)!)"    // add the executable to the dict. Making sure it only contains one executable
                                     } else {
-                                        let alert = NSAlert()
-                                        alert.messageText = "\"\(i.lastPathComponent)\" contains more than one executable."
-                                        alert.informativeText = "Either get a version of this kext that only has one executable or add it manually at your own risk."
-                                        alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+                                        messageBox(message: "\"\(i.lastPathComponent)\" contains more than one executable.",
+                                                    info: "Either get a version of this kext that only has one executable or add it manually at your own risk.")
                                         continue
                                     }
                                 } catch {
@@ -1602,21 +1606,15 @@ class ViewController: NSViewController {
                                     }
                                 }
                             } else {
-                                let alert = NSAlert()
-                                alert.messageText = "\"\(i.lastPathComponent)\" does not have an Info.plist"
-                                alert.informativeText = "Re-download the kext or contact the developer about this issue."
-                                alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+                                messageBox(message: "\"\(i.lastPathComponent)\" does not have an Info.plist",
+                                            info: "You should either re-download the kext or contact the developer about this issue.")
                             }
                         } else {
-                            let alert = NSAlert()
-                            alert.messageText = "\"\(i.lastPathComponent)\" is a malformed kext"
-                            alert.informativeText = "It does not contain a \"Contents\" directory."
-                            alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+                            messageBox(message: "\"\(i.lastPathComponent)\" is a malformed kext",
+                                        info: "It does not contain a \"Contents\" directory.")
                         }
                     } else {
-                        let alert = NSAlert()
-                        alert.messageText = "\"\(i.lastPathComponent)\" is not a kext."
-                        alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+                        messageBox(message: "\"\(i.lastPathComponent)\" is not a kext.")
                     }
                 }
                 return execLookup
