@@ -1328,6 +1328,43 @@ class ViewController: NSViewController {
         removeEntryFromTable(table: &uefiDriverTable)
     }
     
+    func messageBox(message: String, info: String? = nil) {
+        let alert = NSAlert()
+        alert.messageText = message
+        
+        if info != nil {
+            alert.informativeText = info!
+        }
+        
+        alert.beginSheetModal(for: view.window!, completionHandler: nil)
+    }
+    
+    func calcAcpiChecksum(table: URL) -> UInt8? {
+        do {
+            let tableData = try Data(contentsOf: table)
+            
+            let length: [UInt8] = Array([UInt8](tableData)[4...7])
+            let u32length = UnsafePointer(length).withMemoryRebound(to: UInt32.self, capacity: 1) { $0.pointee }
+            
+            if u32length != tableData.count {
+                return nil
+            }
+            
+            try tableData.forEach(addBytes)
+        } catch {
+            print(error)
+        }
+        let localChecksum = checksum
+        checksum = 0
+        return localChecksum
+    }
+    
+    var checksum: UInt8 = 0
+    
+    func addBytes(current: UInt8) throws {
+        checksum &+= current
+    }
+    
     @IBAction func autoAddAcpi(_ sender: Any) {
         if mountedESP != "" {
             let fileManager = FileManager.default
@@ -1336,6 +1373,20 @@ class ViewController: NSViewController {
                 let fileURLs = try fileManager.contentsOfDirectory(at: acpiUrl, includingPropertiesForKeys: nil)
                 var filenames: [String] = [String]()
                 for i in fileURLs {
+                    if !i.lastPathComponent.hasSuffix(".aml") {
+                        messageBox(message: "\(i.lastPathComponent) does not have the .aml extension.")
+                        continue
+                    }
+                    
+                    let checksum = calcAcpiChecksum(table: i)
+                    if checksum != 0 {
+                        if checksum != nil {
+                            messageBox(message: "Invalid Checksum", info: "The checksum for \(i.lastPathComponent) is invalid.")
+                        } else {
+                            messageBox(message: "The length of \(i.lastPathComponent) could not be verified.")
+                        }
+                        continue
+                    }
                     filenames.append(i.lastPathComponent)
                 }
                 
