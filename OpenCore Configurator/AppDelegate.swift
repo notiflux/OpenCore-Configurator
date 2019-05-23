@@ -16,13 +16,6 @@ var shouldExit = false
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
-        
-    }
-    
     func application(_ sender: NSApplication, openFile filename: String) -> Bool {
         path = filename
         NotificationCenter.default.post(name: .plistOpen, object: nil)
@@ -58,10 +51,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return NSApplication.TerminateReply.terminateCancel
     }
     
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-
     @IBAction func newFile(_ sender: Any) {
         let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "mainVC") as! ViewController
         let newWindow = NSWindow(contentViewController: vc)
@@ -103,6 +92,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NotificationCenter.default.post(name: .plistSave, object: nil)
         }
     }
+    
     @IBAction func saveFileAs(_ sender: Any) {
         let dialog = NSSavePanel()
         
@@ -123,17 +113,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-    @IBAction func onPaste(_ sender: Any) {
+    
+    @IBAction func onTableDataPaste(_ sender: Any) {
         NotificationCenter.default.post(name: .paste, object: nil)
     }
 }
 
 class window: NSWindow {
+    
+    func exitDialogHandler(_ result: NSApplication.ModalResponse) {
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        switch result {
+        case NSApplication.ModalResponse.alertFirstButtonReturn:
+            appDelegate.saveFile("")
+            if shouldExit { super.close() }
+        case NSApplication.ModalResponse.alertSecondButtonReturn:
+            break
+        case NSApplication.ModalResponse.alertThirdButtonReturn:
+            editedState = false
+            super.close()
+        default:
+            break
+        }
+    }
 
     override func close() {
         if editedState {
             let alert = NSAlert()
-            let appDelegate = NSApplication.shared.delegate as! AppDelegate
             
             alert.addButton(withTitle: "Save changes and close")
             alert.addButton(withTitle: "Cancel")
@@ -142,19 +148,9 @@ class window: NSWindow {
             alert.messageText = "Unsaved changes"
             alert.informativeText = "Do you want to save your changes?"
             
-            let result = alert.runModal()
+            alert.beginSheetModal(for: windowController!.window!, completionHandler: exitDialogHandler)
             
-            switch result {
-            case NSApplication.ModalResponse.alertFirstButtonReturn:
-                appDelegate.saveFile("")
-                if shouldExit { super.close() }
-            case NSApplication.ModalResponse.alertSecondButtonReturn:
-                break
-            case NSApplication.ModalResponse.alertThirdButtonReturn:
-                super.close()
-            default:
-                break
-            }
+            
         } else { super.close() }
     }
 }

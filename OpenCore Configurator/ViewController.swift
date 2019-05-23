@@ -34,6 +34,11 @@ public var serialDict: [String: [String]] = [String: [String]]()
 
 public var viewLookup: [Int: NSTabView] = [Int: NSTabView]()
 
+public var currentTable: String = String()
+public var currentFind: String = String()
+public var currentReplace: String = String()
+public var allPatchesApplied: String = String()
+
 class ViewController: NSViewController {
 
     // tabs
@@ -84,7 +89,6 @@ class ViewController: NSViewController {
     // misc debug options
     @IBOutlet weak var miscDelayText: NSTextField!
     @IBOutlet weak var miscDisplayLevelText: NSTextField!
-    @IBOutlet weak var miscExposeBootPath: NSButton!
     @IBOutlet weak var miscTargetText: NSTextField!
     @IBOutlet weak var disableWatchdog: NSButton!
     
@@ -92,6 +96,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var miscRequireSignature: NSButton!
     @IBOutlet weak var miscRequireVault: NSButton!
     @IBOutlet weak var miscHaltlevel: NSTextField!
+    @IBOutlet weak var miscExposeSensitiveData: NSTextField!
     
     // acpi quirks
     @IBOutlet weak var FadtEnableReset: NSButton!
@@ -115,7 +120,6 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var IgnoreTextInGraphics: NSButton!
     @IBOutlet weak var IgnoreInvalidFlexRatio: NSButton!
-    @IBOutlet weak var ProvideConsoleControl: NSButton!
     @IBOutlet weak var ProvideConsoleGop: NSButton!
     @IBOutlet weak var ReleaseUsbOwnership: NSButton!
     @IBOutlet weak var RequestBootVarRouting: NSButton!
@@ -123,6 +127,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var ExitBootServicesDelay: NSTextField!
     
     @IBOutlet weak var AppleBootPolicy: NSButton!
+    @IBOutlet weak var ConsoleControl: NSButton!
+    @IBOutlet weak var DataHub: NSButton!
     @IBOutlet weak var DeviceProperties: NSButton!
     
     // smbios options
@@ -131,6 +137,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var updateNvram: NSButton!
     @IBOutlet weak var updateSmbios: NSButton!
     @IBOutlet weak var smbioUpdateModePopup: NSPopUpButton!
+    @IBOutlet weak var spoofVendor: NSButton!
     
     @IBOutlet weak var espPopup: NSPopUpButton!
     
@@ -140,11 +147,7 @@ class ViewController: NSViewController {
     var uefiQuirks: [String: NSButton] = [String: NSButton]()
     var topLevelBools: [NSButton: Bool] = [NSButton: Bool]()
     var uefiProtocols: [String: NSButton] = [String: NSButton]()
-    
-    func windowShouldClose() {
-        
-    }
-    
+
     var dragDropKernelAdd = NSPasteboard.PasteboardType(rawValue: "private.table-row.kernelAdd")
     var dragDropAcpiPatch = NSPasteboard.PasteboardType(rawValue: "private.table-row.acpiPatch")
     var dragDropKernelPatch = NSPasteboard.PasteboardType(rawValue: "private.table-row.kernelPatch")
@@ -154,9 +157,8 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        reloadEsps()
         resetTables()   // initialize table datasources
-        
+
         for table in Array(tableLookup.keys) {              // setup table delegate and datasource
             table.delegate = self as NSTableViewDelegate
             table.dataSource = self
@@ -202,7 +204,6 @@ class ViewController: NSViewController {
         uefiQuirks = [
             "IgnoreTextInGraphics": self.IgnoreTextInGraphics,
             "IgnoreInvalidFlexRatio": self.IgnoreInvalidFlexRatio,
-            "ProvideConsoleControl": self.ProvideConsoleControl,
             "ProvideConsoleGop": self.ProvideConsoleGop,
             "ReleaseUsbOwnership": self.ReleaseUsbOwnership,
             "RequestBootVarRouting": self.RequestBootVarRouting,
@@ -211,6 +212,8 @@ class ViewController: NSViewController {
         
         uefiProtocols = [
             "AppleBootPolicy": self.AppleBootPolicy,
+            "ConsoleControl": self.ConsoleControl,
+            "DataHub": self.DataHub,
             "DeviceProperties": self.DeviceProperties
         ]
         
@@ -219,79 +222,183 @@ class ViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onAcpiSyncPopover(_:)), name: .syncAcpiPopoverAndDict, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onKernelSyncPopover(_:)), name: .syncKernelPopoverAndDict, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onPasteVC(_:)), name: .paste, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(applyAllPatches(_:)), name: .applyAllPatches, object: nil)
     }
     
-    func reloadEsps() {
-        if let tempDir = createTempDirectory() {
-            print(tempDir)
-            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil list -plist > \(tempDir)/diskutil.plist"])
-            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil apfs list -plist > \(tempDir)/apfs.plist"])
-            let disks = shell(launchPath: "/bin/bash", arguments: ["-c", "ls /Volumes | grep -v EFI"])?.components(separatedBy: "\n")
-            let diskutil = NSDictionary(contentsOfFile: "\(tempDir)/diskutil.plist")
-            let allDisksAndPartitioins = diskutil?.object(forKey: "AllDisksAndPartitions") as! NSArray
-            
-            for disk in disks! {
-                if disk != "" {
-                    for diskEntry in allDisksAndPartitioins {
-                        let diskEntryDict = diskEntry as! NSDictionary
-                        let partitionsForDisk = diskEntryDict.object(forKey: "Partitions") as! NSArray
-                        if partitionsForDisk.count > 0 {
-                            for partition in partitionsForDisk {
-                                let partitionDict = partition as! NSDictionary
-                                if disk == partitionDict.value(forKey: "VolumeName") as? String ?? String() {
-                                    for innerPartition in partitionsForDisk {
-                                        let innerPartitionDict = innerPartition as! NSDictionary
-                                        if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
-                                            drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            let apfsDict = NSDictionary(contentsOfFile: "\(tempDir)/apfs.plist")
-                            let apfsVolumesForDisk = diskEntryDict.object(forKey: "APFSVolumes") as! NSArray
-                            for volume in apfsVolumesForDisk {
-                                let volumeDict = volume as! NSDictionary
-                                if disk == volumeDict.value(forKey: "VolumeName") as? String ?? String() {
-                                    let apfsIdentifier = String((volumeDict.value(forKey: "DeviceIdentifier") as! String).dropLast(2))
-                                    let apfsContainers = apfsDict?.object(forKey: "Containers") as! NSArray
-                                    for container in apfsContainers {
-                                        let containerDict = container as! NSDictionary
-                                        if containerDict.value(forKey: "ContainerReference") as? String ?? String() == apfsIdentifier {
-                                            let containerDriveIdentifier = String((containerDict.value(forKey: "DesignatedPhysicalStore") as! String).dropLast(2))
-                                            for innerDiskEntry in allDisksAndPartitioins {
-                                                let innerDiskEntryDict = innerDiskEntry as! NSDictionary
-                                                if innerDiskEntryDict.value(forKey: "DeviceIdentifier") as? String ?? String() == containerDriveIdentifier {
-                                                    let innerPartitions = innerDiskEntryDict.object(forKey: "Partitions") as! NSArray
-                                                    for innerPartition in innerPartitions {
-                                                        let innerPartitionDict = innerPartition as! NSDictionary
-                                                        if innerPartitionDict.value(forKey: "VolumeName") as? String ?? String() == "EFI" {
-                                                            drivesDict[disk] = (innerPartitionDict.value(forKey: "DeviceIdentifier") as! String)
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+    var acpiTables: NSMutableDictionary = NSMutableDictionary()
+    var currentTableData: Data = Data()
+    
+    override func keyDown(with event: NSEvent) {
+        if (event.keyCode == 49){
+            if sectionsTable.selectedRow == 0, (viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as? NSTableView ?? NSTableView()) == acpiPatchTable {
+                if acpiPatchTable.selectedRow != -1 {
+                    let iaslPath = Bundle.main.path(forAuxiliaryExecutable: "iasl62")!
+                    let currentRow = tableLookup[acpiPatchTable]![acpiPatchTable.selectedRow]
+                    if currentRow["Find"]! != "", currentRow["Replace"]! != "", currentRow["TableSignature"]! != "" {       // only show differ if fields aren't empty
+                        currentTableData = acpiTables.value(forKey: currentRow["TableSignature"]!) as? Data ?? Data()     // get apci table for patch
+                        var beforeString = ""
+                        var afterString = ""
+                        let temporaryDirectory = FileManager.default.temporaryDirectory
+                        let beforeURL = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_before.aml", isDirectory: false)
+                        let afterURL = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_after.aml", isDirectory: false)
+                        let beforeURLDecomp = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_before.dsl", isDirectory: false)
+                        let afterURLDecomp = temporaryDirectory.appendingPathComponent("\(currentRow["TableSignature"]!)_after.dsl", isDirectory: false)
+
+                        do {
+                            try currentTableData.write(to: beforeURL) // write unpatched table to file
+                            try currentTableData.replaceSubranges(
+                                of: currentRow["Find"]!,
+                                with: currentRow["Replace"]!,
+                                skip: Int(currentRow["Skip"]!) ?? 0,
+                                count: Int(currentRow["Count"]!) ?? 0,
+                                limit: Int(currentRow["Limit"]!) ?? 0
+                            )
+                            .write(to: afterURL) // write patched table to file
+                            _ = shell(launchPath: iaslPath, arguments: [beforeURL.absoluteURL.path]) // decompile with iASL
+                            _ = shell(launchPath: iaslPath, arguments: [afterURL.absoluteURL.path])
+                            beforeString = try String(contentsOf: beforeURLDecomp) // open decompiled file as String
+                            afterString = try String(contentsOf: afterURLDecomp)
+                        } catch {
+                            print("failed to write table data: \(error)")
                         }
+
+                        currentTable = currentRow["TableSignature"]!        // set global variables for use in acpiDifferController
+                        currentFind = String(data: Data(hexString: currentRow["Find"]!) ?? Data(), encoding: .ascii) ?? "??"
+                        currentReplace = String(data: Data(hexString: currentRow["Replace"]!) ?? Data(), encoding: .ascii) ?? "??"
+                        let acpiDifferVc = acpiDifferController.loadFromNib()
+                        acpiDifferVc.showPopover(bounds: view.bounds, window: view)
+                        acpiDifferVc.populatePopover(before: beforeString, after: afterString)
                     }
                 }
             }
         }
-        
-        espPopup.removeAllItems()
-        espPopup.addItem(withTitle: "Select an EFI partition...")
-        espPopup.menu?.addItem(NSMenuItem.separator())
-        
-        
-        for drive in Array(drivesDict.keys) {
-            espPopup.addItem(withTitle: drive)
+    }
+    
+    @objc func applyAllPatches(_ notification: Notification) {
+        for entry in tableLookup[acpiPatchTable]! {
+            if entry["TableSignature"] == currentTable {
+                currentTableData = currentTableData.replaceSubranges(of: entry["Find"]!, with: entry["Replace"]!, skip: Int(entry["Skip"]!) ?? 0, count: Int(entry["Count"]!) ?? 0, limit: Int(entry["Limit"]!) ?? 0)
+            }
+        }
+
+        let iaslPath = Bundle.main.path(forAuxiliaryExecutable: "iasl62")!
+        let temporaryDirectory = FileManager.default.temporaryDirectory
+        let allPatchesURL = temporaryDirectory.appendingPathComponent("\(currentTable)_allPatches.aml", isDirectory: false)
+
+        do {
+            try currentTableData.write(to: allPatchesURL)
+            let _ = shell(launchPath: "/bin/bash", arguments: ["-c", iaslPath, allPatchesURL.absoluteURL.path])
+            allPatchesApplied = try String(contentsOf: allPatchesURL)
+        } catch {
+            print(error)
         }
     }
     
+    override func viewDidAppear() {
+        super.viewDidAppear()
+
+        do {
+            try reloadEsps()
+        } catch let error {
+            NSApplication.shared.presentError(error)
+        }
+
+            // I stole this from MaciASL
+            // TODO: write tables to file (xxd -r -p) and show differences
+        let expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert"))
+        acpiTables = IORegistryEntryCreateCFProperty(expert, ("ACPI Tables" as CFString), kCFAllocatorDefault, 0)?.takeRetainedValue() as! NSMutableDictionary
+        
+        
+        let officialOcVersions = [
+            "REL-001-2019-05-03"
+        ]
+        
+        let supportedOcVersions = [
+            "REL-002-2019-05-08"
+        ]
+        
+        let currentOcVersion = (shell(launchPath: "/bin/bash", arguments: ["-c", "nvram 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:opencore-version | awk '{print $2}'"]) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        let alert = NSAlert()
+        
+        if currentOcVersion != "" {
+            if !officialOcVersions.contains(currentOcVersion) {
+                if supportedOcVersions.contains(currentOcVersion) {
+                    alert.messageText = "You are running a prerelease version of OpenCore."
+                    alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+                } else {
+                    alert.messageText = "You are running a prerelease version of OpenCore."
+                    alert.informativeText = "This App was not designed to work with this version. It may not contain all options or use a different format. Use at your own risk!"
+                    alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+                }
+            } else {
+                if !officialOcVersions.contains(currentOcVersion) {
+                    alert.messageText = "You're running a version of OpenCore that this app does not currently support"
+                    alert.informativeText = "It may not contain all options or use a different format. Use at your own risk!\nThese versions are officially supported:"
+                    for version in supportedOcVersions {
+                        alert.informativeText += "\n\(version)"
+                    }
+                    alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+                }
+            }
+        } else {
+            alert.messageText = "Could not get OpenCore version!"
+            alert.informativeText = "Make sure you are creating a configuration file for a supported version.\nThese versions are officially supported:"
+            for version in supportedOcVersions {
+                alert.informativeText += "\n\(version)"
+            }
+            alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+        }
+        self.view.window?.makeKeyAndOrderFront(self.view.window)
+    }
+    
+    func reloadEsps() throws {
+        let diskList = try DiskUtility.listDisks()
+        let containerList = try DiskUtility.listAPFSContainers()
+
+        // Map our list of disks that have EFI partitions and mounted non-APFS volumes
+        let espsForPartitions = diskList.efiPartitions
+            .compactMap { partition -> (String, String)? in
+                guard
+                    let disk = diskList.disk(for: partition),
+                    let mainPartition = disk.mountedPartitions.first(where: { $0.isEFI == false }),
+                    let efiPartition = disk.efiPartition,
+                    let volumeName = mainPartition.volumeName
+                else {
+                    return nil
+                }
+                return (volumeName, efiPartition.deviceIdentifier)
+            }
+
+        // It's necessary to do a double lookup here that crosses the disk and APFS lists to retrieve the first mounted APFS volume of an APFS container partition that has an EFI sibling partition.
+        let espsForVolumes = Set(diskList.disksWithAPFSContainers)
+            .intersection(diskList.disksWithEFIPartitions)
+            .compactMap { disk -> (String, String)? in
+                guard
+                    let efiPartition = disk.efiPartition,
+                    let apfsContainerPartition = disk.partitions.first(where: { $0.isAPFSContainer }),
+                    let apfsVolume = containerList.containerUsingPhysicalStore(for: apfsContainerPartition.diskUUID)?.volumes.first,
+                    let containerDisk = diskList.disk(for: apfsVolume),
+                    let mountedVolume = containerDisk.mountedAPFSVolumes.first
+                else {
+                    return nil
+                }
+
+                return (mountedVolume.volumeName, efiPartition.deviceIdentifier)
+            }
+
+        // Populate the drives dictionary
+        drivesDict = Dictionary(uniqueKeysWithValues: espsForPartitions + espsForVolumes)
+
+        // Reset the ESP pop-up menu
+        espPopup.removeAllItems()
+        espPopup.addItem(withTitle: "Select an EFI partition…")
+        espPopup.menu?.addItem(NSMenuItem.separator())
+
+        // Populate the pop-up menu
+        drivesDict.keys.forEach(espPopup.addItem(withTitle:))
+    }
+
     func resetTables() {
         tableLookup = [             // lookup table holding the datasources to the tableviews
             sectionsTable: [["section": "ACPI"],["section": "Device Properties"],["section": "Kernel"],["section": "Misc"],["section": "NVRAM"],["section": "Platform Info"],["section": "UEFI"]],
@@ -522,18 +629,7 @@ class ViewController: NSViewController {
      var platformUpdateNvramBool: Bool = Bool()
      var platformUpdateSmbiosBool: Bool = Bool()
      var platformUpdateSmbiosModeStr: String = String()
-    
-    func createTempDirectory() -> String? {
-        let tempDirectoryTemplate = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("OpenCore-Configurator")
-        let fileManager = FileManager.default
-        do {
-            try fileManager.createDirectory(at: tempDirectoryTemplate, withIntermediateDirectories: true, attributes: nil)
-            return tempDirectoryTemplate.path
-        } catch {
-            return nil
-        }
-    }
-    
+
     @objc func onPlistOpen(_ notification: Notification) {
         resetTables()       // clear tables before adding new data to them
         
@@ -546,7 +642,7 @@ class ViewController: NSViewController {
         if acpiAddArray.count > 0 {
             for i in 0...(acpiAddArray.count - 1) {
                 let tempDict = (acpiAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
-                if (tempDict.value(forKey: "Enabled") as! Bool) == true {
+                if (tempDict.value(forKey: "Enabled") as? Bool ?? false) == true {
                     tempDict.setValue("1", forKey: "Enabled")
                 } else {
                     tempDict.setValue("0", forKey: "Enabled")
@@ -669,9 +765,9 @@ class ViewController: NSViewController {
         ]
         
         for (key, value) in miscBootDict {      // we're not dealing with tables here so it's easier to just parse the data manually. This sucks but I don't have a better idea for this atm
-            switch key as! String {
+            switch key as? String ?? "" {
             case "ShowPicker":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     showPicker.state = .on
                 }
                 else {
@@ -679,57 +775,50 @@ class ViewController: NSViewController {
                 }
                 
             case "Timeout":
-                timeoutStepper.stringValue = String(value as! Int)
-                timeoutTextfield.stringValue = String(value as! Int)
+                timeoutStepper.stringValue = String(value as? Int ?? Int())
+                timeoutTextfield.stringValue = String(value as? Int ?? Int())
             case "ConsoleMode":
-                consoleMode.stringValue = value as! String
+                consoleMode.stringValue = value as? String ?? ""
             case "ConsoleBehaviourOs":
-                if value as! String != "" {
-                    if OsBehavior.itemTitles.contains(value as! String) {
-                        OsBehavior.selectItem(withTitle: value as! String)
+                if value as? String ?? "" != "" {
+                    if OsBehavior.itemTitles.contains(value as? String ?? "") {
+                        OsBehavior.selectItem(withTitle: value as? String ?? "")
                     }
                 } else {
                     OsBehavior.selectItem(withTitle: "Don't change")
                 }
             case "ConsoleBehaviourUi":
-                if value as! String != "" {
-                    if UiBehavior.itemTitles.contains(value as! String) {
-                        UiBehavior.selectItem(withTitle: value as! String)
+                if value as? String ?? "" != "" {
+                    if UiBehavior.itemTitles.contains(value as? String ?? "") {
+                        UiBehavior.selectItem(withTitle: value as? String ?? "")
                     }
                 } else {
                     UiBehavior.selectItem(withTitle: "Don't change")
                 }
             case "HideSelf":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     hideSelf.state = .on
                 }
                 else {
                     hideSelf.state = .off
                 }
             case "Resolution":
-                resolution.stringValue = value as! String
+                resolution.stringValue = value as? String ?? ""
             default:
                 break
             }
         }
         
         for (key, value) in miscDebugDict {
-            switch key as! String {
+            switch key as? String ?? "" {
             case "DisplayDelay":
-                miscDelayText.stringValue = String(value as! Int)
+                miscDelayText.stringValue = String(value as? Int ?? Int())
             case "DisplayLevel":
-                miscDisplayLevelText.stringValue = String(value as! Int)
-            case "ExposeBootPath":
-                if value as! Bool {
-                    miscExposeBootPath.state = .on
-                }
-                else {
-                    miscExposeBootPath.state = .off
-                }
+                miscDisplayLevelText.stringValue = String(value as? Int ?? Int())
             case "Target":
-                miscTargetText.stringValue = String(value as! Int)
+                miscTargetText.stringValue = String(value as? Int ?? Int())
             case "DisableWatchDog":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     disableWatchdog.state = .on
                 } else {
                     disableWatchdog.state = .off
@@ -740,41 +829,43 @@ class ViewController: NSViewController {
         }
         
         for (key, value) in miscSecurityDict {
-            switch key as! String {
+            switch key as? String ?? "" {
             case "HaltLevel":
-                miscHaltlevel.stringValue = String(value as! Int)
+                miscHaltlevel.stringValue = String(value as? Int ?? Int())
             case "RequireSignature":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     miscRequireSignature.state = .on
                 }
                 else {
                     miscRequireSignature.state = .off
                 }
             case "RequireVault":
-                if value as! Bool {
+                if value as? Bool ?? false {
                     miscRequireVault.state = .on
                 }
                 else {
                     miscRequireVault.state = .off
                 }
+            case "ExposeSensitiveData":
+                miscExposeSensitiveData.stringValue = String(value as? Int ?? Int())
             default:
                 break
             }
         }
         
         for (key, value) in nvramAddDict {
-            switch key as! String {
+            switch key as? String ?? "" {
             case "7C436110-AB2A-4BBB-A880-FE41995C9F82":
-                OHF.createNvramData(value: value as! NSMutableDictionary, table: &nvramBootTable)
+                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramBootTable)
             case "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14":
-                OHF.createNvramData(value: value as! NSMutableDictionary, table: &nvramVendorTable)
+                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramVendorTable)
             default:
-                OHF.createNvramData(value: value as! NSMutableDictionary, table: &nvramCustomTable, guidString: key as? String)
+                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramCustomTable, guidString: key as? String)
             }
         }
         
         for (key, value) in nvramBlockDict {
-            OHF.createNvramData(value: value as! NSMutableArray, table: &nvramBlockTable, guidString: key as? String)
+            OHF.createNvramData(value: value as? NSMutableArray ?? NSMutableArray(), table: &nvramBlockTable, guidString: key as? String)
         }
         
         OHF.createTopLevelBools(buttonDict: &topLevelBools)
@@ -782,7 +873,7 @@ class ViewController: NSViewController {
         if smbioUpdateModePopup.itemTitles.contains(platformUpdateSmbiosModeStr) {
             smbioUpdateModePopup.selectItem(withTitle: platformUpdateSmbiosModeStr)
         } else {
-            smbioUpdateModePopup.selectItem(withTitle: "Auto")
+            smbioUpdateModePopup.selectItem(withTitle: "Create")
         }
         
         //OHF.createData(input: acpiAddArray, table: &acpiAddTable, predefinedKey: "acpiAdd")
@@ -815,8 +906,16 @@ class ViewController: NSViewController {
         OHF.createData(input: platformSmbiosDict, table: &platformSmbiosTable)
         OHF.createData(input: platformDatahubDict, table: &platformDatahubTable)
         OHF.createData(input: platformGenericDict, table: &platformGenericTable)
+        if platformGenericDict.value(forKey: "SpoofVendor") as? Bool ?? false {
+            spoofVendor.state = .on
+        } else {
+            spoofVendor.state = .off
+        }
+        
         OHF.createData(input: platformNvramDict, table: &platformNvramTable)
 
+        togglePlatformAutomatic()
+        
         self.view.window?.title = "\((path as NSString).lastPathComponent) - OpenCore Configurator"
         self.view.window?.representedURL = URL(fileURLWithPath: path)
     }
@@ -937,8 +1036,16 @@ class ViewController: NSViewController {
         }                                                                // only add platform dicts if they're not empty
         if isNotEmpty(platformDatahubDict) { platformInfoDict.addEntries(from: ["DataHub": platformDatahubDict]) }
         if isNotEmpty(platformGenericDict) { platformInfoDict.addEntries(from: ["Generic": platformGenericDict]) }
+        if spoofVendor.state == .on {
+            platformGenericDict.addEntries(from: ["SpoofVendor": true])
+        } else {
+            platformGenericDict.addEntries(from: ["SpoofVendor": false])
+        }
+        
         if isNotEmpty(platformNvramDict) { platformInfoDict.addEntries(from: ["PlatformNVRAM": platformNvramDict]) }
         if isNotEmpty(platformSmbiosDict) { platformInfoDict.addEntries(from: ["SMBIOS": platformSmbiosDict]) }
+        
+        // set all button values
         if updateDatahub.state == .on {
             platformInfoDict.addEntries(from: ["UpdateDataHub": true])
         } else {
@@ -1015,7 +1122,7 @@ class ViewController: NSViewController {
         
         newPlistString += plistArray[plistArray.count - 2]      // since we're only iterating over 0...(plistArray.count - 3) because we don't want a newline at EOF,
                                                                 // we need to manually append it here
-        newPlistString = newPlistString.replacingOccurrences(of: "\"", with: "\\\"")    // escape quotes so bash doesn't strip them
+        newPlistString = newPlistString.replacingOccurrences(of: "\"", with: "\\\"")    // escape quotes so bash doesn't strip them (for readability: replacing " with \")
         
         let _ = shell(launchPath: "/bin/bash", arguments: ["-c", "printf \"\(newPlistString)\" > \(path)"])   // write the new plist back to path. Using printf instead of echo because echo appends a final newline
         
@@ -1056,10 +1163,10 @@ class ViewController: NSViewController {
         miscDebugDict.addEntries(from: ["DisableWatchDog": checkboxState(button: disableWatchdog)])
         miscDebugDict.addEntries(from: ["DisplayDelay": Int(miscDelayText.stringValue) ?? 0])
         miscDebugDict.addEntries(from: ["DisplayLevel": Int(miscDisplayLevelText.stringValue) ?? 0])
-        miscDebugDict.addEntries(from: ["ExposeBootPath": checkboxState(button: miscExposeBootPath)])
         miscDebugDict.addEntries(from: ["Target": Int(miscTargetText.stringValue) ?? 0])
         
         miscSecurityDict.removeAllObjects()
+        miscSecurityDict.addEntries(from: ["ExposeSensitiveData": Int(miscExposeSensitiveData.stringValue) ?? 0])
         miscSecurityDict.addEntries(from: ["HaltLevel": Int(miscHaltlevel.stringValue) ?? 0])
         miscSecurityDict.addEntries(from: ["RequireSignature": checkboxState(button: miscRequireSignature)])
         miscSecurityDict.addEntries(from: ["RequireVault": checkboxState(button: miscRequireVault)])
@@ -1221,6 +1328,43 @@ class ViewController: NSViewController {
         removeEntryFromTable(table: &uefiDriverTable)
     }
     
+    func messageBox(message: String, info: String? = nil) {
+        let alert = NSAlert()
+        alert.messageText = message
+        
+        if info != nil {
+            alert.informativeText = info!
+        }
+        
+        alert.beginSheetModal(for: view.window!, completionHandler: nil)
+    }
+    
+    func calcAcpiChecksum(table: URL) -> UInt8? {
+        do {
+            let tableData = try Data(contentsOf: table)
+            
+            let length: [UInt8] = Array([UInt8](tableData)[4...7])
+            let u32length = UnsafePointer(length).withMemoryRebound(to: UInt32.self, capacity: 1) { $0.pointee }
+            
+            if u32length != tableData.count {
+                return nil
+            }
+            
+            try tableData.forEach(addBytes)
+        } catch {
+            print(error)
+        }
+        let localChecksum = checksum
+        checksum = 0
+        return localChecksum
+    }
+    
+    var checksum: UInt8 = 0
+    
+    func addBytes(current: UInt8) throws {
+        checksum &+= current
+    }
+    
     @IBAction func autoAddAcpi(_ sender: Any) {
         if mountedESP != "" {
             let fileManager = FileManager.default
@@ -1229,6 +1373,20 @@ class ViewController: NSViewController {
                 let fileURLs = try fileManager.contentsOfDirectory(at: acpiUrl, includingPropertiesForKeys: nil)
                 var filenames: [String] = [String]()
                 for i in fileURLs {
+                    if !i.lastPathComponent.hasSuffix(".aml") {
+                        messageBox(message: "\(i.lastPathComponent) does not have the .aml extension.")
+                        continue
+                    }
+                    
+                    let checksum = calcAcpiChecksum(table: i)
+                    if checksum != 0 {
+                        if checksum != nil {
+                            messageBox(message: "Invalid Checksum", info: "The checksum for \(i.lastPathComponent) is invalid.")
+                        } else {
+                            messageBox(message: "The length of \(i.lastPathComponent) could not be verified.")
+                        }
+                        continue
+                    }
                     filenames.append(i.lastPathComponent)
                 }
                 
@@ -1257,11 +1415,57 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBAction func autoAddUefi(_ sender: Any) {
+        if mountedESP != "" {
+            let fileManager = FileManager.default
+            let acpiUrl = URL(fileURLWithPath: "\(mountedESP)/EFI/OC/Drivers")
+            do {
+                let fileURLs = try fileManager.contentsOfDirectory(at: acpiUrl, includingPropertiesForKeys: nil)
+                var filenames: [String] = [String]()
+                for i in fileURLs {
+                    filenames.append(i.lastPathComponent)
+                }
+                
+                for file in filenames {
+                    tableLookup[uefiDriverTable]!.append(["driver": file])
+                }
+                uefiDriverTable.reloadData()
+            } catch {
+                print("Error while enumerating files \(acpiUrl.path): \(error.localizedDescription)")
+            }
+        } else {
+            espWarning()
+        }
+    }
+    @IBAction func platformAutomaticAction(_ sender: NSButton) {
+        togglePlatformAutomatic()
+    }
+    
+    func togglePlatformAutomatic() {
+        if smbiosAutomatic.state == .on {
+            platformDatahubTable.isEnabled = false
+            platformNvramTable.isEnabled = false
+            platformSmbiosTable.isEnabled = false
+            platformGenericTable.isEnabled = true
+            spoofVendor.isEnabled = true
+        } else {
+            platformDatahubTable.isEnabled = true
+            platformNvramTable.isEnabled = true
+            platformSmbiosTable.isEnabled = true
+            platformGenericTable.isEnabled = false
+            spoofVendor.isEnabled = false
+        }
+    }
+    
+    @IBAction func helpButtonAction(_ sender: Any) {
+        NSWorkspace.shared.open(URL(string: "https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf")!)
+    }
+    
     func espWarning() {
         let alert = NSAlert()
         alert.messageText = "No EFI partition selected!"
         alert.informativeText = "Please select an EFI partition from the drop down."
-        alert.runModal()
+        alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
     }
     
     @objc func onSmbiosSelect(_ sender: NSMenuItem) {
@@ -1293,7 +1497,7 @@ class ViewController: NSViewController {
         }
         
         let menu = NSMenu()
-        for model in Array(serialDict.keys).sorted(by: <) {
+        for model in Array(serialDict.keys).sorted(by:{$0.localizedStandardCompare($1) == .orderedAscending} ) {
             menu.addItem(withTitle: model, action: #selector(onSmbiosSelect), keyEquivalent: "")
         }
         let p = NSPoint(x: sender.frame.origin.x, y: sender.frame.origin.y + 48)
@@ -1303,14 +1507,16 @@ class ViewController: NSViewController {
     var wasMounted = false
     
     @IBAction func mountEsp(_ sender: NSPopUpButton) {
-        if sender.selectedItem!.title != "Select an EFI partition..." {
+        if sender.selectedItem!.title != "Select an EFI partition…" {
             let driveToMount = drivesDict[sender.selectedItem!.title]
             let driveIsMounted = shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mounted\" | awk '{ print $2 }'"])
 
             if !self.wasMounted {
                 if mountedESP != "" {
                     DispatchQueue.global(qos: .background).async {
-                        let _ = (self.shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil unmount \(mountedESPID)"]))!
+                        if mountedESPID != "" {
+                            let _ = (self.shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil unmount \(mountedESPID)"]))!
+                        }
                     }
                 }
             }
@@ -1326,11 +1532,21 @@ class ViewController: NSViewController {
             mountedESP = (shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil info \(driveToMount!) | grep \"Mount Point\" | awk '{ print $3 }'"])?.replacingOccurrences(of: "\n", with: ""))!
         } else {
             mountedESP = ""
+            if !wasMounted {
+                DispatchQueue.global(qos: .background).async {
+                    let _ = (self.shell(launchPath: "/bin/bash", arguments: ["-c", "diskutil unmount \(mountedESPID)"]))!
+                    mountedESPID = ""
+                }
+            }
         }
     }
 
     @IBAction func reloadEfiPartitions(_ sender: Any) {
-        reloadEsps()
+        do {
+            try reloadEsps()
+        } catch let error {
+            NSApplication.shared.presentError(error)
+        }
     }
     
     func shell(launchPath: String, arguments: [String]) -> String?
@@ -1357,25 +1573,48 @@ class ViewController: NSViewController {
             var execLookup: [String: String] =  [String: String]()
             if fileURLs != nil {
                 for i in fileURLs! {
-                    if fileManager.fileExists(atPath: "\(i.path)/Contents/Info.plist") {
-                        let execUrl = URL(fileURLWithPath: "Contents/MacOS", relativeTo: i)
-                        do {
-                            let executable = try fileManager.contentsOfDirectory(at: execUrl, includingPropertiesForKeys: nil)
-                            execLookup[i.lastPathComponent] = "Contents/MacOS/\((executable.first?.lastPathComponent)!)"
-                        } catch {
-                            execLookup[i.lastPathComponent] = ""
-                        }
-                        let recursiveLookup = recursiveKexts(path: "\(i.path)/Contents/PlugIns")
-                        if recursiveLookup != nil {
-                            for recursiveKext in Array(recursiveLookup!.keys) {
-                                execLookup["\(i.lastPathComponent)/Contents/PlugIns/\(recursiveKext)"] = recursiveLookup![recursiveKext]!
+                    var kextIsDirObjcBool: ObjCBool = ObjCBool(true)
+                    let _: Bool = fileManager.fileExists(atPath: "\(i.path)", isDirectory: &kextIsDirObjcBool)  // ensure the kext is a directory
+                    if i.lastPathComponent.hasSuffix(".kext"), kextIsDirObjcBool.boolValue {                    // ensure it has the ".kext" suffix
+                        var contentsExistObjcBool: ObjCBool = ObjCBool(true)
+                        let contentsExists: Bool = fileManager.fileExists(atPath: "\(i.path)/Contents", isDirectory: &contentsExistObjcBool)    // ensure it has a "Contents" directory
+                        if contentsExists, contentsExistObjcBool.boolValue{
+                            if fileManager.fileExists(atPath: "\(i.path)/Contents/Info.plist") {                    // ensure it has an Info.plist
+                                let execUrl = URL(fileURLWithPath: "Contents/MacOS", relativeTo: i)
+                                do {
+                                    let executable = try fileManager.contentsOfDirectory(at: execUrl, includingPropertiesForKeys: nil)
+                                    if executable.count <= 1 {
+                                        let fileType = shell(launchPath: "/usr/bin/file", arguments: ["\(i.path)/Contents/MacOS/\((executable.first?.lastPathComponent)!)"])
+                                        if !fileType!.contains("Mach-O 64-bit kext bundle x86_64") {
+                                            messageBox(message: "\(i.lastPathComponent)'s executable is not a kext bundle",
+                                                        info: "You should either re-download the kext, contact the developer or remove it.")
+                                            continue
+                                        }
+                                        execLookup[i.lastPathComponent] = "Contents/MacOS/\((executable.first?.lastPathComponent)!)"    // add the executable to the dict. Making sure it only contains one executable
+                                    } else {
+                                        messageBox(message: "\"\(i.lastPathComponent)\" contains more than one executable.",
+                                                    info: "Either get a version of this kext that only has one executable or add it manually at your own risk.")
+                                        continue
+                                    }
+                                } catch {
+                                    execLookup[i.lastPathComponent] = ""
+                                }
+                                let recursiveLookup = recursiveKexts(path: "\(i.path)/Contents/PlugIns")
+                                if recursiveLookup != nil {
+                                    for recursiveKext in Array(recursiveLookup!.keys) {
+                                        execLookup["\(i.lastPathComponent)/Contents/PlugIns/\(recursiveKext)"] = recursiveLookup![recursiveKext]!
+                                    }
+                                }
+                            } else {
+                                messageBox(message: "\"\(i.lastPathComponent)\" does not have an Info.plist",
+                                            info: "You should either re-download the kext or contact the developer about this issue.")
                             }
+                        } else {
+                            messageBox(message: "\"\(i.lastPathComponent)\" is a malformed kext",
+                                        info: "It does not contain a \"Contents\" directory.")
                         }
                     } else {
-                        let alert = NSAlert()
-                        alert.messageText = "\(i.lastPathComponent) does not have an Info.plist"
-                        alert.informativeText = "Re-download the kext or contact the developer about this issue."
-                        alert.runModal()
+                        messageBox(message: "\"\(i.lastPathComponent)\" is not a kext.")
                     }
                 }
                 return execLookup
@@ -1410,5 +1649,58 @@ extension Data {
             }
         }
         self = data
+    }
+    
+    func replaceSubranges(of: String, with: String, skip: Int, count: Int, limit: Int) -> Data {
+        var dataRangesMatching: [Range<Data.Index>?] = [Range<Data.Index>?]()
+        dataRangesMatching.append(self.range(of: Data(hexString: of)!))        // add first range to array before looping over it
+        
+        if dataRangesMatching != [nil] {
+            while true {    // find all ranges matching "of" and add them to the array
+                let currentRange = self.range(of: Data(hexString: of)!, in: ((dataRangesMatching.last?!.upperBound)!..<self.count) as Range<Data.Index>)
+                
+                if currentRange != nil {
+                    dataRangesMatching.append(currentRange)
+                }
+                
+                else {
+                    break
+                }
+            }
+            
+            var newData = self
+            var skip = skip
+            var count = count
+            
+            for range in dataRangesMatching {
+                if skip > 0 {
+                    skip -= 1
+                    continue
+                }
+                
+                if limit > 0 {
+                    if (range?.distance(from: Data().startIndex, to: range!.upperBound))! < limit {
+                        newData.replaceSubrange(range!, with: Data(hexString: with)!)
+                    }
+                        
+                    else {
+                        break
+                    }
+                }
+                    
+                else {
+                    newData.replaceSubrange(range!, with: Data(hexString: with)!)
+                }
+                
+                if count > 0 {
+                    count -= 1
+                    if count == 0 {
+                        break
+                    }
+                }
+            }
+            return newData
+        }
+        return self
     }
 }
