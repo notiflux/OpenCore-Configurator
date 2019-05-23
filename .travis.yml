@@ -10,7 +10,5 @@ script:
   - set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator build | xcpretty
   - set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator archive -archivePath opencore.xcarchive | xcpretty
   - ls -lsall
-  - ls -lsall ~/Library/Developer/Xcode/DerivedData
-  - ls -lsall ~/Library/Developer/Xcode/DerivedData/"OpenCore Configurator"/Build/Products
-  - set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator exportArchive -archivePath opencore.xcarchive -exportPath build/ | xcpretty
+  - set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator -exportArchive -archivePath opencore.xcarchive -exportPath build/ | xcpretty
   - ls -lsall
