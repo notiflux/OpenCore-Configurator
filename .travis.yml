@@ -6,7 +6,7 @@ script:
 - set -o pipefail && xcodebuild | xcpretty
 before_deploy:
 - zip -r -X OpenCore.zip build/Release/OpenCore\ Configurator.app
-- git tag "$(date +'%m-%d-%Y--%H-%M-%S')--$(git log --format=%h -1)"
+- git tag "$(git log --format=%h -1)"
 deploy:
   provider: releases
   api_key:
