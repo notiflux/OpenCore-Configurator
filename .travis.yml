@@ -1,25 +1,16 @@
 language:
-  - swift
+- swift
 osx_image: xcode10.2
-# xcode_project: "OpenCore Configurator.xcodeproj"
-# xcode_scheme: "OpenCore Configurator"
+if: tag IS blank
 script:
-  - #wget https://github.com/acidanthera/MacInfoPkg/releases/download/2.0.5/macserial-2.0.5-mac.zip
-  - #unzip macserial-2.0.5-mac.zip
-  - #rm macserial-2.0.5-mac.zip
-  - #set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator build | xcpretty
-  - #set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator archive -archivePath opencore.xcarchive | xcpretty
-  - #ls -lsall
-  - #set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator -exportArchive -archivePath opencore.xcarchive -exportPath build/ | xcpretty
-  - #ls -lsall
-  - set -o pipefail && xcodebuild | xcpretty
-  - ls build/Release/
+- set -o pipefail && xcodebuild | xcpretty
 before_deploy:
-  - zip -r -X OpenCore.zip build/Release/OpenCore\ Configurator.app
-  - git tag "$(date +'%m-%d-%Y--%H-%M-%S')--$(git log --format=%h -1)"
+- zip -r -X OpenCore.zip build/Release/OpenCore\ Configurator.app
+- git tag "$(date +'%m-%d-%Y--%H-%M-%S')--$(git log --format=%h -1)"
 deploy:
   provider: releases
   api_key:
-    secure: Y74bZC5S0Fw7jQpXkNmAJ31/u5mIoDRthiE9NZyrtD1aCmpoAlmqXcxDWZgosyihMXJTetIyq1XFhPzVYyDXmZxqL+QKea9xss3WKg1FKvcY2RYa8QjDMDS0Pib+1cv8TKr0pS8fYZUAhO8BBw+FHyqQ8uLdMSGfxBeQe5nR6nqcdQJwRiUafUWmJO7SfGo0eJ1sPdD5TsTPwn3aS2GOhPg0TuLYmapI6Bv5X9jajGXQU24YExeb+d7l1JTScbaQh/dSaTwJXpw3LZxRvwLafSQSEkO2mSClwIXC2IUmaVdOipX3rvRfzwaHit85nZzS4ZwUqhf8mUE7KHO5LxQkxNBKwDQq8R0U5iKa9MtJLP5OdkURlJ6ozfn+EHd2aXFwbGFVMYAmgfsnPx2zIt1Sj1151sknm+BLWI45Kf7XV25TQ4+WsTLNL/Nf0H0jaE0tnIZJc7j8yNWO4Adn2Q9ZebaGBvHOnLkE2thGlfM1+F653nw8oCHtWkbR/N0UwmXGU3l+teZB4tZf8+GqG5xtpFs8cwgKOiPM/hlQg24ajNhSnEPb0DOfgiaf/CrJFDH0CER87Wfc8FcVWrfO7C0Cjqsk1LEHqpQaO/f7hRDMFVS7pcw/NP9e55YkMiR1np75gSREtxxq7Rdv56YA4vGJewbc74lRD7bKwwezISZt25I=
+    secure: pqVH8IkJEJmdW14M85esYP0vh9MUaTmKOoaScBm87Bo3HA5MngOwEZgIAxrXIIBy/SgyNIsStpvUMm7BTKZSaZom8GZDu2Wjsom1Y/CSEsX106t3U6g7jR7N8j/4/ytD/+Vh+pgsZRePjgfW4xRxO0IR6k36d3EySx10DT73TskvYKq0K5xv5KSC3TYxrrLcsHH87Oh6ML1tvihz37s9eshleJpuMS4D6zEx/GoblNCmSTSnlE985C9LAefl8EBEZYqTgdpYhLJsS2I70gX8lZNyiG22604hdsjkx6yR2tLAUBH0lxbrvLsesk5wgGgBOl9MMbr2hn/l8BlluIle26bamMBqKO/KsDUkvSgLTdkPwiUyYe6X1J/gNmzvv9WsYCrxmxVoc/UnpWSvkRB4VajIXgg+64oW8pajX6luLQ7MI+A3kDdoFEtmCccOfL1ypgbTQB3Qho9UPFGwhRjiV5CFlzGA4lgjunhsFI2YeiCa2kTcB8EYtQNxX8Vtbwm3nlpMwVLGQX5aeU8oxh+bzXV2y1gtHhzVScJokOJEM+/GDkL+oj/DsIC0WeYKrjLZvFoEmwX1+GO8SgwUrh/L9zLX81MwsfOve/+kKCWR1ACCYW5Nh20HHD663rUGOjLu4sRC6sG4ccy+NbRmuYYDp8p+SyuYc/j5y05kWs9MUI0=
   file: OpenCore.zip
-  skip_cleanup: true
+  on:
+    repo: dhinakg/OpenCore-Configurator
