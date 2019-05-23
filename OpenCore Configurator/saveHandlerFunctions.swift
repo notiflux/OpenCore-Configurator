@@ -1,11 +1,3 @@
-//
-//  saveHandlerFunctions.swift
-//  OpenCore Configurator
-//
-//  Created by notiflux on 01.05.19.
-//  Copyright © 2019 notiflux. All rights reserved.
-//
-
 import Cocoa
 
 var clearDict = true

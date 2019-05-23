@@ -1,11 +1,3 @@
-//
-//  acpiDifferController.swift
-//  OpenCore Configurator
-//
-//  Created by Max Banmann on 16.05.19.
-//  Copyright © 2019 notiflux. All rights reserved.
-//
-
 import Cocoa
 
 class acpiDifferController: NSViewController {

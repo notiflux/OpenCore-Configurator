@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  OpenCore Configurator
-//
-//  Created by notiflux on 15.04.19.
-//  Copyright © 2019 notiflux. All rights reserved.
-//
 import Cocoa
 
 public let kNotification = Notification.Name("kNotification")
@@ -75,6 +68,12 @@ class ViewController: NSViewController {
     @IBOutlet weak var platformDatahubTable: NSTableView!
     @IBOutlet weak var platformGenericTable: NSTableView!
     @IBOutlet weak var platformNvramTable: NSTableView!
+    
+    // buttons
+    @IBOutlet weak var acpiAutoBtn: NSButton!
+    @IBOutlet weak var kernelAutoBtn: NSButton!
+    @IBOutlet weak var platformAutoBtn: NSButton!
+    @IBOutlet weak var uefiAutoBtn: NSButton!
     
     // misc boot options
     @IBOutlet weak var timeoutTextfield: NSTextField!
@@ -217,12 +216,19 @@ class ViewController: NSViewController {
             "DeviceProperties": self.DeviceProperties
         ]
         
+        acpiAutoBtn.toolTip = "Automatically check and add entries for all ACPI tables in EFI/OC/ACPI/Custom"
+        kernelAutoBtn.toolTip = "Automatically check and add entries for all KEXTs in EFI/OC/Kexts"
+        platformAutoBtn.toolTip = "Select an SMBIOS preset"
+        uefiAutoBtn.toolTip = "Automatically check and add entries for all UEFI drivers in EFI/OC/Drivers"
+        
         NotificationCenter.default.addObserver(self, selector: #selector(onPlistOpen(_:)), name: .plistOpen, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onPlistSave(_:)), name: .plistSave, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onAcpiSyncPopover(_:)), name: .syncAcpiPopoverAndDict, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onKernelSyncPopover(_:)), name: .syncKernelPopoverAndDict, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onPasteVC(_:)), name: .paste, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applyAllPatches(_:)), name: .applyAllPatches, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(openVaultManager(_:)), name: .manageVault, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closeVaultManager(_:)), name: .closeVault, object: nil)
     }
     
     var acpiTables: NSMutableDictionary = NSMutableDictionary()
@@ -271,6 +277,24 @@ class ViewController: NSViewController {
                     }
                 }
             }
+        }
+    }
+    
+    var vaultWindow: NSWindow? = nil
+    
+    @objc func openVaultManager(_ notification: Notification) {
+        if mountedESP != "" {
+            let vault = openCoreVault()
+            vaultWindow = vault.showVaultManager(vaultEnabled: miscRequireVault.state.rawValue)
+            view.window!.beginSheet(vaultWindow!, completionHandler: nil)
+        } else {
+            messageBox(message: "No EFI partition selected", info: "Please select an EFI partition from the dropdown menu.")
+        }
+    }
+    
+    @objc func closeVaultManager(_ notification: Notification) {
+        if vaultWindow != nil {
+            view.window!.endSheet(vaultWindow!)
         }
     }
     
@@ -1486,7 +1510,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func genSmbios(_ sender: NSButton) {
-        let macSerial = Bundle.main.url(forResource: "macserial", withExtension: "")!.path
+        let macSerial = Bundle.main.path(forAuxiliaryExecutable: "macserial" )!
         let serialMess = shell(launchPath: macSerial, arguments: ["-a"])?.components(separatedBy: "\n")
         
         for entry in serialMess! {

@@ -1,11 +1,3 @@
-//
-//  KernelPopoverController.swift
-//  OpenCore Configurator
-//
-//  Created by notiflux on 24.04.19.
-//  Copyright © 2019 notiflux. All rights reserved.
-//
-
 import Cocoa
 
 public var kernelCurrentTextField: NSTextField = NSTextField()

@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  OpenCore Configurator
-//
-//  Created by notiflux on 15.04.19.
-//  Copyright © 2019 notiflux. All rights reserved.
-//
-
 import Cocoa
 
 var path = ""
@@ -112,6 +104,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 shouldExit = true
             }
         }
+    }
+    @IBAction func manageVault(_ sender: Any) {
+        NotificationCenter.default.post(name: .manageVault, object: nil)
     }
     
     @IBAction func onTableDataPaste(_ sender: Any) {

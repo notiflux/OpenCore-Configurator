@@ -1,15 +1,7 @@
-//
-//  Extensions.swift
-//  OpenCore Configurator
-//
-//  Created by notiflux on 19.04.19.
-//  Copyright © 2019 notiflux. All rights reserved.
-//
-
 import Foundation
 import Cocoa
 
-extension ViewController:NSTableViewDataSource {
+extension ViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return tableLookup[tableView]!.count
     }
@@ -287,4 +279,6 @@ extension Notification.Name {
     static let syncKernelPopoverAndDict = Notification.Name("syncKernelPopoverAndDict")
     static let paste = Notification.Name("paste")
     static let applyAllPatches = Notification.Name("applyAllPatches")
+    static let manageVault = Notification.Name("manageVault")
+    static let closeVault = Notification.Name("closeVault")
 }

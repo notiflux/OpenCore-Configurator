@@ -13,6 +13,8 @@
 		7F8A7D722283605900EEB165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 810042471ECA33DF009FE633 /* Assets.xcassets */; };
 		7F961CCC2270974E007F0BBE /* KernelPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */; };
 		7F9A2A6F228D9B7A00CCC12B /* acpiDifferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9A2A6E228D9B7A00CCC12B /* acpiDifferController.swift */; };
+		7FA19C082296B59300954C46 /* vaultPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA19C072296B59300954C46 /* vaultPlist.swift */; };
+		7FEADAE92295C775009800DD /* vaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEADAE82295C775009800DD /* vaultManager.swift */; };
 		7FF918A9227226A60081891E /* openHandlerFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF918A8227226A60081891E /* openHandlerFunctions.swift */; };
 		810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042431ECA33DF009FE633 /* AppDelegate.swift */; };
 		810042461ECA33DF009FE633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042451ECA33DF009FE633 /* ViewController.swift */; };
@@ -57,6 +59,9 @@
 		7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcpiPopoverController.swift; sourceTree = "<group>"; };
 		7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelPopoverController.swift; sourceTree = "<group>"; };
 		7F9A2A6E228D9B7A00CCC12B /* acpiDifferController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acpiDifferController.swift; sourceTree = "<group>"; };
+		7FA19C072296B59300954C46 /* vaultPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vaultPlist.swift; sourceTree = "<group>"; };
+		7FA19C092296CB1B00954C46 /* OpenCore-Configurator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenCore-Configurator-Bridging-Header.h"; sourceTree = "<group>"; };
+		7FEADAE82295C775009800DD /* vaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vaultManager.swift; sourceTree = "<group>"; };
 		7FF918A8227226A60081891E /* openHandlerFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openHandlerFunctions.swift; sourceTree = "<group>"; };
 		810042401ECA33DF009FE633 /* OpenCore Configurator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OpenCore Configurator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		810042431ECA33DF009FE633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -128,7 +133,9 @@
 				7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */,
 				7FF918A8227226A60081891E /* openHandlerFunctions.swift */,
 				7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */,
+				7FEADAE82295C775009800DD /* vaultManager.swift */,
 				9021990F2290CD2700C7A73D /* Supporting Files */,
+				7FA19C092296CB1B00954C46 /* OpenCore-Configurator-Bridging-Header.h */,
 			);
 			path = "OpenCore Configurator";
 			sourceTree = "<group>";
@@ -174,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				90399A8D2290F1CC0017024B /* DiskUtility.swift */,
+				7FA19C072296B59300954C46 /* vaultPlist.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,7 +310,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				90399A8E2290F1CC0017024B /* DiskUtility.swift in Sources */,
+				7FEADAE92295C775009800DD /* vaultManager.swift in Sources */,
 				90399A99229104460017024B /* Process.swift in Sources */,
+				7FA19C082296B59300954C46 /* vaultPlist.swift in Sources */,
 				7FF918A9227226A60081891E /* openHandlerFunctions.swift in Sources */,
 				810042461ECA33DF009FE633 /* ViewController.swift in Sources */,
 				7F3AAC182279BB55006644AD /* saveHandlerFunctions.swift in Sources */,
@@ -468,6 +478,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.notiflux.OpenCore-Configurator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OpenCore Configurator/OpenCore-Configurator-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -484,6 +495,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.notiflux.OpenCore-Configurator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OpenCore Configurator/OpenCore-Configurator-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
