@@ -1,11 +1,3 @@
-//
-//  openHandlerFunctions.swift
-//  OpenCore Configurator
-//
-//  Created by Max Banmann on 25.04.19.
-//  Copyright © 2019 notiflux. All rights reserved.
-//
-
 import Cocoa
 
 class openHandlerFunctions {

@@ -1,11 +1,3 @@
-//
-//  AcpiPopoverController.swift
-//  OpenCore Configurator
-//
-//  Created by notiflux on 19.04.19.
-//  Copyright © 2019 notiflux. All rights reserved.
-//
-
 import Cocoa
 
 public var acpiCurrentTextField: NSTextField = NSTextField()
