@@ -6,8 +6,8 @@ script:
 - set -o pipefail && xcodebuild | xcpretty
 before_deploy:
 - cd build/Release
-- zip -r -X OpenCore.zip OpenCore\ Configurator.app
 - git tag "$(git log --format=%h -1)"
+- zip -r -X $(git describe --abbrev=0).zip OpenCore\ Configurator.app
 - cd ../..
 deploy:
   provider: releases
