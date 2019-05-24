@@ -2,22 +2,17 @@ language:
 - swift
 osx_image: xcode10.2
 if: tag IS blank
-xcode_project: OpenCore Configurator.xcodeproj
-xcode_scheme: OpenCore Configurator
-xcode_destination: platform=macOS
-#script:
-#- set -o pipefail && xcodebuild | xcpretty
+script:
+- set -o pipefail && xcodebuild | xcpretty
+- set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator -destination platform\=macOS test | xcpretty
 before_deploy:
 - cd build/Release
 - COMMIT="$(git log --format=%h -1)"
 - git tag $COMMIT
 - zip -r -X OpenCore.zip OpenCore\ Configurator.app
-- ls
 - cd ..
 - cd ..
-- ls
 - mv build/Release/OpenCore.zip "$COMMIT.zip"
-- ls
 deploy:
   provider: releases
   api_key:
