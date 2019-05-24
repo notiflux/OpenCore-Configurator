@@ -10,7 +10,8 @@ before_deploy:
 - git tag $COMMIT
 - zip -r -X ..\..\OpenCore.zip OpenCore\ Configurator.app
 - ls
-- cd ..\..
+- cd ..
+- cd ..
 - ls
 - mv OpenCore.zip "$COMMIT.zip"
 deploy:
