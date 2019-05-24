@@ -7,13 +7,15 @@ script:
 before_deploy:
 - cd build/Release
 - git tag "$(git log --format=%h -1)"
-- zip -r -X $(git describe --tags).zip OpenCore\ Configurator.app
-- cd ../..
+- zip -r -X ..\..\"$(git log --format=%h -1).zip" OpenCore\ Configurator.app
+- ls
+- cd ..\..\
+- ls
 deploy:
   provider: releases
   api_key:
     secure: pqVH8IkJEJmdW14M85esYP0vh9MUaTmKOoaScBm87Bo3HA5MngOwEZgIAxrXIIBy/SgyNIsStpvUMm7BTKZSaZom8GZDu2Wjsom1Y/CSEsX106t3U6g7jR7N8j/4/ytD/+Vh+pgsZRePjgfW4xRxO0IR6k36d3EySx10DT73TskvYKq0K5xv5KSC3TYxrrLcsHH87Oh6ML1tvihz37s9eshleJpuMS4D6zEx/GoblNCmSTSnlE985C9LAefl8EBEZYqTgdpYhLJsS2I70gX8lZNyiG22604hdsjkx6yR2tLAUBH0lxbrvLsesk5wgGgBOl9MMbr2hn/l8BlluIle26bamMBqKO/KsDUkvSgLTdkPwiUyYe6X1J/gNmzvv9WsYCrxmxVoc/UnpWSvkRB4VajIXgg+64oW8pajX6luLQ7MI+A3kDdoFEtmCccOfL1ypgbTQB3Qho9UPFGwhRjiV5CFlzGA4lgjunhsFI2YeiCa2kTcB8EYtQNxX8Vtbwm3nlpMwVLGQX5aeU8oxh+bzXV2y1gtHhzVScJokOJEM+/GDkL+oj/DsIC0WeYKrjLZvFoEmwX1+GO8SgwUrh/L9zLX81MwsfOve/+kKCWR1ACCYW5Nh20HHD663rUGOjLu4sRC6sG4ccy+NbRmuYYDp8p+SyuYc/j5y05kWs9MUI0=
-  file: "$(git describe --tags).zip"
+  file: "$(git log --format=%h -1).zip"
   skip_cleanup: true
   on:
     repo: dhinakg/OpenCore-Configurator
