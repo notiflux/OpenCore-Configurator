@@ -8,12 +8,13 @@ before_deploy:
 - cd build/Release
 - COMMIT="$(git log --format=%h -1)"
 - git tag $COMMIT
-- zip -r -X ..\..\OpenCore.zip OpenCore\ Configurator.app
+- zip -r -X OpenCore.zip OpenCore\ Configurator.app
 - ls
 - cd ..
 - cd ..
 - ls
-- mv OpenCore.zip "$COMMIT.zip"
+- mv build/Release/OpenCore.zip "$COMMIT.zip"
+- ls
 deploy:
   provider: releases
   api_key:
