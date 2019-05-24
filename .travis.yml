@@ -7,7 +7,7 @@ script:
 before_deploy:
 - cd build/Release
 - git tag "$(git log --format=%h -1)"
-- zip -r -X ..\..\"$(git log --format=%h -1).zip" OpenCore\ Configurator.app
+- zip -r -X ..\..\$(git log --format=%h -1).zip OpenCore\ Configurator.app
 - ls
 - cd ..\..\
 - ls
