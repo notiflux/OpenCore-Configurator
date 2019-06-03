@@ -27,6 +27,17 @@
 		9036D81522915EF500B73530 /* Bundle+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9036D81422915EF500B73530 /* Bundle+Tests.swift */; };
 		90399A8E2290F1CC0017024B /* DiskUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90399A8D2290F1CC0017024B /* DiskUtility.swift */; };
 		90399A99229104460017024B /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90399A98229104460017024B /* Process.swift */; };
+		CF03985022A4B49B005E0BCC /* NVRAMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF03984F22A4B49B005E0BCC /* NVRAMViewController.swift */; };
+		CF03985222A4B50D005E0BCC /* MiscViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF03985122A4B50D005E0BCC /* MiscViewController.swift */; };
+		CF03985422A4B5A9005E0BCC /* KernelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF03985322A4B5A9005E0BCC /* KernelViewController.swift */; };
+		CF03985622A4B670005E0BCC /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF03985522A4B670005E0BCC /* MainWindowController.swift */; };
+		CF2D736422A4AF5D00CECB07 /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D736322A4AF5D00CECB07 /* MainSplitViewController.swift */; };
+		CF2D736622A4AF8300CECB07 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D736522A4AF8300CECB07 /* MasterViewController.swift */; };
+		CF2D736922A4AF9B00CECB07 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D736722A4AF9B00CECB07 /* DetailsViewController.swift */; };
+		CF2D736C22A4B09900CECB07 /* ACPIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D736B22A4B09900CECB07 /* ACPIViewController.swift */; };
+		CF2D736E22A4B2A700CECB07 /* DevicePropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D736D22A4B2A700CECB07 /* DevicePropertiesViewController.swift */; };
+		CF2D737022A4B35800CECB07 /* PlatformInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D736F22A4B35800CECB07 /* PlatformInfoViewController.swift */; };
+		CF2D737222A4B38300CECB07 /* UEFIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D737122A4B38300CECB07 /* UEFIViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +90,17 @@
 		9036D81422915EF500B73530 /* Bundle+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Tests.swift"; sourceTree = "<group>"; };
 		90399A8D2290F1CC0017024B /* DiskUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskUtility.swift; sourceTree = "<group>"; };
 		90399A98229104460017024B /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
+		CF03984F22A4B49B005E0BCC /* NVRAMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVRAMViewController.swift; sourceTree = "<group>"; };
+		CF03985122A4B50D005E0BCC /* MiscViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscViewController.swift; sourceTree = "<group>"; };
+		CF03985322A4B5A9005E0BCC /* KernelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelViewController.swift; sourceTree = "<group>"; };
+		CF03985522A4B670005E0BCC /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		CF2D736322A4AF5D00CECB07 /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
+		CF2D736522A4AF8300CECB07 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		CF2D736722A4AF9B00CECB07 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		CF2D736B22A4B09900CECB07 /* ACPIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACPIViewController.swift; sourceTree = "<group>"; };
+		CF2D736D22A4B2A700CECB07 /* DevicePropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePropertiesViewController.swift; sourceTree = "<group>"; };
+		CF2D736F22A4B35800CECB07 /* PlatformInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformInfoViewController.swift; sourceTree = "<group>"; };
+		CF2D737122A4B38300CECB07 /* UEFIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UEFIViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +145,17 @@
 				90399A972291043F0017024B /* Extensions */,
 				90399A8B2290F1B20017024B /* Model */,
 				810042431ECA33DF009FE633 /* AppDelegate.swift */,
+				CF03985522A4B670005E0BCC /* MainWindowController.swift */,
+				CF2D736322A4AF5D00CECB07 /* MainSplitViewController.swift */,
+				CF2D736B22A4B09900CECB07 /* ACPIViewController.swift */,
+				CF2D736D22A4B2A700CECB07 /* DevicePropertiesViewController.swift */,
+				CF2D736F22A4B35800CECB07 /* PlatformInfoViewController.swift */,
+				CF2D737122A4B38300CECB07 /* UEFIViewController.swift */,
+				CF03984F22A4B49B005E0BCC /* NVRAMViewController.swift */,
+				CF03985122A4B50D005E0BCC /* MiscViewController.swift */,
+				CF03985322A4B5A9005E0BCC /* KernelViewController.swift */,
+				CF2D736522A4AF8300CECB07 /* MasterViewController.swift */,
+				CF2D736722A4AF9B00CECB07 /* DetailsViewController.swift */,
 				810042451ECA33DF009FE633 /* ViewController.swift */,
 				810042471ECA33DF009FE633 /* Assets.xcassets */,
 				810042491ECA33DF009FE633 /* Main.storyboard */,
@@ -310,17 +343,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				90399A8E2290F1CC0017024B /* DiskUtility.swift in Sources */,
+				CF03985622A4B670005E0BCC /* MainWindowController.swift in Sources */,
+				CF03985422A4B5A9005E0BCC /* KernelViewController.swift in Sources */,
 				7FEADAE92295C775009800DD /* vaultManager.swift in Sources */,
+				CF03985222A4B50D005E0BCC /* MiscViewController.swift in Sources */,
 				90399A99229104460017024B /* Process.swift in Sources */,
 				7FA19C082296B59300954C46 /* vaultPlist.swift in Sources */,
 				7FF918A9227226A60081891E /* openHandlerFunctions.swift in Sources */,
+				CF2D736422A4AF5D00CECB07 /* MainSplitViewController.swift in Sources */,
 				810042461ECA33DF009FE633 /* ViewController.swift in Sources */,
 				7F3AAC182279BB55006644AD /* saveHandlerFunctions.swift in Sources */,
+				CF2D737022A4B35800CECB07 /* PlatformInfoViewController.swift in Sources */,
+				CF2D737222A4B38300CECB07 /* UEFIViewController.swift in Sources */,
 				7F961CCC2270974E007F0BBE /* KernelPopoverController.swift in Sources */,
+				CF2D736E22A4B2A700CECB07 /* DevicePropertiesViewController.swift in Sources */,
 				7F4C29DE2269FD2900720E68 /* Extensions.swift in Sources */,
 				7F4C29E2226A130A00720E68 /* AcpiPopoverController.swift in Sources */,
 				7F9A2A6F228D9B7A00CCC12B /* acpiDifferController.swift in Sources */,
+				CF03985022A4B49B005E0BCC /* NVRAMViewController.swift in Sources */,
+				CF2D736622A4AF8300CECB07 /* MasterViewController.swift in Sources */,
 				810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */,
+				CF2D736922A4AF9B00CECB07 /* DetailsViewController.swift in Sources */,
+				CF2D736C22A4B09900CECB07 /* ACPIViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
