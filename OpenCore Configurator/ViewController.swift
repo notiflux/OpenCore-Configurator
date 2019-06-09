@@ -44,18 +44,16 @@ class ViewController: NSViewController {
     @IBOutlet weak var uefiTab: NSTabView!
     
     // tables
+    
+    
+    
     @IBOutlet weak var sectionsTable:NSTableView!
-    @IBOutlet weak var nvramBootTable: NSTableView!
-    @IBOutlet weak var nvramVendorTable: NSTableView!
-    @IBOutlet weak var nvramCustomTable: NSTableView!
-    @IBOutlet weak var nvramBlockTable: NSTableView!
-    
-    @IBOutlet weak var uefiDriverTable: NSTableView!
-    
     @IBOutlet weak var platformSmbiosTable: NSTableView!
     @IBOutlet weak var platformDatahubTable: NSTableView!
     @IBOutlet weak var platformGenericTable: NSTableView!
     @IBOutlet weak var platformNvramTable: NSTableView!
+    
+    @IBOutlet weak var uefiDriverTable: NSTableView!
     
     // buttons
     @IBOutlet weak var kernelAutoBtn: NSButton!
@@ -1247,30 +1245,6 @@ class ViewController: NSViewController {
         timeoutStepper.stringValue = sender.stringValue
     }
     
-    @IBAction func addNvramBootBtn(_ sender: Any) {
-        addEntryToTable(table: &nvramBootTable, appendix: ["property": "", "value": ""])
-    }
-    @IBAction func remNvramBootBtn(_ sender: Any) {
-        removeEntryFromTable(table: &nvramBootTable)
-    }
-    @IBAction func addNvramVendorBtn(_ sender: Any) {
-        addEntryToTable(table: &nvramVendorTable, appendix: ["property": "", "value": ""])
-    }
-    @IBAction func remNvramVendorBtn(_ sender: Any) {
-        removeEntryFromTable(table: &nvramVendorTable)
-    }
-    @IBAction func addNvramCustomBtn(_ sender: Any) {
-        addEntryToTable(table: &nvramCustomTable, appendix: ["guid": "", "property": "", "value": ""])
-    }
-    @IBAction func remNvramCustomBtn(_ sender: Any) {
-        removeEntryFromTable(table: &nvramCustomTable)
-    }
-    @IBAction func addNvramBlockBtn(_ sender: Any) {
-        addEntryToTable(table: &nvramBlockTable, appendix: ["guid": "", "property": ""])
-    }
-    @IBAction func remNvramBlockBtn(_ sender: Any) {
-        removeEntryFromTable(table: &nvramBlockTable)
-    }
     @IBAction func addUefiDriverBtn(_ sender: Any) {
         addEntryToTable(table: &uefiDriverTable, appendix: ["driver": ""])
     }

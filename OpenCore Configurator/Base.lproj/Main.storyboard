@@ -4800,6 +4800,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addNvramBootBtn:" target="bIi-06-OfU" id="auL-gH-4vu"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aTT-vU-86s" userLabel="Remove nvram vendor">
                                 <rect key="frame" x="672" y="155" width="21" height="21"/>
@@ -4807,6 +4810,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remNvramVendorBtn:" target="bIi-06-OfU" id="u5N-kk-xmN"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EbU-8v-qqw" userLabel="Add nvram vendor">
                                 <rect key="frame" x="643" y="154" width="21" height="21"/>
@@ -4814,6 +4820,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addNvramVendorBtn:" target="bIi-06-OfU" id="IAs-qL-Qzx"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CcN-d7-jZE" userLabel="Remove nvram custom">
                                 <rect key="frame" x="676" y="8" width="13" height="21"/>
@@ -4821,6 +4830,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remNvramCustomBtn:" target="bIi-06-OfU" id="cna-3A-MYU"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Abv-Xj-ehA" userLabel="Remove nvram boot">
                                 <rect key="frame" x="672" y="252" width="21" height="21"/>
@@ -4828,6 +4840,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remNvramBootBtn:" target="bIi-06-OfU" id="dq2-6B-fF0"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u3U-ZY-EIZ" userLabel="Add nvram custom">
                                 <rect key="frame" x="643" y="8" width="21" height="21"/>
@@ -4835,6 +4850,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addNvramCustomBtn:" target="bIi-06-OfU" id="5Oq-8T-7ph"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -4874,6 +4892,11 @@
                             <constraint firstItem="Tpo-7E-Aco" firstAttribute="top" secondItem="N1E-XH-XtS" secondAttribute="top" constant="20" symbolic="YES" id="zWg-8K-VkP"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="nvramBootTable" destination="LhX-it-tGL" id="Jjh-Ii-r22"/>
+                        <outlet property="nvramCustomTable" destination="5Om-qj-c4N" id="RH7-pu-kSw"/>
+                        <outlet property="nvramVendorTable" destination="eJ7-EP-0Pi" id="ddb-t0-0hp"/>
+                    </connections>
                 </viewController>
                 <customObject id="juX-XG-SyJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -5000,6 +5023,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addNvramBlockBtn:" target="e2R-LO-nQE" id="trN-bb-RAj"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hEr-pV-v9f" userLabel="Remove nvram block">
                                 <rect key="frame" x="49" y="19" width="21" height="21"/>
@@ -5010,6 +5036,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remNvramBlockBtn:" target="e2R-LO-nQE" id="MCE-Yd-Ahg"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -5023,6 +5052,9 @@
                             <constraint firstItem="byW-24-0UN" firstAttribute="baseline" secondItem="hEr-pV-v9f" secondAttribute="baseline" id="sNG-in-kGw"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="nvramBlockTable" destination="eJb-8l-9ld" id="cFU-RZ-N7I"/>
+                    </connections>
                 </viewController>
                 <customObject id="p6X-59-PL8" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
