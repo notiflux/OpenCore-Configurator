@@ -1272,12 +1272,6 @@ class ViewController: NSViewController {
     @IBAction func timeoutTextfieldAction(_ sender: NSTextField) {
         timeoutStepper.stringValue = sender.stringValue
     }
-    @IBAction func addPatchAcpiBtn(_ sender: Any) {
-        addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "DSDT", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": "", "Count": ""])
-    }
-    @IBAction func remPatchAcpiBtn(_ sender: Any) {
-        removeEntryFromTable(table: &acpiPatchTable)
-    }
     @IBAction func addDeviceAddBtn(_ sender: Any) {
         addEntryToTable(table: &deviceAddTable, appendix: ["device": "", "property": "", "value": "", "edit": ""])
     }
