@@ -23,6 +23,67 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         super.viewDidLoad()
     }
     
+    func addEntryToTable(table: inout NSTableView, appendix: [String:String]) {
+        tableLookup[table]!.append(appendix)
+        table.beginUpdates()
+        table.insertRows(at: IndexSet(integer: tableLookup[table]!.count - 1), withAnimation: .effectGap)
+        table.endUpdates()
+    }
+    
+    func removeEntryFromTable(table: inout NSTableView) {       // for some reason this spawns simultaneous read and write access to the table view delegate. TODO: figure this out so we can re-enable exclusive memory access enforcement
+        let SR = table.selectedRow
+        if SR != -1 {
+            table.removeRows(at: IndexSet(integer: SR), withAnimation: .effectGap)
+            tableLookup[table]!.remove(at: SR)
+            table.reloadData()
+            if table.accessibilityRowCount() < SR {
+                table.selectRowIndexes(IndexSet(integer: SR - 1), byExtendingSelection: false)
+            }
+            else {
+                table.selectRowIndexes(IndexSet(integer: SR), byExtendingSelection: false)
+            }
+            
+        }
+    }
+    
+    func messageBox(message: String, info: String? = nil) {
+        let alert = NSAlert()
+        alert.messageText = message
+        
+        if info != nil {
+            alert.informativeText = info!
+        }
+        
+        alert.beginSheetModal(for: view.window!, completionHandler: nil)
+    }
+    
+    func calcAcpiChecksum(table: URL) -> UInt8? {
+        do {
+            let tableData = try Data(contentsOf: table)
+            
+            let length: [UInt8] = Array([UInt8](tableData)[4...7])
+            let u32length = UnsafePointer(length).withMemoryRebound(to: UInt32.self, capacity: 1) { $0.pointee }
+            
+            if u32length != tableData.count {
+                return nil
+            }
+            
+            try tableData.forEach(addBytes)
+        } catch {
+            print(error)
+        }
+        let localChecksum = checksum
+        checksum = 0
+        return localChecksum
+    }
+    
+    func espWarning() {
+        let alert = NSAlert()
+        alert.messageText = "No EFI partition selected!"
+        alert.informativeText = "Please select an EFI partition from the drop down."
+        alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+    }
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return itemsList.count
     }

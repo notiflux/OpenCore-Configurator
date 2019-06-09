@@ -46,10 +46,6 @@ class ViewController: NSViewController {
     // tables
     @IBOutlet weak var sectionsTable:NSTableView!
     
-    @IBOutlet weak var acpiAddTable: NSTableView!
-    @IBOutlet weak var acpiBlockTable: NSTableView!
-    @IBOutlet weak var acpiPatchTable: NSTableView!
-    
     @IBOutlet weak var deviceAddTable: NSTableView!
     @IBOutlet weak var deviceBlockTable: NSTableView!
     
@@ -70,7 +66,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var platformNvramTable: NSTableView!
     
     // buttons
-    @IBOutlet weak var acpiAutoBtn: NSButton!
     @IBOutlet weak var kernelAutoBtn: NSButton!
     @IBOutlet weak var platformAutoBtn: NSButton!
     @IBOutlet weak var uefiAutoBtn: NSButton!
@@ -96,13 +91,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var miscRequireVault: NSButton!
     @IBOutlet weak var miscHaltlevel: NSTextField!
     @IBOutlet weak var miscExposeSensitiveData: NSTextField!
-    
-    // acpi quirks
-    @IBOutlet weak var FadtEnableReset: NSButton!
-    @IBOutlet weak var IgnoreForWindows: NSButton!
-    @IBOutlet weak var NormalizeHeaders: NSButton!
-    @IBOutlet weak var RebaseRegions: NSButton!
-    @IBOutlet weak var ResetLogoStatus: NSButton!
     
     // device quirks
     // @IBOutlet weak var ReinstallProtocol: NSButton!
@@ -216,7 +204,6 @@ class ViewController: NSViewController {
             "DeviceProperties": self.DeviceProperties
         ]
         
-        acpiAutoBtn.toolTip = "Automatically check and add entries for all ACPI tables in EFI/OC/ACPI/Custom"
         kernelAutoBtn.toolTip = "Automatically check and add entries for all KEXTs in EFI/OC/Kexts"
         platformAutoBtn.toolTip = "Select an SMBIOS preset"
         uefiAutoBtn.toolTip = "Automatically check and add entries for all UEFI drivers in EFI/OC/Drivers"
@@ -1427,13 +1414,6 @@ class ViewController: NSViewController {
     
     @IBAction func helpButtonAction(_ sender: Any) {
         NSWorkspace.shared.open(URL(string: "https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf")!)
-    }
-    
-    func espWarning() {
-        let alert = NSAlert()
-        alert.messageText = "No EFI partition selected!"
-        alert.informativeText = "Please select an EFI partition from the drop down."
-        alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
     }
     
     @objc func onSmbiosSelect(_ sender: NSMenuItem) {

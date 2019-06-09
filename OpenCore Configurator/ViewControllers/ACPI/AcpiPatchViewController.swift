@@ -9,6 +9,10 @@
 import Cocoa
 
 class AcpiPatchViewController: NSViewController {
+    
+    var masterVC: MasterDetailsViewController?
+    
+    @IBOutlet weak var acpiPatchTable: NSTableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,9 +20,9 @@ class AcpiPatchViewController: NSViewController {
     }
     
     @IBAction func addPatchAcpiBtn(_ sender: Any) {
-        addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "DSDT", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": "", "Count": ""])
+        masterVC?.addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "DSDT", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": "", "Count": ""])
     }
     @IBAction func remPatchAcpiBtn(_ sender: Any) {
-        removeEntryFromTable(table: &acpiPatchTable)
+        masterVC?.removeEntryFromTable(table: &acpiPatchTable)
     }
 }

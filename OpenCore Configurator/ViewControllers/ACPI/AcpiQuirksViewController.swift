@@ -9,6 +9,12 @@
 import Cocoa
 
 class AcpiQuirksViewController: NSViewController {
+    
+    @IBOutlet weak var FadtEnableReset: NSButton!
+    @IBOutlet weak var IgnoreForWindows: NSButton!
+    @IBOutlet weak var NormalizeHeaders: NSButton!
+    @IBOutlet weak var RebaseRegions: NSButton!
+    @IBOutlet weak var ResetLogoStatus: NSButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()

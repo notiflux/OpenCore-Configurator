@@ -1683,6 +1683,10 @@
                             <constraint firstItem="3mj-7B-LIQ" firstAttribute="top" secondItem="Lsk-33-B4U" secondAttribute="top" id="pRb-He-BRy"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="acpiAddTable" destination="Jy7-eS-9xz" id="2xu-fK-OV2"/>
+                        <outlet property="acpiAutoBtn" destination="Joe-7a-lWk" id="O2C-cg-xXY"/>
+                    </connections>
                 </viewController>
                 <customObject id="tg8-Ma-lkH" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2005,6 +2009,9 @@
                             <constraint firstItem="odl-v9-2GA" firstAttribute="leading" secondItem="hLP-ka-TUb" secondAttribute="leading" id="x0c-uF-IsI"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="acpiBlockTable" destination="YjK-UN-ZnF" id="syc-dP-oFi"/>
+                    </connections>
                 </viewController>
                 <customObject id="6Ag-IB-uiH" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2307,6 +2314,9 @@
                             <constraint firstItem="4fj-Ez-f8Z" firstAttribute="leading" secondItem="yXn-Mi-zsb" secondAttribute="trailing" constant="8" symbolic="YES" id="w6R-8w-PhQ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="acpiPatchTable" destination="1Ef-gh-oKP" id="2ir-Ml-7Nk"/>
+                    </connections>
                 </viewController>
                 <customObject id="8GM-UR-1mM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2369,6 +2379,13 @@
                             <constraint firstItem="acl-JU-dh3" firstAttribute="top" secondItem="LHs-tB-m91" secondAttribute="bottom" constant="20" id="xHY-XO-ivB"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="FadtEnableReset" destination="Xoj-h3-uYo" id="aEB-Df-tGc"/>
+                        <outlet property="IgnoreForWindows" destination="TpM-bG-UU9" id="dbT-kf-c5Y"/>
+                        <outlet property="NormalizeHeaders" destination="LHs-tB-m91" id="ydT-hE-5zR"/>
+                        <outlet property="RebaseRegions" destination="acl-JU-dh3" id="ELz-dg-xCL"/>
+                        <outlet property="ResetLogoStatus" destination="0D0-aW-vBI" id="0qX-lv-6xj"/>
+                    </connections>
                 </viewController>
                 <customObject id="eoO-7h-fei" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
