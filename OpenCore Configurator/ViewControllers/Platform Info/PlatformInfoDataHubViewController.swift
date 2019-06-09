@@ -9,6 +9,8 @@
 import Cocoa
 
 class PlatformInfoDataHubViewController: NSViewController {
+    
+    @IBOutlet weak var platformDatahubTable: NSTableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()

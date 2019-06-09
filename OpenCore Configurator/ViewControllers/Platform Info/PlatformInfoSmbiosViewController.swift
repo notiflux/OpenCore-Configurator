@@ -9,6 +9,8 @@
 import Cocoa
 
 class PlatformInfoSmbiosViewController: NSViewController {
+    
+    @IBOutlet weak var platformSmbiosTable: NSTableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()

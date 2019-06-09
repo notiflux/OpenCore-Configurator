@@ -40,7 +40,7 @@
 		CF48B5E422AC970C00F9DBE1 /* NvramAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5C422AC970A00F9DBE1 /* NvramAddViewController.swift */; };
 		CF48B5E522AC970C00F9DBE1 /* ACPITabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5C522AC970A00F9DBE1 /* ACPITabViewController.swift */; };
 		CF48B5E622AC970C00F9DBE1 /* AcpiAddViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5C622AC970A00F9DBE1 /* AcpiAddViewContoller.swift */; };
-		CF48B5E722AC970C00F9DBE1 /* MiscBlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5C722AC970A00F9DBE1 /* MiscBlockViewController.swift */; };
+		CF48B5E722AC970C00F9DBE1 /* MiscBootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5C722AC970A00F9DBE1 /* MiscBootViewController.swift */; };
 		CF48B5E822AC970C00F9DBE1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5C822AC970A00F9DBE1 /* DetailViewController.swift */; };
 		CF48B5E922AC970C00F9DBE1 /* MiscSecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5C922AC970A00F9DBE1 /* MiscSecurityViewController.swift */; };
 		CF48B5EA22AC970C00F9DBE1 /* KernelQuirksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5CA22AC970B00F9DBE1 /* KernelQuirksViewController.swift */; };
@@ -124,7 +124,7 @@
 		CF48B5C422AC970A00F9DBE1 /* NvramAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NvramAddViewController.swift; sourceTree = "<group>"; };
 		CF48B5C522AC970A00F9DBE1 /* ACPITabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACPITabViewController.swift; sourceTree = "<group>"; };
 		CF48B5C622AC970A00F9DBE1 /* AcpiAddViewContoller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcpiAddViewContoller.swift; sourceTree = "<group>"; };
-		CF48B5C722AC970A00F9DBE1 /* MiscBlockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscBlockViewController.swift; sourceTree = "<group>"; };
+		CF48B5C722AC970A00F9DBE1 /* MiscBootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscBootViewController.swift; sourceTree = "<group>"; };
 		CF48B5C822AC970A00F9DBE1 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		CF48B5C922AC970A00F9DBE1 /* MiscSecurityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscSecurityViewController.swift; sourceTree = "<group>"; };
 		CF48B5CA22AC970B00F9DBE1 /* KernelQuirksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KernelQuirksViewController.swift; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 		CFF218D122AD5B6C002FE73E /* Misc */ = {
 			isa = PBXGroup;
 			children = (
-				CF48B5C722AC970A00F9DBE1 /* MiscBlockViewController.swift */,
+				CF48B5C722AC970A00F9DBE1 /* MiscBootViewController.swift */,
 				CF48B5D622AC970C00F9DBE1 /* MiscDebugViewController.swift */,
 				CF48B5C922AC970A00F9DBE1 /* MiscSecurityViewController.swift */,
 				CF48B5D922AC970C00F9DBE1 /* MiscTabViewController.swift */,
@@ -500,7 +500,7 @@
 				CF48B5E122AC970C00F9DBE1 /* UEFITabViewController.swift in Sources */,
 				CF48B5DB22AC970C00F9DBE1 /* AcpiQuirksViewController.swift in Sources */,
 				7F4C29E2226A130A00720E68 /* AcpiPopoverController.swift in Sources */,
-				CF48B5E722AC970C00F9DBE1 /* MiscBlockViewController.swift in Sources */,
+				CF48B5E722AC970C00F9DBE1 /* MiscBootViewController.swift in Sources */,
 				CF48B5E522AC970C00F9DBE1 /* ACPITabViewController.swift in Sources */,
 				CF48B5E422AC970C00F9DBE1 /* NvramAddViewController.swift in Sources */,
 				7F9A2A6F228D9B7A00CCC12B /* acpiDifferController.swift in Sources */,

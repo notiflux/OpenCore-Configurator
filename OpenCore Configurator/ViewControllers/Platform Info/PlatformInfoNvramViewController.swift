@@ -9,6 +9,8 @@
 import Cocoa
 
 class PlatformInfoNvramViewController: NSViewController {
+    
+    @IBOutlet weak var platformNvramTable: NSTableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -11,6 +11,7 @@ import Cocoa
 class KernelAddViewController: NSViewController {
     
     @IBOutlet weak var kernelAddTable: NSTableView!
+    @IBOutlet weak var kernelAutoBtn: NSButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
