@@ -208,7 +208,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="file" width="446" minWidth="446" maxWidth="1000000000" id="4nN-X4-lOI">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="File">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -245,7 +245,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="checksum" width="475" minWidth="475" maxWidth="10000000000" id="1Uh-lQ-9vd">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Checksum">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -282,7 +282,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="ok" width="34" minWidth="34" maxWidth="34" id="l3b-O8-kos">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1363,7 +1363,7 @@
                                             <tableColumns>
                                                 <tableColumn width="285" minWidth="40" maxWidth="1000" id="OSD-gC-hpo">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -1501,7 +1501,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Comment" width="256" minWidth="40" maxWidth="1000" id="aMO-dj-JXQ">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Comment">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -1538,7 +1538,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Path" width="129" minWidth="10" maxWidth="3.4028234663852886e+38" id="Hdc-3t-Ul2">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Path">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1577,7 +1577,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="54" minWidth="10" maxWidth="3.4028234663852886e+38" id="d2P-DR-g3H">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1715,7 +1715,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Comment" width="250" minWidth="40" maxWidth="1000" id="60f-wb-RQQ">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Comment">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -1752,7 +1752,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="OemTableId" width="240" minWidth="10" maxWidth="3.4028234663852886e+38" id="q3p-pD-SWm">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="OemTableId">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1789,7 +1789,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="TableLength" width="70" minWidth="10" maxWidth="3.4028234663852886e+38" id="VIV-RF-WOS">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="TableLength">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1826,7 +1826,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="TableSignature" width="90" minWidth="10" maxWidth="3.4028234663852886e+38" id="mJC-fe-ZZg">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Table Signature">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1887,7 +1887,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="48" minWidth="10" maxWidth="3.4028234663852886e+38" id="ByW-2Y-Dex">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1919,7 +1919,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="All" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="suo-u9-Wcl">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="All">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2040,7 +2040,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Comment" width="142" minWidth="40" maxWidth="1000" id="YbA-Eb-nk2">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Comment">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -2077,7 +2077,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Find" width="195" minWidth="10" maxWidth="3.4028234663852886e+38" id="Nln-oG-CrW">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Find">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2114,7 +2114,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Replace" width="195" minWidth="10" maxWidth="3.4028234663852886e+38" id="lIN-HF-bQc">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Replace">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2151,7 +2151,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="TableSignature" width="90" minWidth="10" maxWidth="3.4028234663852886e+38" id="Ll0-1r-kQi">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Table Signature">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2210,7 +2210,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="48" minWidth="10" maxWidth="3.4028234663852886e+38" id="wor-bP-Jm0">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2242,7 +2242,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="advanced" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="Nyr-aq-pvY">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Advanced">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2440,7 +2440,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="device" width="235" minWidth="40" maxWidth="1000" id="TMe-cV-5VP">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Device Path">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -2477,7 +2477,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="property" width="235" minWidth="10" maxWidth="3.4028234663852886e+38" id="zrF-Bb-F6k">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2514,7 +2514,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="235" minWidth="10" maxWidth="3.4028234663852886e+38" id="0fw-98-Ezb">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2551,7 +2551,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="edit" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="T5V-tQ-HtU">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title=" ">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2654,7 +2654,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="device" width="369" minWidth="40" maxWidth="1000" id="ZeE-Qx-c2f">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Device Path">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -2691,7 +2691,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="property" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="L9Y-r3-Ww2">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2842,7 +2842,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="BundlePath" width="150" minWidth="40" maxWidth="1000" id="eFo-Aw-xVX">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Bundle Identifier">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -2879,7 +2879,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Comment" width="87" minWidth="10" maxWidth="3.4028234663852886e+38" id="9un-1D-dWS">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Comment">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2916,7 +2916,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="ExecutablePath" width="240" minWidth="10" maxWidth="3.4028234663852886e+38" id="zov-1x-QOv">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="ExecutablePath">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2953,7 +2953,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="PlistPath" width="130" minWidth="10" maxWidth="3.4028234663852886e+38" id="84r-fE-WV7">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="PlistPath">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2990,7 +2990,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="MatchKernel" width="72" minWidth="10" maxWidth="3.4028234663852886e+38" id="btz-OR-OQ7">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="MatchKernel">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3120,7 +3120,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="9YE-IR-AEf">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3223,6 +3223,7 @@
                     </view>
                     <connections>
                         <outlet property="kernelAddTable" destination="3S6-nr-v3e" id="nKe-S1-1ky"/>
+                        <outlet property="kernelAutoBtn" destination="oIc-ro-fYH" id="ei5-eu-QWR"/>
                     </connections>
                 </viewController>
                 <customObject id="Bvo-W1-kCN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -3252,7 +3253,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Identifier" width="295" minWidth="40" maxWidth="1000" id="pd5-DN-XW4">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Identifier">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -3289,7 +3290,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Comment" width="275" minWidth="10" maxWidth="3.4028234663852886e+38" id="xoi-jE-lfB">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Comment">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3326,7 +3327,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="MatchKernel" width="115" minWidth="10" maxWidth="3.4028234663852886e+38" id="znj-DX-rVf">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="MatchKernel">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3457,7 +3458,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="51" minWidth="10" maxWidth="3.4028234663852886e+38" id="WlN-uu-TNQ">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3573,7 +3574,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Comment" width="142" minWidth="40" maxWidth="1000" id="KAw-bx-9Au">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Comment">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -3610,7 +3611,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Find" width="195" minWidth="10" maxWidth="3.4028234663852886e+38" id="nBh-aW-Ofp">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Find">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3647,7 +3648,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Replace" width="195" minWidth="10" maxWidth="3.4028234663852886e+38" id="lBp-Y0-UYe">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Replace">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3684,7 +3685,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="MatchKernel" width="90" minWidth="10" maxWidth="3.4028234663852886e+38" id="m16-GX-mk7">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="MatchKernel">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3815,7 +3816,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="48" minWidth="10" maxWidth="3.4028234663852886e+38" id="pba-6Q-CiG">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3847,7 +3848,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="kernelAdvanced" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="r0u-Zc-7KU">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Advanced">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -4054,6 +4055,9 @@
                             <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zL5-KI-aeI">
                                 <rect key="frame" x="278" y="247" width="19" height="27"/>
                                 <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="3" id="4mb-BW-Bao"/>
+                                <connections>
+                                    <action selector="timeoutStepperAction:" target="pyq-Kt-Jl4" id="LFo-Rc-oNA"/>
+                                </connections>
                             </stepper>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HWB-bq-zP0">
                                 <rect key="frame" x="18" y="110" width="132" height="17"/>
@@ -4074,6 +4078,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="timeoutTextfieldAction:" target="pyq-Kt-Jl4" id="RZj-fN-sbh"/>
+                                </connections>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yjj-9O-Irw">
                                 <rect key="frame" x="172" y="105" width="127" height="25"/>
@@ -4206,6 +4213,16 @@
                             <constraint firstItem="HWB-bq-zP0" firstAttribute="baseline" secondItem="Yjj-9O-Irw" secondAttribute="baseline" id="ycc-TR-BwS"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="OsBehavior" destination="Yjj-9O-Irw" id="K01-qR-fbS"/>
+                        <outlet property="UiBehavior" destination="qhN-7R-bTP" id="bMS-L4-12d"/>
+                        <outlet property="consoleMode" destination="HZb-Wd-7FA" id="lRn-Ak-2PU"/>
+                        <outlet property="hideSelf" destination="G3s-G2-PkQ" id="7cU-IG-d0g"/>
+                        <outlet property="resolution" destination="1gf-U9-PIz" id="nB8-c8-K1I"/>
+                        <outlet property="showPicker" destination="oDM-nN-mYc" id="zrp-kR-cla"/>
+                        <outlet property="timeoutStepper" destination="zL5-KI-aeI" id="s7s-EF-UIL"/>
+                        <outlet property="timeoutTextfield" destination="Zl5-fq-C5b" id="dU1-eT-n3x"/>
+                    </connections>
                 </viewController>
                 <customObject id="ac2-PU-iLj" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4297,6 +4314,12 @@
                             <constraint firstItem="971-Ok-dfl" firstAttribute="leading" secondItem="TIh-zG-5jj" secondAttribute="leading" id="oGI-O9-5X6"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="disableWatchdog" destination="pcP-IZ-MYt" id="igy-AG-aht"/>
+                        <outlet property="miscDelayText" destination="p0i-5J-4pT" id="twY-o8-GWP"/>
+                        <outlet property="miscDisplayLevelText" destination="zbm-dK-9LK" id="grT-43-1qO"/>
+                        <outlet property="miscTargetText" destination="Bp7-9G-8VX" id="0Lz-Ow-uFr"/>
+                    </connections>
                 </viewController>
                 <customObject id="EBN-nE-HN0" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4376,6 +4399,12 @@
                             <constraint firstItem="2g4-4J-GqK" firstAttribute="top" secondItem="JMy-w9-2FY" secondAttribute="top" id="puF-Aj-18H"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="miscExposeSensitiveData" destination="5rT-wn-njb" id="1xU-xv-AYX"/>
+                        <outlet property="miscHaltlevel" destination="JMy-w9-2FY" id="5B9-0T-xf2"/>
+                        <outlet property="miscRequireSignature" destination="j1k-7R-6eb" id="36P-7M-HZV"/>
+                        <outlet property="miscRequireVault" destination="CEE-fN-j4B" id="TGP-fd-xYR"/>
+                    </connections>
                 </viewController>
                 <customObject id="VyD-Ga-f6y" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4438,7 +4467,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" width="369" minWidth="40" maxWidth="1000" id="VyP-dB-8US">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4475,7 +4504,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="328" minWidth="40" maxWidth="1000" id="NeO-97-DN5">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4553,7 +4582,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" width="369" minWidth="40" maxWidth="1000" id="iCC-Nq-edg">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4590,7 +4619,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="328" minWidth="40" maxWidth="1000" id="t6L-rn-3oF">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4665,7 +4694,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="guid" width="245" minWidth="10" maxWidth="3.4028234663852886e+38" id="BuM-sb-BFU">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="GUID">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -4702,7 +4731,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="property" width="245" minWidth="40" maxWidth="1000" id="gUA-40-X6g">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4739,7 +4768,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="204" minWidth="40" maxWidth="1000" id="yTJ-kY-2X5">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4925,7 +4954,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="guid" width="369" minWidth="40" maxWidth="1000" id="Wpw-mR-4Rc">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="GUID">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4962,7 +4991,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="property" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="aNX-jO-sEi">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -5170,6 +5199,13 @@
                             <constraint firstItem="eIo-hK-ou8" firstAttribute="leading" secondItem="Nd8-eu-Xp4" secondAttribute="leading" id="syd-GG-00u"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="smbioUpdateModePopup" destination="PK4-ad-KG1" id="hsB-cf-pi3"/>
+                        <outlet property="smbiosAutomatic" destination="Y2V-Ub-aqS" id="Ytk-QA-pk0"/>
+                        <outlet property="updateDatahub" destination="YBK-Ae-3Vz" id="IZe-TI-0To"/>
+                        <outlet property="updateNvram" destination="eIo-hK-ou8" id="dmp-E0-cbY"/>
+                        <outlet property="updateSmbios" destination="Nd8-eu-Xp4" id="exI-iQ-umg"/>
+                    </connections>
                 </viewController>
                 <customObject id="iwy-LU-bnV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -5198,7 +5234,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" editable="NO" width="369" minWidth="40" maxWidth="1000" id="2hz-qt-7Dq">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5235,7 +5271,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="xtz-Ex-wKM">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -5320,6 +5356,11 @@
                             <constraint firstAttribute="bottom" secondItem="hLB-gC-LVj" secondAttribute="bottom" constant="14" id="q2M-6v-egE"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="platformAutoBtn" destination="DIO-b3-ESp" id="YRY-pN-BzO"/>
+                        <outlet property="platformGenericTable" destination="6aa-Tl-7OK" id="An3-GZ-Lv9"/>
+                        <outlet property="spoofVendor" destination="hLB-gC-LVj" id="QY9-qk-A2J"/>
+                    </connections>
                 </viewController>
                 <customObject id="hmk-at-8qh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -5348,7 +5389,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" editable="NO" width="369" minWidth="40" maxWidth="1000" id="I22-Uc-hiK">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5385,7 +5426,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="oWb-G7-79x">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -5445,6 +5486,9 @@
                             <constraint firstAttribute="trailing" secondItem="gOz-Jw-tGZ" secondAttribute="trailing" id="xHq-sM-40P"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="platformDatahubTable" destination="Dj1-Ie-nE1" id="p6l-id-9cl"/>
+                    </connections>
                 </viewController>
                 <customObject id="nGm-yl-lPC" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -5473,7 +5517,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" editable="NO" width="369" minWidth="40" maxWidth="1000" id="uNB-pd-20d">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5510,7 +5554,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="pCL-wx-7Ui">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -5570,6 +5614,9 @@
                             <constraint firstItem="Xch-pr-oOb" firstAttribute="leading" secondItem="lrV-2S-wGj" secondAttribute="leading" id="yNv-7c-fHk"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="platformNvramTable" destination="VVt-7U-7tb" id="jff-gO-Beb"/>
+                    </connections>
                 </viewController>
                 <customObject id="bRY-ZR-rgO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -5598,7 +5645,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" editable="NO" width="369" minWidth="40" maxWidth="1000" id="rp3-Ig-gwd">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5635,7 +5682,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="ilR-Td-jlS">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -5695,6 +5742,9 @@
                             <constraint firstAttribute="bottom" secondItem="h1J-Kf-Vx1" secondAttribute="bottom" id="t3c-nk-1hF"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="platformSmbiosTable" destination="cU8-Q4-nYn" id="II8-qr-N8V"/>
+                    </connections>
                 </viewController>
                 <customObject id="JBG-vM-N3O" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -5743,6 +5793,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remUefiDriverBtn:" target="3ME-en-nce" id="exL-7B-0Ht"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LZ8-wm-Uf7" userLabel="Add UEFI driver">
                                 <rect key="frame" x="20" y="14" width="21" height="21"/>
@@ -5753,6 +5806,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addUefiDriverBtn:" target="3ME-en-nce" id="S6P-gV-46E"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gca-Ad-6WF" userLabel="Auto-add UEFI drivers">
                                 <rect key="frame" x="409" y="14" width="21" height="21"/>
@@ -5764,6 +5820,9 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <accessibility description="Auto-add entries for all files in OC/ACPI/Add" help="Auto-add entries for all files in OC/ACPI/Add"/>
+                                <connections>
+                                    <action selector="autoAddUefi:" target="3ME-en-nce" id="RL1-cl-tpI"/>
+                                </connections>
                             </button>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EdA-mi-xk8">
                                 <rect key="frame" x="0.0" y="46" width="450" height="216"/>
@@ -5780,7 +5839,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="driver" width="445" minWidth="40" maxWidth="1000" id="191-de-8fA">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Driver">
-                                                        <font key="font" metaFont="label" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5855,6 +5914,11 @@
                             <constraint firstItem="EdA-mi-xk8" firstAttribute="top" secondItem="a22-N5-nEo" secondAttribute="bottom" constant="8" symbolic="YES" id="wYF-PC-7FG"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="uefiAutoBtn" destination="gca-Ad-6WF" id="gyj-RK-3Rj"/>
+                        <outlet property="uefiConnectDrivers" destination="a22-N5-nEo" id="TzS-M6-7gr"/>
+                        <outlet property="uefiDriverTable" destination="cpW-fe-0oC" id="VFL-6e-Chw"/>
+                    </connections>
                 </viewController>
                 <customObject id="gDq-1h-yNf" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -6004,6 +6068,19 @@
                             <constraint firstItem="5vR-qL-ezZ" firstAttribute="top" secondItem="yxy-aR-pUq" secondAttribute="bottom" constant="20" id="zbt-ye-jHS"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="AppleBootPolicy" destination="JWy-o6-iO3" id="Fiz-A2-LL4"/>
+                        <outlet property="ConsoleControl" destination="1Cg-2A-JdG" id="lDL-4X-lZa"/>
+                        <outlet property="DataHub" destination="Ux2-06-YDx" id="fpM-2E-OIz"/>
+                        <outlet property="DeviceProperties" destination="RJ9-69-ap6" id="1U5-4Y-kXT"/>
+                        <outlet property="ExitBootServicesDelay" destination="FXY-7u-eQv" id="ht1-Bg-BI7"/>
+                        <outlet property="IgnoreInvalidFlexRatio" destination="FuS-np-Q37" id="cOV-x8-42d"/>
+                        <outlet property="IgnoreTextInGraphics" destination="aMB-gG-MBR" id="WU5-2r-e83"/>
+                        <outlet property="ProvideConsoleGop" destination="7lc-nX-3kY" id="VGg-nY-W2z"/>
+                        <outlet property="ReleaseUsbOwnership" destination="cnf-mq-tcA" id="WIf-WE-FCq"/>
+                        <outlet property="RequestBootVarRouting" destination="Mqf-bh-1YZ" id="LFh-Y2-jDI"/>
+                        <outlet property="SanitiseClearScreen" destination="yxy-aR-pUq" id="VgX-wc-mU3"/>
+                    </connections>
                 </viewController>
                 <customObject id="o74-xP-H6E" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

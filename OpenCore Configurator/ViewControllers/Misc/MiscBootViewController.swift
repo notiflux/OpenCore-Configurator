@@ -24,4 +24,11 @@ class MiscBootViewController: NSViewController {
         // Do view setup here.
     }
     
+    @IBAction func timeoutStepperAction(_ sender: NSStepper) {
+        timeoutTextfield.stringValue = sender.stringValue
+    }
+    @IBAction func timeoutTextfieldAction(_ sender: NSTextField) {
+        timeoutStepper.stringValue = sender.stringValue
+    }
+    
 }

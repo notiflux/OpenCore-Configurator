@@ -15,42 +15,11 @@ class ViewController: NSViewController {
     
     // tables
     @IBOutlet weak var sectionsTable:NSTableView!
-    // buttons
-    // misc boot options
-    
-    
-    // misc debug options
-    
-    
-    // misc security options
-    
-    
-    // device quirks
-    // @IBOutlet weak var ReinstallProtocol: NSButton!
-    
-    // kernel quirks
-    
-    
-    // uefi quirks
-    
-    
-    
-    
-    
-    
-    // smbios options
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    @IBAction func timeoutStepperAction(_ sender: NSStepper) {
-        timeoutTextfield.stringValue = sender.stringValue
-    }
-    @IBAction func timeoutTextfieldAction(_ sender: NSTextField) {
-        timeoutStepper.stringValue = sender.stringValue
-    }
+
     @IBAction func helpButtonAction(_ sender: Any) {
         NSWorkspace.shared.open(URL(string: "https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf")!)
     }
