@@ -273,37 +273,93 @@
 		CF48B5B922AC969D00F9DBE1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				CF48B5C622AC970A00F9DBE1 /* AcpiAddViewContoller.swift */,
-				CF48B5CF22AC970B00F9DBE1 /* AcpiBlockViewController.swift */,
-				CF48B5D822AC970C00F9DBE1 /* AcpiPatchViewController.swift */,
-				CF48B5BB22AC970900F9DBE1 /* AcpiQuirksViewController.swift */,
+				CFF218CE22AD5B21002FE73E /* ACPI */,
+				CFF218CF22AD5B46002FE73E /* Device Properties */,
+				CFF218D022AD5B5C002FE73E /* Kernel */,
+				CFF218D122AD5B6C002FE73E /* Misc */,
+				CFF218D322AD5B89002FE73E /* NVRAM */,
+				CFF218D222AD5B77002FE73E /* Platform Info */,
+				CFF218D422AD5B95002FE73E /* UEFI */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CFF218CE22AD5B21002FE73E /* ACPI */ = {
+			isa = PBXGroup;
+			children = (
 				CF48B5C522AC970A00F9DBE1 /* ACPITabViewController.swift */,
+				CF48B5BB22AC970900F9DBE1 /* AcpiQuirksViewController.swift */,
+				CF48B5D822AC970C00F9DBE1 /* AcpiPatchViewController.swift */,
+				CF48B5CF22AC970B00F9DBE1 /* AcpiBlockViewController.swift */,
+				CF48B5C622AC970A00F9DBE1 /* AcpiAddViewContoller.swift */,
+			);
+			path = ACPI;
+			sourceTree = "<group>";
+		};
+		CFF218CF22AD5B46002FE73E /* Device Properties */ = {
+			isa = PBXGroup;
+			children = (
 				CF48B5D322AC970B00F9DBE1 /* DevicePropertiesTabViewController.swift */,
 				CF48B5C222AC970A00F9DBE1 /* DPAddViewController.swift */,
 				CF48B5D422AC970B00F9DBE1 /* DPBlockViewController.swift */,
+			);
+			path = "Device Properties";
+			sourceTree = "<group>";
+		};
+		CFF218D022AD5B5C002FE73E /* Kernel */ = {
+			isa = PBXGroup;
+			children = (
 				CF48B5D522AC970B00F9DBE1 /* KernelAddViewController.swift */,
 				CF48B5D722AC970C00F9DBE1 /* KernelBlockViewController.swift */,
 				CF48B5C022AC970A00F9DBE1 /* KernelPatchViewController.swift */,
 				CF48B5CA22AC970B00F9DBE1 /* KernelQuirksViewController.swift */,
 				CF48B5CB22AC970B00F9DBE1 /* KernelTabViewController.swift */,
+			);
+			path = Kernel;
+			sourceTree = "<group>";
+		};
+		CFF218D122AD5B6C002FE73E /* Misc */ = {
+			isa = PBXGroup;
+			children = (
 				CF48B5C722AC970A00F9DBE1 /* MiscBlockViewController.swift */,
 				CF48B5D622AC970C00F9DBE1 /* MiscDebugViewController.swift */,
 				CF48B5C922AC970A00F9DBE1 /* MiscSecurityViewController.swift */,
 				CF48B5D922AC970C00F9DBE1 /* MiscTabViewController.swift */,
-				CF48B5C422AC970A00F9DBE1 /* NvramAddViewController.swift */,
-				CF48B5CD22AC970B00F9DBE1 /* NvramBlockViewController.swift */,
-				CF48B5D022AC970B00F9DBE1 /* NVRAMTabViewController.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		CFF218D222AD5B77002FE73E /* Platform Info */ = {
+			isa = PBXGroup;
+			children = (
 				CF48B5CC22AC970B00F9DBE1 /* PlatformInfoDataHubViewController.swift */,
 				CF48B5BC22AC970900F9DBE1 /* PlatformInfoGeneralViewController.swift */,
 				CF48B5C322AC970A00F9DBE1 /* PlatformInfoGenericViewController.swift */,
 				CF48B5D222AC970B00F9DBE1 /* PlatformInfoNvramViewController.swift */,
 				CF48B5BA22AC970900F9DBE1 /* PlatformInfoSmbiosViewController.swift */,
 				CF48B5D122AC970B00F9DBE1 /* PlatformInfoTabViewController.swift */,
+			);
+			path = "Platform Info";
+			sourceTree = "<group>";
+		};
+		CFF218D322AD5B89002FE73E /* NVRAM */ = {
+			isa = PBXGroup;
+			children = (
+				CF48B5C422AC970A00F9DBE1 /* NvramAddViewController.swift */,
+				CF48B5CD22AC970B00F9DBE1 /* NvramBlockViewController.swift */,
+				CF48B5D022AC970B00F9DBE1 /* NVRAMTabViewController.swift */,
+			);
+			path = NVRAM;
+			sourceTree = "<group>";
+		};
+		CFF218D422AD5B95002FE73E /* UEFI */ = {
+			isa = PBXGroup;
+			children = (
 				CF48B5CE22AC970B00F9DBE1 /* UEFIDriversViewController.swift */,
 				CF48B5BF22AC970A00F9DBE1 /* UEFIQuirksViewController.swift */,
 				CF48B5C122AC970A00F9DBE1 /* UEFITabViewController.swift */,
 			);
-			path = ViewControllers;
+			path = UEFI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
