@@ -2617,6 +2617,9 @@
                             <constraint firstAttribute="bottom" secondItem="hbP-qd-IYC" secondAttribute="bottom" constant="19" id="zdx-tw-DQn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="deviceAddTable" destination="RqF-nM-wSP" id="xDO-UW-eip"/>
+                    </connections>
                 </viewController>
                 <customObject id="2JU-00-XN0" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2766,6 +2769,9 @@
                             <constraint firstItem="CLB-zP-1zP" firstAttribute="leading" secondItem="IZ6-yf-Idh" secondAttribute="leading" constant="20" symbolic="YES" id="xgo-4E-NG7"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="deviceBlockTable" destination="l9X-zJ-7Wb" id="Gza-cv-ojS"/>
+                    </connections>
                 </viewController>
                 <customObject id="SWG-Ep-KAv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

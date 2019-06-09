@@ -9,6 +9,8 @@
 import Cocoa
 
 class DPBlockViewController: NSViewController {
+    
+    @IBOutlet weak var deviceBlockTable: NSTableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -9,6 +9,8 @@
 import Cocoa
 
 class DPAddViewController: NSViewController {
+    
+    @IBOutlet weak var deviceAddTable: NSTableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()

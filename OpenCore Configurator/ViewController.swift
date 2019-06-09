@@ -46,9 +46,6 @@ class ViewController: NSViewController {
     // tables
     @IBOutlet weak var sectionsTable:NSTableView!
     
-    @IBOutlet weak var deviceAddTable: NSTableView!
-    @IBOutlet weak var deviceBlockTable: NSTableView!
-    
     @IBOutlet weak var kernelAddTable: NSTableView!
     @IBOutlet weak var kernelBlockTable: NSTableView!
     @IBOutlet weak var kernelPatchTable: NSTableView!
