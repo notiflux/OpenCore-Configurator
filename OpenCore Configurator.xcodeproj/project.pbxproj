@@ -196,9 +196,6 @@
 				810042491ECA33DF009FE633 /* Main.storyboard */,
 				8100424C1ECA33DF009FE633 /* Info.plist */,
 				7F4C29DD2269FD2900720E68 /* Extensions.swift */,
-				7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */,
-				7F9A2A6E228D9B7A00CCC12B /* acpiDifferController.swift */,
-				7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */,
 				7FF918A8227226A60081891E /* openHandlerFunctions.swift */,
 				7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */,
 				7FEADAE82295C775009800DD /* vaultManager.swift */,
@@ -292,6 +289,8 @@
 				CF48B5D822AC970C00F9DBE1 /* AcpiPatchViewController.swift */,
 				CF48B5CF22AC970B00F9DBE1 /* AcpiBlockViewController.swift */,
 				CF48B5C622AC970A00F9DBE1 /* AcpiAddViewContoller.swift */,
+				7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */,
+				7F9A2A6E228D9B7A00CCC12B /* acpiDifferController.swift */,
 			);
 			path = ACPI;
 			sourceTree = "<group>";
@@ -314,6 +313,7 @@
 				CF48B5C022AC970A00F9DBE1 /* KernelPatchViewController.swift */,
 				CF48B5CA22AC970B00F9DBE1 /* KernelQuirksViewController.swift */,
 				CF48B5CB22AC970B00F9DBE1 /* KernelTabViewController.swift */,
+				7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */,
 			);
 			path = Kernel;
 			sourceTree = "<group>";

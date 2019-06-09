@@ -208,7 +208,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="file" width="446" minWidth="446" maxWidth="1000000000" id="4nN-X4-lOI">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="File">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -245,7 +245,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="checksum" width="475" minWidth="475" maxWidth="10000000000" id="1Uh-lQ-9vd">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Checksum">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -282,7 +282,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="ok" width="34" minWidth="34" maxWidth="34" id="l3b-O8-kos">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1318,7 +1318,7 @@
         <!--Split View Controller-->
         <scene sceneID="CYe-tD-UUQ">
             <objects>
-                <splitViewController id="Ynr-OB-7cW" customClass="SplitViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController id="Ynr-OB-7cW" customClass="SplitViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="Wry-Ph-FDg"/>
                         <splitViewItem id="dag-N6-4Ol"/>
@@ -1343,7 +1343,7 @@
         <!--Master Details View Controller-->
         <scene sceneID="pdT-K0-elw">
             <objects>
-                <viewController storyboardIdentifier="masterVC" id="4IW-BK-7IE" customClass="MasterDetailsViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="masterVC" id="4IW-BK-7IE" customClass="MasterDetailsViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="gxr-A5-GVN">
                         <rect key="frame" x="0.0" y="0.0" width="290" height="253"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1363,7 +1363,7 @@
                                             <tableColumns>
                                                 <tableColumn width="285" minWidth="40" maxWidth="1000" id="OSD-gC-hpo">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -1435,7 +1435,7 @@
         <!--Detail View Controller-->
         <scene sceneID="sYD-b9-EGt">
             <objects>
-                <viewController storyboardIdentifier="detailsVC" id="mgC-wh-t1m" customClass="DetailViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="detailsVC" id="mgC-wh-t1m" customClass="DetailViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Xdo-fY-4dB">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1451,7 +1451,7 @@
         <!--Tab View Controller-->
         <scene sceneID="EY0-sa-YBJ">
             <objects>
-                <tabViewController storyboardIdentifier="acpiTabVC" selectedTabViewItemIndex="0" id="07A-Ic-bYk" customClass="ACPITabViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController storyboardIdentifier="acpiTabVC" selectedTabViewItemIndex="0" id="07A-Ic-bYk" customClass="ACPITabViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="Add" id="Ze4-vP-Zjv"/>
                         <tabViewItem label="Block" id="9dm-us-TWB"/>
@@ -1481,7 +1481,7 @@
         <!--Acpi Add View Contoller-->
         <scene sceneID="Eon-Gk-E6K">
             <objects>
-                <viewController id="HrG-QH-YM4" customClass="AcpiAddViewContoller" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="HrG-QH-YM4" customClass="AcpiAddViewContoller" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Lsk-33-B4U">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1501,7 +1501,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Comment" width="256" minWidth="40" maxWidth="1000" id="aMO-dj-JXQ">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Comment">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -1538,7 +1538,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Path" width="129" minWidth="10" maxWidth="3.4028234663852886e+38" id="Hdc-3t-Ul2">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Path">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1577,7 +1577,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="54" minWidth="10" maxWidth="3.4028234663852886e+38" id="d2P-DR-g3H">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1638,6 +1638,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addAcpiBtn:" target="HrG-QH-YM4" id="4tv-Ga-Bta"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H0f-vh-PMK" userLabel="Remove ACPI Add">
                                 <rect key="frame" x="49" y="11" width="21" height="21"/>
@@ -1648,6 +1651,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remAcpiBtn:" target="HrG-QH-YM4" id="zyq-fe-TJX"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Joe-7a-lWk" userLabel="Auto-add ACPI Patches">
                                 <rect key="frame" x="409" y="11" width="21" height="21"/>
@@ -1659,6 +1665,9 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <accessibility description="Auto-add entries for all files in OC/ACPI/Add" help="Auto-add entries for all files in OC/ACPI/Add"/>
+                                <connections>
+                                    <action selector="autoAddAcpi:" target="HrG-QH-YM4" id="rGA-us-pHr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -1682,7 +1691,7 @@
         <!--Acpi Block View Controller-->
         <scene sceneID="Tra-7Z-qMx">
             <objects>
-                <viewController id="qe0-4H-1Kh" customClass="AcpiBlockViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="qe0-4H-1Kh" customClass="AcpiBlockViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="hLP-ka-TUb">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1702,7 +1711,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Comment" width="250" minWidth="40" maxWidth="1000" id="60f-wb-RQQ">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Comment">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -1739,7 +1748,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="OemTableId" width="240" minWidth="10" maxWidth="3.4028234663852886e+38" id="q3p-pD-SWm">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="OemTableId">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1776,7 +1785,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="TableLength" width="70" minWidth="10" maxWidth="3.4028234663852886e+38" id="VIV-RF-WOS">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="TableLength">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1813,7 +1822,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="TableSignature" width="90" minWidth="10" maxWidth="3.4028234663852886e+38" id="mJC-fe-ZZg">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Table Signature">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1874,7 +1883,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="48" minWidth="10" maxWidth="3.4028234663852886e+38" id="ByW-2Y-Dex">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1906,7 +1915,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="All" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="suo-u9-Wcl">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="All">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -1998,7 +2007,7 @@
         <!--Acpi Patch View Controller-->
         <scene sceneID="hLE-J5-Qqk">
             <objects>
-                <viewController id="D9z-LZ-Q0s" customClass="AcpiPatchViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="D9z-LZ-Q0s" customClass="AcpiPatchViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="etC-iZ-lh8">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2018,7 +2027,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Comment" width="142" minWidth="40" maxWidth="1000" id="YbA-Eb-nk2">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Comment">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -2055,7 +2064,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Find" width="195" minWidth="10" maxWidth="3.4028234663852886e+38" id="Nln-oG-CrW">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Find">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2092,7 +2101,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Replace" width="195" minWidth="10" maxWidth="3.4028234663852886e+38" id="lIN-HF-bQc">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Replace">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2129,7 +2138,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="TableSignature" width="90" minWidth="10" maxWidth="3.4028234663852886e+38" id="Ll0-1r-kQi">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Table Signature">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2188,7 +2197,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="48" minWidth="10" maxWidth="3.4028234663852886e+38" id="wor-bP-Jm0">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2220,7 +2229,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="advanced" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="Nyr-aq-pvY">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Advanced">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2294,7 +2303,7 @@
         <!--Acpi Quirks View Controller-->
         <scene sceneID="bbE-NL-Vfk">
             <objects>
-                <viewController id="7ON-es-qpp" customClass="AcpiQuirksViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7ON-es-qpp" customClass="AcpiQuirksViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="mWp-r4-sfz">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2356,7 +2365,7 @@
         <!--Device Properties Tab View Controller-->
         <scene sceneID="vzg-eA-0Y6">
             <objects>
-                <tabViewController storyboardIdentifier="devicePropertiesTabVC" id="8AS-lG-XyE" customClass="DevicePropertiesTabViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController storyboardIdentifier="devicePropertiesTabVC" id="8AS-lG-XyE" customClass="DevicePropertiesTabViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="Add" id="HQ3-r3-bJl"/>
                         <tabViewItem label="Block" id="vpk-Ue-ZRS"/>
@@ -2382,7 +2391,7 @@
         <!--Add View Controller-->
         <scene sceneID="m0D-qZ-A66">
             <objects>
-                <viewController id="zfR-hR-bHN" customClass="DPAddViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zfR-hR-bHN" customClass="DPAddViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="h2H-ea-3V1">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2402,7 +2411,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="device" width="235" minWidth="40" maxWidth="1000" id="TMe-cV-5VP">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Device Path">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -2439,7 +2448,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="property" width="235" minWidth="10" maxWidth="3.4028234663852886e+38" id="zrF-Bb-F6k">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2476,7 +2485,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="235" minWidth="10" maxWidth="3.4028234663852886e+38" id="0fw-98-Ezb">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2513,7 +2522,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="edit" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="T5V-tQ-HtU">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title=" ">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2587,7 +2596,7 @@
         <!--Block View Controller-->
         <scene sceneID="BUD-hI-9pg">
             <objects>
-                <viewController id="r3N-YI-RsF" customClass="DPBlockViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="r3N-YI-RsF" customClass="DPBlockViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="IZ6-yf-Idh">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2607,7 +2616,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="device" width="369" minWidth="40" maxWidth="1000" id="ZeE-Qx-c2f">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Device Path">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -2644,7 +2653,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="property" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="L9Y-r3-Ww2">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2736,7 +2745,7 @@
         <!--Kernel Tab View Controller-->
         <scene sceneID="tUb-Ra-UMF">
             <objects>
-                <tabViewController storyboardIdentifier="kernelTabVC" id="irU-61-faS" customClass="KernelTabViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController storyboardIdentifier="kernelTabVC" id="irU-61-faS" customClass="KernelTabViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="Add" id="8WY-9S-ddq"/>
                         <tabViewItem label="Block" id="ZXU-sz-0Hy"/>
@@ -2766,7 +2775,7 @@
         <!--Kernel Add View Controller-->
         <scene sceneID="z32-1X-aiV">
             <objects>
-                <viewController id="0yj-wz-dO6" customClass="KernelAddViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="0yj-wz-dO6" customClass="KernelAddViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="omB-gZ-4OF">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2786,7 +2795,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="BundlePath" width="150" minWidth="40" maxWidth="1000" id="eFo-Aw-xVX">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Bundle Identifier">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -2823,7 +2832,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Comment" width="87" minWidth="10" maxWidth="3.4028234663852886e+38" id="9un-1D-dWS">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Comment">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2860,7 +2869,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="ExecutablePath" width="240" minWidth="10" maxWidth="3.4028234663852886e+38" id="zov-1x-QOv">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="ExecutablePath">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2897,7 +2906,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="PlistPath" width="130" minWidth="10" maxWidth="3.4028234663852886e+38" id="84r-fE-WV7">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="PlistPath">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -2934,7 +2943,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="MatchKernel" width="72" minWidth="10" maxWidth="3.4028234663852886e+38" id="btz-OR-OQ7">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="MatchKernel">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3064,7 +3073,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="9YE-IR-AEf">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3164,7 +3173,7 @@
         <!--Kernel Block View Controller-->
         <scene sceneID="ljC-2j-CHL">
             <objects>
-                <viewController id="idG-My-Y86" customClass="KernelBlockViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="idG-My-Y86" customClass="KernelBlockViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="i6I-dN-HGf">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -3184,7 +3193,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Identifier" width="295" minWidth="40" maxWidth="1000" id="pd5-DN-XW4">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Identifier">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -3221,7 +3230,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Comment" width="275" minWidth="10" maxWidth="3.4028234663852886e+38" id="xoi-jE-lfB">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Comment">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3258,7 +3267,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="MatchKernel" width="115" minWidth="10" maxWidth="3.4028234663852886e+38" id="znj-DX-rVf">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="MatchKernel">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3389,7 +3398,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="51" minWidth="10" maxWidth="3.4028234663852886e+38" id="WlN-uu-TNQ">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3476,7 +3485,7 @@
         <!--Kernel Patch View Controller-->
         <scene sceneID="YWA-2J-rdJ">
             <objects>
-                <viewController id="Tgp-lV-BxI" customClass="KernelPatchViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Tgp-lV-BxI" customClass="KernelPatchViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="I0o-lr-9VP">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -3496,7 +3505,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="Comment" width="142" minWidth="40" maxWidth="1000" id="KAw-bx-9Au">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Comment">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -3533,7 +3542,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Find" width="195" minWidth="10" maxWidth="3.4028234663852886e+38" id="nBh-aW-Ofp">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Find">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3570,7 +3579,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Replace" width="195" minWidth="10" maxWidth="3.4028234663852886e+38" id="lBp-Y0-UYe">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Replace">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3607,7 +3616,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="MatchKernel" width="90" minWidth="10" maxWidth="3.4028234663852886e+38" id="m16-GX-mk7">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="MatchKernel">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3738,7 +3747,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="Enabled" width="48" minWidth="10" maxWidth="3.4028234663852886e+38" id="pba-6Q-CiG">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Enabled">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3770,7 +3779,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="kernelAdvanced" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="r0u-Zc-7KU">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Advanced">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -3844,7 +3853,7 @@
         <!--Kernel Quirks View Controller-->
         <scene sceneID="Vlg-vb-c07">
             <objects>
-                <viewController id="5Cx-yR-2uK" customClass="KernelQuirksViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5Cx-yR-2uK" customClass="KernelQuirksViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="zdQ-w9-Lzt">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -3906,7 +3915,7 @@
         <!--Misc Tab View Controller-->
         <scene sceneID="xdS-t8-kIn">
             <objects>
-                <tabViewController storyboardIdentifier="miscTabVC" id="1if-uK-gno" customClass="MiscTabViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController storyboardIdentifier="miscTabVC" id="1if-uK-gno" customClass="MiscTabViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="Boot" id="op9-02-jwh"/>
                         <tabViewItem label="Debug" id="Oyo-co-RX4"/>
@@ -3934,7 +3943,7 @@
         <!--Misc Block View Controller-->
         <scene sceneID="Qcj-75-fsb">
             <objects>
-                <viewController id="pyq-Kt-Jl4" customClass="MiscBlockViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pyq-Kt-Jl4" customClass="MiscBlockViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="qpD-Om-3cD">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="333"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4121,7 +4130,7 @@
         <!--Misc Debug View Controller-->
         <scene sceneID="blQ-Ao-8me">
             <objects>
-                <viewController id="gEd-6U-Izk" customClass="MiscDebugViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="gEd-6U-Izk" customClass="MiscDebugViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="5eK-W8-iQ8">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4212,7 +4221,7 @@
         <!--Misc Security View Controller-->
         <scene sceneID="Q0S-K5-M2U">
             <objects>
-                <viewController id="vTu-EV-9hj" customClass="MiscSecurityViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vTu-EV-9hj" customClass="MiscSecurityViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="D1H-cE-FGw">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4291,7 +4300,7 @@
         <!--Tab View Controller-->
         <scene sceneID="eys-xU-dJu">
             <objects>
-                <tabViewController storyboardIdentifier="nvramTabVC" id="HRx-Xj-buf" customClass="NVRAMTabViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController storyboardIdentifier="nvramTabVC" id="HRx-Xj-buf" customClass="NVRAMTabViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="Add" id="ofm-9C-skU"/>
                         <tabViewItem label="Block" id="R7V-7k-oyc"/>
@@ -4317,7 +4326,7 @@
         <!--Nvram Add View Controller-->
         <scene sceneID="vFy-kZ-TbB">
             <objects>
-                <viewController id="bIi-06-OfU" customClass="NvramAddViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bIi-06-OfU" customClass="NvramAddViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="N1E-XH-XtS">
                         <rect key="frame" x="0.0" y="0.0" width="705" height="381"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4345,7 +4354,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" width="369" minWidth="40" maxWidth="1000" id="VyP-dB-8US">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4382,7 +4391,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="328" minWidth="40" maxWidth="1000" id="NeO-97-DN5">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4460,7 +4469,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" width="369" minWidth="40" maxWidth="1000" id="iCC-Nq-edg">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4497,7 +4506,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="328" minWidth="40" maxWidth="1000" id="t6L-rn-3oF">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4572,7 +4581,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="guid" width="245" minWidth="10" maxWidth="3.4028234663852886e+38" id="BuM-sb-BFU">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="GUID">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -4609,7 +4618,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="property" width="245" minWidth="40" maxWidth="1000" id="gUA-40-X6g">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4646,7 +4655,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="204" minWidth="40" maxWidth="1000" id="yTJ-kY-2X5">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4789,7 +4798,7 @@
         <!--Nvram Block View Controller-->
         <scene sceneID="VAo-9Q-t6h">
             <objects>
-                <viewController id="e2R-LO-nQE" customClass="NvramBlockViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="e2R-LO-nQE" customClass="NvramBlockViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ZQH-NO-iax">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4809,7 +4818,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="guid" width="369" minWidth="40" maxWidth="1000" id="Wpw-mR-4Rc">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="GUID">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -4846,7 +4855,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="property" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="aNX-jO-sEi">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -4938,7 +4947,7 @@
         <!--Platform Info Tab View Controller-->
         <scene sceneID="Jc3-sX-iHE">
             <objects>
-                <tabViewController storyboardIdentifier="platformInfoTabVC" id="gVh-6Q-7l0" customClass="PlatformInfoTabViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController storyboardIdentifier="platformInfoTabVC" id="gVh-6Q-7l0" customClass="PlatformInfoTabViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="General" id="G8B-CM-HJJ"/>
                         <tabViewItem label="Generic" id="540-8B-k5j"/>
@@ -4970,7 +4979,7 @@
         <!--Platform Info General View Controller-->
         <scene sceneID="GdT-X5-int">
             <objects>
-                <viewController id="6bS-OB-0Ih" customClass="PlatformInfoGeneralViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6bS-OB-0Ih" customClass="PlatformInfoGeneralViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="diE-9y-7os">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -5050,7 +5059,7 @@
         <!--Platform Info Generic View Controller-->
         <scene sceneID="vCD-k0-YBU">
             <objects>
-                <viewController id="ZTd-og-PK4" customClass="PlatformInfoGenericViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZTd-og-PK4" customClass="PlatformInfoGenericViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="0aA-s1-Gfz">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -5070,7 +5079,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" editable="NO" width="369" minWidth="40" maxWidth="1000" id="2hz-qt-7Dq">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5107,7 +5116,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="xtz-Ex-wKM">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -5197,7 +5206,7 @@
         <!--Platform Info Data Hub View Controller-->
         <scene sceneID="Sg5-zt-K91">
             <objects>
-                <viewController id="7D7-nD-351" customClass="PlatformInfoDataHubViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7D7-nD-351" customClass="PlatformInfoDataHubViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="wnS-2b-6CW">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -5217,7 +5226,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" editable="NO" width="369" minWidth="40" maxWidth="1000" id="I22-Uc-hiK">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5254,7 +5263,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="oWb-G7-79x">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -5322,7 +5331,7 @@
         <!--Platform Info Nvram View Controller-->
         <scene sceneID="nor-kM-687">
             <objects>
-                <viewController id="dHF-FU-UcX" customClass="PlatformInfoNvramViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="dHF-FU-UcX" customClass="PlatformInfoNvramViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="lrV-2S-wGj">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -5342,7 +5351,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" editable="NO" width="369" minWidth="40" maxWidth="1000" id="uNB-pd-20d">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5379,7 +5388,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="pCL-wx-7Ui">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -5447,7 +5456,7 @@
         <!--Platform Info Smbios View Controller-->
         <scene sceneID="Vcv-z7-z7e">
             <objects>
-                <viewController id="63L-Nr-bHy" customClass="PlatformInfoSmbiosViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="63L-Nr-bHy" customClass="PlatformInfoSmbiosViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="pcv-2a-uHZ">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -5467,7 +5476,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="property" editable="NO" width="369" minWidth="40" maxWidth="1000" id="rp3-Ig-gwd">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" title="Property">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5504,7 +5513,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="value" width="73" minWidth="10" maxWidth="3.4028234663852886e+38" id="ilR-Td-jlS">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" alignment="left" title="Value">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -5572,7 +5581,7 @@
         <!--Tab View Controller-->
         <scene sceneID="1lK-eN-gjf">
             <objects>
-                <tabViewController storyboardIdentifier="uefiTabVC" id="4J9-Hk-ACV" customClass="UEFITabViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController storyboardIdentifier="uefiTabVC" id="4J9-Hk-ACV" customClass="UEFITabViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="Drivers" id="zAp-cg-fBd"/>
                         <tabViewItem label="Quirks" id="d4r-Jw-7mb"/>
@@ -5598,7 +5607,7 @@
         <!--Drivers View Controller-->
         <scene sceneID="McN-OD-SFu">
             <objects>
-                <viewController id="3ME-en-nce" customClass="UEFIDriversViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3ME-en-nce" customClass="UEFIDriversViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ahQ-kj-bWZ">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -5649,7 +5658,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="driver" width="445" minWidth="40" maxWidth="1000" id="191-de-8fA">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Driver">
-                                                        <font key="font" metaFont="menu" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -5732,7 +5741,7 @@
         <!--Quirks View Controller-->
         <scene sceneID="g6H-RX-Qxr">
             <objects>
-                <viewController id="eeJ-U1-fCJ" customClass="UEFIQuirksViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="eeJ-U1-fCJ" customClass="UEFIQuirksViewController" customModule="OpenCore_Configurator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="0TX-HQ-YHp">
                         <rect key="frame" x="0.0" y="0.0" width="564" height="474"/>
                         <autoresizingMask key="autoresizingMask"/>
