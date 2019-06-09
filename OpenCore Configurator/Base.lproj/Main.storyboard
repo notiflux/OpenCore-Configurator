@@ -2594,6 +2594,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addDeviceAddBtn:" target="zfR-hR-bHN" id="sjk-3e-EDC"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wQb-lz-RC0" userLabel="Remove ACPI Add">
                                 <rect key="frame" x="49" y="18" width="21" height="21"/>
@@ -2604,6 +2607,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remDeviceAddBtn:" target="zfR-hR-bHN" id="xuq-aD-0C4"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -2746,6 +2752,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addDeviceBlockBtn:" target="r3N-YI-RsF" id="rEB-a5-oGQ"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uH6-Rk-I1E" userLabel="Remove ACPI Add">
                                 <rect key="frame" x="49" y="18" width="21" height="21"/>
@@ -2756,6 +2765,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remDeviceBlockBtn:" target="r3N-YI-RsF" id="DUd-YV-Ung"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -3164,6 +3176,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addKernelAddBtn:" target="0yj-wz-dO6" id="hf0-s1-91V"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oIc-ro-fYH" userLabel="Auto-add ACPI Patches">
                                 <rect key="frame" x="409" y="18" width="21" height="21"/>
@@ -3175,6 +3190,9 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <accessibility description="Auto-add entries for all files in OC/ACPI/Add" help="Auto-add entries for all files in OC/ACPI/Add"/>
+                                <connections>
+                                    <action selector="autoAddKernel:" target="0yj-wz-dO6" id="gFR-Jd-FC6"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jVF-uI-Hud" userLabel="Remove ACPI Add">
                                 <rect key="frame" x="49" y="18" width="21" height="21"/>
@@ -3185,6 +3203,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remKernelAddBtn:" target="0yj-wz-dO6" id="baE-Bp-hOl"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -3200,6 +3221,9 @@
                             <constraint firstItem="ZcW-Zp-Ohf" firstAttribute="leading" secondItem="omB-gZ-4OF" secondAttribute="leading" constant="20" symbolic="YES" id="mDL-yn-m59"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="kernelAddTable" destination="3S6-nr-v3e" id="nKe-S1-1ky"/>
+                    </connections>
                 </viewController>
                 <customObject id="Bvo-W1-kCN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3253,9 +3277,9 @@
                                                                 </textField>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="bbW-Bs-aDp" firstAttribute="leading" secondItem="xvw-zw-u8l" secondAttribute="leading" constant="2" id="6cn-IS-FqZ"/>
-                                                                <constraint firstItem="bbW-Bs-aDp" firstAttribute="centerX" secondItem="xvw-zw-u8l" secondAttribute="centerX" id="H1u-tG-upg"/>
-                                                                <constraint firstItem="bbW-Bs-aDp" firstAttribute="top" secondItem="xvw-zw-u8l" secondAttribute="top" id="K69-fc-yER"/>
+                                                                <constraint firstItem="bbW-Bs-aDp" firstAttribute="centerX" secondItem="xvw-zw-u8l" secondAttribute="centerX" id="Yfr-DJ-X7O"/>
+                                                                <constraint firstItem="bbW-Bs-aDp" firstAttribute="top" secondItem="xvw-zw-u8l" secondAttribute="top" id="wIU-tk-Bj3"/>
+                                                                <constraint firstItem="bbW-Bs-aDp" firstAttribute="leading" secondItem="xvw-zw-u8l" secondAttribute="leading" constant="2" id="zup-Wo-dyd"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="bbW-Bs-aDp" id="PRY-47-Ayd"/>
@@ -3290,9 +3314,9 @@
                                                                 </textField>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="seg-jc-Tj6" firstAttribute="leading" secondItem="nwf-9l-Rfn" secondAttribute="leading" constant="2" id="WM3-BJ-DJB"/>
-                                                                <constraint firstItem="seg-jc-Tj6" firstAttribute="top" secondItem="nwf-9l-Rfn" secondAttribute="top" id="bwh-ff-vur"/>
-                                                                <constraint firstItem="seg-jc-Tj6" firstAttribute="centerX" secondItem="nwf-9l-Rfn" secondAttribute="centerX" id="gDN-Hd-8NW"/>
+                                                                <constraint firstItem="seg-jc-Tj6" firstAttribute="centerX" secondItem="nwf-9l-Rfn" secondAttribute="centerX" id="9d7-wT-eNj"/>
+                                                                <constraint firstItem="seg-jc-Tj6" firstAttribute="leading" secondItem="nwf-9l-Rfn" secondAttribute="leading" constant="2" id="GdH-Kl-0xU"/>
+                                                                <constraint firstItem="seg-jc-Tj6" firstAttribute="top" secondItem="nwf-9l-Rfn" secondAttribute="top" id="o4T-fr-SKy"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="seg-jc-Tj6" id="ih2-m2-FM5"/>
@@ -3320,7 +3344,7 @@
                                                                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="cZi-6X-pN3">
                                                                     <rect key="frame" x="-2" y="18" width="117" height="75"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="117" id="pDL-6s-Kki"/>
+                                                                        <constraint firstAttribute="width" constant="117" id="cT1-GQ-Trt"/>
                                                                     </constraints>
                                                                     <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingHead" state="on" inset="2" autoenablesItems="NO" selectedItem="J3g-ZN-OcN" id="iQh-Yz-q0j">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3424,9 +3448,9 @@
                                                                 </popUpButton>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="cZi-6X-pN3" firstAttribute="top" secondItem="7Qd-Aw-BGi" secondAttribute="top" constant="-1" id="6hQ-oD-cxZ"/>
-                                                                <constraint firstAttribute="bottom" secondItem="cZi-6X-pN3" secondAttribute="bottom" constant="18" id="Ul3-Qe-vbX"/>
-                                                                <constraint firstItem="cZi-6X-pN3" firstAttribute="leading" secondItem="7Qd-Aw-BGi" secondAttribute="leading" constant="-2" id="gzP-WI-G3A"/>
+                                                                <constraint firstItem="cZi-6X-pN3" firstAttribute="top" secondItem="7Qd-Aw-BGi" secondAttribute="top" constant="-1" id="C4a-Qf-N9o"/>
+                                                                <constraint firstAttribute="bottom" secondItem="cZi-6X-pN3" secondAttribute="bottom" constant="18" id="Jsj-Id-Cfa"/>
+                                                                <constraint firstItem="cZi-6X-pN3" firstAttribute="leading" secondItem="7Qd-Aw-BGi" secondAttribute="leading" constant="-2" id="nud-nN-xBY"/>
                                                             </constraints>
                                                         </tableCellView>
                                                     </prototypeCellViews>
@@ -3457,8 +3481,8 @@
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="b2A-2V-I2t" firstAttribute="top" secondItem="MJW-Od-yDj" secondAttribute="top" constant="4" id="I2o-aj-gzC"/>
-                                                                <constraint firstItem="b2A-2V-I2t" firstAttribute="centerX" secondItem="MJW-Od-yDj" secondAttribute="centerX" id="pZB-mc-I79"/>
+                                                                <constraint firstItem="b2A-2V-I2t" firstAttribute="top" secondItem="MJW-Od-yDj" secondAttribute="top" constant="4" id="GXn-Wy-kj9"/>
+                                                                <constraint firstItem="b2A-2V-I2t" firstAttribute="centerX" secondItem="MJW-Od-yDj" secondAttribute="centerX" id="PvV-Fm-wiu"/>
                                                             </constraints>
                                                         </tableCellView>
                                                     </prototypeCellViews>
@@ -3483,35 +3507,44 @@
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oTN-is-FcR" userLabel="Add ACPI Add">
                                 <rect key="frame" x="20" y="18" width="21" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="21" id="kYf-cu-22O"/>
+                                    <constraint firstAttribute="width" constant="21" id="CQz-pM-Pye"/>
                                 </constraints>
                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BcJ-Vl-002">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addKernelBlockBtn:" target="idG-My-Y86" id="HlG-iV-jDH"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fdf-4t-FU7" userLabel="Remove ACPI Add">
                                 <rect key="frame" x="49" y="18" width="21" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="21" id="9P6-uw-oVr"/>
+                                    <constraint firstAttribute="width" constant="21" id="1ud-Se-had"/>
                                 </constraints>
                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EdJ-dL-rvT">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remKernelBlockBtn:" target="idG-My-Y86" id="7zy-y2-jMr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="yoo-Jf-eZp" firstAttribute="leading" secondItem="i6I-dN-HGf" secondAttribute="leading" id="1AF-hU-2eP"/>
-                            <constraint firstItem="oTN-is-FcR" firstAttribute="top" secondItem="yoo-Jf-eZp" secondAttribute="bottom" constant="8" symbolic="YES" id="1ie-1B-Vr1"/>
-                            <constraint firstItem="oTN-is-FcR" firstAttribute="leading" secondItem="i6I-dN-HGf" secondAttribute="leading" constant="20" symbolic="YES" id="4wl-G9-l5b"/>
-                            <constraint firstAttribute="trailing" secondItem="yoo-Jf-eZp" secondAttribute="trailing" id="HAd-5x-eXi"/>
-                            <constraint firstItem="fdf-4t-FU7" firstAttribute="leading" secondItem="oTN-is-FcR" secondAttribute="trailing" constant="8" symbolic="YES" id="aLm-rK-0VU"/>
-                            <constraint firstItem="oTN-is-FcR" firstAttribute="baseline" secondItem="fdf-4t-FU7" secondAttribute="baseline" id="gdW-n3-7AY"/>
-                            <constraint firstItem="yoo-Jf-eZp" firstAttribute="top" secondItem="i6I-dN-HGf" secondAttribute="top" id="n8O-ZH-ppj"/>
-                            <constraint firstAttribute="bottom" secondItem="oTN-is-FcR" secondAttribute="bottom" constant="19" id="yBz-0E-YUt"/>
+                            <constraint firstItem="yoo-Jf-eZp" firstAttribute="top" secondItem="i6I-dN-HGf" secondAttribute="top" id="FuR-gB-h17"/>
+                            <constraint firstAttribute="trailing" secondItem="yoo-Jf-eZp" secondAttribute="trailing" id="SIe-sM-RQR"/>
+                            <constraint firstItem="fdf-4t-FU7" firstAttribute="leading" secondItem="oTN-is-FcR" secondAttribute="trailing" constant="8" symbolic="YES" id="UHV-IF-1ZW"/>
+                            <constraint firstItem="yoo-Jf-eZp" firstAttribute="leading" secondItem="i6I-dN-HGf" secondAttribute="leading" id="gJ7-4V-gje"/>
+                            <constraint firstAttribute="bottom" secondItem="oTN-is-FcR" secondAttribute="bottom" constant="19" id="hP2-jt-wd3"/>
+                            <constraint firstItem="oTN-is-FcR" firstAttribute="baseline" secondItem="fdf-4t-FU7" secondAttribute="baseline" id="ssn-LR-W8x"/>
+                            <constraint firstItem="oTN-is-FcR" firstAttribute="top" secondItem="yoo-Jf-eZp" secondAttribute="bottom" constant="8" symbolic="YES" id="tNI-IF-yOj"/>
+                            <constraint firstItem="oTN-is-FcR" firstAttribute="leading" secondItem="i6I-dN-HGf" secondAttribute="leading" constant="20" symbolic="YES" id="vBK-Ud-8hO"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="kernelBlockTable" destination="ipz-QG-O5u" id="sP2-3I-2af"/>
+                    </connections>
                 </viewController>
                 <customObject id="ey2-UW-zE6" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3857,6 +3890,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="addKernelPatchBtn:" target="Tgp-lV-BxI" id="ARv-eX-Z2m"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z00-VT-aCi" userLabel="Remove Kernel Patch">
                                 <rect key="frame" x="49" y="18" width="21" height="21"/>
@@ -3867,6 +3903,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="remKernelPatchBtn:" target="Tgp-lV-BxI" id="iks-ao-5tW"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -3880,6 +3919,9 @@
                             <constraint firstItem="Z00-VT-aCi" firstAttribute="leading" secondItem="buU-mD-8UL" secondAttribute="trailing" constant="8" symbolic="YES" id="vRD-Na-IBJ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="kernelPatchTable" destination="LFj-hq-69B" id="gZs-Pp-vyA"/>
+                    </connections>
                 </viewController>
                 <customObject id="Jmq-4V-xUZ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3942,6 +3984,13 @@
                             <constraint firstItem="Wwh-i6-Lax" firstAttribute="top" secondItem="IKa-1p-yS0" secondAttribute="bottom" constant="20" id="x47-TD-yCV"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="AppleCpuPmCfgLock" destination="Qqs-IA-CXr" id="1e8-5B-P1S"/>
+                        <outlet property="AppleXcpmCfgLock" destination="6Xf-IA-7Md" id="3Tu-c1-dFx"/>
+                        <outlet property="ExternalDiskIcons" destination="sOp-os-ZuO" id="3qh-oM-yw4"/>
+                        <outlet property="ThirdPartyTrim" destination="IKa-1p-yS0" id="BNn-iY-C2l"/>
+                        <outlet property="XhciPortLimit" destination="Wwh-i6-Lax" id="jNR-HV-cC3"/>
+                    </connections>
                 </viewController>
                 <customObject id="Z68-Eu-P40" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

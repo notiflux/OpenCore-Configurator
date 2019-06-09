@@ -17,4 +17,10 @@ class DPBlockViewController: NSViewController {
         // Do view setup here.
     }
     
+    @IBAction func addDeviceBlockBtn(_ sender: Any) {
+        addEntryToTable(table: &deviceBlockTable, appendix: ["device": "", "property": ""])
+    }
+    @IBAction func remDeviceBlockBtn(_ sender: Any) {
+        removeEntryFromTable(table: &deviceBlockTable)
+    }
 }

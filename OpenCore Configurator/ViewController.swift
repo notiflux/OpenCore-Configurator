@@ -45,11 +45,6 @@ class ViewController: NSViewController {
     
     // tables
     @IBOutlet weak var sectionsTable:NSTableView!
-    
-    @IBOutlet weak var kernelAddTable: NSTableView!
-    @IBOutlet weak var kernelBlockTable: NSTableView!
-    @IBOutlet weak var kernelPatchTable: NSTableView!
-    
     @IBOutlet weak var nvramBootTable: NSTableView!
     @IBOutlet weak var nvramVendorTable: NSTableView!
     @IBOutlet weak var nvramCustomTable: NSTableView!
@@ -93,11 +88,7 @@ class ViewController: NSViewController {
     // @IBOutlet weak var ReinstallProtocol: NSButton!
     
     // kernel quirks
-    @IBOutlet weak var AppleCpuPmCfgLock: NSButton!
-    @IBOutlet weak var AppleXcpmCfgLock: NSButton!
-    @IBOutlet weak var ExternalDiskIcons: NSButton!
-    @IBOutlet weak var ThirdPartyTrim: NSButton!
-    @IBOutlet weak var XhciPortLimit: NSButton!
+    
     
     // uefi quirks
     @IBOutlet weak var uefiConnectDrivers: NSButton!
@@ -1252,40 +1243,10 @@ class ViewController: NSViewController {
     @IBAction func timeoutStepperAction(_ sender: NSStepper) {
         timeoutTextfield.stringValue = sender.stringValue
     }
-    
     @IBAction func timeoutTextfieldAction(_ sender: NSTextField) {
         timeoutStepper.stringValue = sender.stringValue
     }
-    @IBAction func addDeviceAddBtn(_ sender: Any) {
-        addEntryToTable(table: &deviceAddTable, appendix: ["device": "", "property": "", "value": "", "edit": ""])
-    }
-    @IBAction func remDeviceAddBtn(_ sender: Any) {
-        removeEntryFromTable(table: &deviceAddTable)
-    }
-    @IBAction func addDeviceBlockBtn(_ sender: Any) {
-        addEntryToTable(table: &deviceBlockTable, appendix: ["device": "", "property": ""])
-    }
-    @IBAction func remDeviceBlockBtn(_ sender: Any) {
-        removeEntryFromTable(table: &deviceBlockTable)
-    }
-    @IBAction func addKernelAddBtn(_ sender: Any) {
-        addEntryToTable(table: &kernelAddTable, appendix: ["BundlePath": "", "Comment": "", "ExecutablePath": "", "PlistPath": "","MatchKernel": "", "Enabled": ""])
-    }
-    @IBAction func remKernelAddBtn(_ sender: Any) {
-        removeEntryFromTable(table: &kernelAddTable)
-    }
-    @IBAction func addKernelBlockBtn(_ sender: Any) {
-        addEntryToTable(table: &kernelBlockTable, appendix: ["Identifier": "", "Comment": "", "MatchKernel": "", "Enabled": ""])
-    }
-    @IBAction func remKernelBlockBtn(_ sender: Any) {
-        removeEntryFromTable(table: &kernelBlockTable)
-    }
-    @IBAction func addKernelPatchBtn(_ sender: Any) {
-        addEntryToTable(table: &kernelPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "MatchKernel": "", "Enabled": "", "kernelAdvanced": "", "Base": "", "Count": "", "Identifier": "", "Limit": "", "Mask": "", "ReplaceMask": "", "Skip": ""])
-    }
-    @IBAction func remKernelPatchBtn(_ sender: Any) {
-        removeEntryFromTable(table: &kernelPatchTable)
-    }
+    
     @IBAction func addNvramBootBtn(_ sender: Any) {
         addEntryToTable(table: &nvramBootTable, appendix: ["property": "", "value": ""])
     }
@@ -1352,19 +1313,6 @@ class ViewController: NSViewController {
     
     func addBytes(current: UInt8) throws {
         checksum &+= current
-    }
-    
-    @IBAction func autoAddKernel(_ sender: Any) {
-        if mountedESP != "" {
-            let execLookup = recursiveKexts(path: "\(mountedESP)/EFI/OC/Kexts")
-            for kext in Array(execLookup!.keys) {
-                tableLookup[kernelAddTable]!.append(["Comment": "", "BundlePath": kext, "Enabled": "1", "ExecutablePath": "\(execLookup![kext]!)", "MatchKernel": "", "PlistPath": "Contents/Info.plist"])
-            }
-            tableLookup[kernelAddTable]! = tableLookup[kernelAddTable]!.sorted { $0.values[$0.keys.firstIndex(of: "BundlePath")!] < $1.values[$1.keys.firstIndex(of: "BundlePath")!] }
-            kernelAddTable.reloadData()
-        } else {
-            espWarning()
-        }
     }
     
     @IBAction func autoAddUefi(_ sender: Any) {

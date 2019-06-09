@@ -16,5 +16,11 @@ class DPAddViewController: NSViewController {
         super.viewDidLoad()
         // Do view setup here.
     }
+    @IBAction func addDeviceAddBtn(_ sender: Any) {
+        addEntryToTable(table: &deviceAddTable, appendix: ["device": "", "property": "", "value": "", "edit": ""])
+    }
     
+    @IBAction func remDeviceAddBtn(_ sender: Any) {
+        removeEntryFromTable(table: &deviceAddTable)
+    }
 }
