@@ -1272,12 +1272,6 @@ class ViewController: NSViewController {
     @IBAction func timeoutTextfieldAction(_ sender: NSTextField) {
         timeoutStepper.stringValue = sender.stringValue
     }
-    @IBAction func blockAcpiBtn(_ sender: Any) {
-        addEntryToTable(table: &acpiBlockTable, appendix: ["Comment": "", "OemTableId": "", "TableLength": "", "TableSignature": "DSDT","Enabled": "", "All": ""])
-    }
-    @IBAction func remBlockAcpiBtn(_ sender: Any) {
-        removeEntryFromTable(table: &acpiBlockTable)
-    }
     @IBAction func addPatchAcpiBtn(_ sender: Any) {
         addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "DSDT", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": "", "Count": ""])
     }
