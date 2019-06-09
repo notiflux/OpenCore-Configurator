@@ -10,6 +10,8 @@ import Cocoa
 
 class KernelBlockViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var kernelBlockTable: NSTableView!
 
     override func viewDidLoad() {
@@ -18,9 +20,9 @@ class KernelBlockViewController: NSViewController {
     }
     
     @IBAction func addKernelBlockBtn(_ sender: Any) {
-        addEntryToTable(table: &kernelBlockTable, appendix: ["Identifier": "", "Comment": "", "MatchKernel": "", "Enabled": ""])
+        masterVC!.addEntryToTable(table: &kernelBlockTable, appendix: ["Identifier": "", "Comment": "", "MatchKernel": "", "Enabled": ""])
     }
     @IBAction func remKernelBlockBtn(_ sender: Any) {
-        removeEntryFromTable(table: &kernelBlockTable)
+        masterVC!.removeEntryFromTable(table: &kernelBlockTable)
     }
 }

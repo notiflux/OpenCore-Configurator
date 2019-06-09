@@ -16,7 +16,8 @@ class AcpiPatchViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        // allow row reordering for kexts + acpi pactches table
+//        acpiPatchTable.registerForDraggedTypes([masterVC!.dragDropAcpiPatch])
     }
     
     @IBAction func addPatchAcpiBtn(_ sender: Any) {

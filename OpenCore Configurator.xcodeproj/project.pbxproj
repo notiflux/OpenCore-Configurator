@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7F3AAC182279BB55006644AD /* saveHandlerFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */; };
-		7F4C29DE2269FD2900720E68 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C29DD2269FD2900720E68 /* Extensions.swift */; };
 		7F4C29E2226A130A00720E68 /* AcpiPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */; };
 		7F8A7D722283605900EEB165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 810042471ECA33DF009FE633 /* Assets.xcassets */; };
 		7F961CCC2270974E007F0BBE /* KernelPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */; };
@@ -17,7 +16,6 @@
 		7FEADAE92295C775009800DD /* vaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEADAE82295C775009800DD /* vaultManager.swift */; };
 		7FF918A9227226A60081891E /* openHandlerFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF918A8227226A60081891E /* openHandlerFunctions.swift */; };
 		810042441ECA33DF009FE633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042431ECA33DF009FE633 /* AppDelegate.swift */; };
-		810042461ECA33DF009FE633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810042451ECA33DF009FE633 /* ViewController.swift */; };
 		8100424B1ECA33DF009FE633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 810042491ECA33DF009FE633 /* Main.storyboard */; settings = {ASSET_TAGS = (0, ); }; };
 		902199162290CD6F00C7A73D /* iasl62 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 902199102290CD2700C7A73D /* iasl62 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		902199172290CD6F00C7A73D /* macserial in CopyFiles */ = {isa = PBXBuildFile; fileRef = 902199112290CD2700C7A73D /* macserial */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -59,6 +57,7 @@
 		CF48B5F722AC970C00F9DBE1 /* KernelBlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5D722AC970C00F9DBE1 /* KernelBlockViewController.swift */; };
 		CF48B5F822AC970C00F9DBE1 /* AcpiPatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5D822AC970C00F9DBE1 /* AcpiPatchViewController.swift */; };
 		CF48B5F922AC970C00F9DBE1 /* MiscTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF48B5D922AC970C00F9DBE1 /* MiscTabViewController.swift */; };
+		CF60920922ADB02B00223C90 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF60920822ADB02B00223C90 /* MainWindowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,7 +86,6 @@
 
 /* Begin PBXFileReference section */
 		7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saveHandlerFunctions.swift; sourceTree = "<group>"; };
-		7F4C29DD2269FD2900720E68 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7F4C29E1226A130A00720E68 /* AcpiPopoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcpiPopoverController.swift; sourceTree = "<group>"; };
 		7F961CCB2270974E007F0BBE /* KernelPopoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelPopoverController.swift; sourceTree = "<group>"; };
 		7F9A2A6E228D9B7A00CCC12B /* acpiDifferController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acpiDifferController.swift; sourceTree = "<group>"; };
@@ -97,7 +95,6 @@
 		7FF918A8227226A60081891E /* openHandlerFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openHandlerFunctions.swift; sourceTree = "<group>"; };
 		810042401ECA33DF009FE633 /* OpenCore Configurator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OpenCore Configurator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		810042431ECA33DF009FE633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		810042451ECA33DF009FE633 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		810042471ECA33DF009FE633 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8100424A1ECA33DF009FE633 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8100424C1ECA33DF009FE633 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,6 +140,7 @@
 		CF48B5D722AC970C00F9DBE1 /* KernelBlockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KernelBlockViewController.swift; sourceTree = "<group>"; };
 		CF48B5D822AC970C00F9DBE1 /* AcpiPatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcpiPatchViewController.swift; sourceTree = "<group>"; };
 		CF48B5D922AC970C00F9DBE1 /* MiscTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscTabViewController.swift; sourceTree = "<group>"; };
+		CF60920822ADB02B00223C90 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,11 +189,10 @@
 				CF48B5C822AC970A00F9DBE1 /* DetailViewController.swift */,
 				CF48B5BD22AC970900F9DBE1 /* SplitViewController.swift */,
 				CF48B5BE22AC970900F9DBE1 /* MasterDetailsViewController.swift */,
-				810042451ECA33DF009FE633 /* ViewController.swift */,
 				810042471ECA33DF009FE633 /* Assets.xcassets */,
 				810042491ECA33DF009FE633 /* Main.storyboard */,
+				CF60920822ADB02B00223C90 /* MainWindowController.swift */,
 				8100424C1ECA33DF009FE633 /* Info.plist */,
-				7F4C29DD2269FD2900720E68 /* Extensions.swift */,
 				7FF918A8227226A60081891E /* openHandlerFunctions.swift */,
 				7F3AAC172279BB55006644AD /* saveHandlerFunctions.swift */,
 				7FEADAE82295C775009800DD /* vaultManager.swift */,
@@ -485,7 +482,6 @@
 				CF48B5F122AC970C00F9DBE1 /* PlatformInfoTabViewController.swift in Sources */,
 				CF48B5F222AC970C00F9DBE1 /* PlatformInfoNvramViewController.swift in Sources */,
 				7FF918A9227226A60081891E /* openHandlerFunctions.swift in Sources */,
-				810042461ECA33DF009FE633 /* ViewController.swift in Sources */,
 				CF48B5E022AC970C00F9DBE1 /* KernelPatchViewController.swift in Sources */,
 				CF48B5E822AC970C00F9DBE1 /* DetailViewController.swift in Sources */,
 				CF48B5EB22AC970C00F9DBE1 /* KernelTabViewController.swift in Sources */,
@@ -496,7 +492,6 @@
 				CF48B5F922AC970C00F9DBE1 /* MiscTabViewController.swift in Sources */,
 				CF48B5DC22AC970C00F9DBE1 /* PlatformInfoGeneralViewController.swift in Sources */,
 				CF48B5F622AC970C00F9DBE1 /* MiscDebugViewController.swift in Sources */,
-				7F4C29DE2269FD2900720E68 /* Extensions.swift in Sources */,
 				CF48B5E122AC970C00F9DBE1 /* UEFITabViewController.swift in Sources */,
 				CF48B5DB22AC970C00F9DBE1 /* AcpiQuirksViewController.swift in Sources */,
 				7F4C29E2226A130A00720E68 /* AcpiPopoverController.swift in Sources */,
@@ -510,6 +505,7 @@
 				CF48B5EF22AC970C00F9DBE1 /* AcpiBlockViewController.swift in Sources */,
 				CF48B5E922AC970C00F9DBE1 /* MiscSecurityViewController.swift in Sources */,
 				CF48B5DF22AC970C00F9DBE1 /* UEFIQuirksViewController.swift in Sources */,
+				CF60920922ADB02B00223C90 /* MainWindowController.swift in Sources */,
 				CF48B5DD22AC970C00F9DBE1 /* SplitViewController.swift in Sources */,
 				CF48B5E322AC970C00F9DBE1 /* PlatformInfoGenericViewController.swift in Sources */,
 				CF48B5F322AC970C00F9DBE1 /* DevicePropertiesTabViewController.swift in Sources */,

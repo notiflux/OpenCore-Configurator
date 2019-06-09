@@ -4,6 +4,38 @@ public var kernelCurrentTextField: NSTextField = NSTextField()
 
 class KernelPopoverController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    var acpiTabVC: ACPITabViewController?
+    var acpiAddVC: AcpiAddViewContoller?
+    var acpiBlockVC: AcpiBlockViewController?
+    var acpiPatchVC: AcpiPatchViewController?
+    var acpiQuirksVC: AcpiQuirksViewController?
+    var devicePropertiesTabVC: DevicePropertiesTabViewController?
+    var devicePropertiesAddVC: DPAddViewController?
+    var devicePropertiesBlockVC: DPBlockViewController?
+    var kernelTabVC: KernelTabViewController?
+    var kernelAddVC: KernelAddViewController?
+    var kernelBlockVC: KernelBlockViewController?
+    var kernelPatchVC: KernelPatchViewController?
+    var kernelQuirksVC: KernelQuirksViewController?
+    var miscTabVC: MiscTabViewController?
+    var miscBootVC: MiscBootViewController?
+    var miscDebugVC: MiscDebugViewController?
+    var miscSecurityVC: MiscSecurityViewController?
+    var nvramTabVC: NVRAMTabViewController?
+    var nvramAddVC: NvramAddViewController?
+    var nvramBlockVC: NvramBlockViewController?
+    var platformInfoTabVC: PlatformInfoTabViewController?
+    var platformInfoGeneralVC: PlatformInfoGeneralViewController?
+    var platformInfoGenericVC: PlatformInfoGenericViewController?
+    var platformInfoDataHubVC: PlatformInfoDataHubViewController?
+    var platformInfoNvramVC: PlatformInfoNvramViewController?
+    var platformInfoSmbiosVC: PlatformInfoSmbiosViewController?
+    var uefiTabVC: UEFITabViewController?
+    var uefiDriversVC: UEFIDriversViewController?
+    var uefiQuirksVC: UEFIQuirksViewController?
+    var detailsVC: DetailViewController?
+    
     @IBOutlet weak var baseText: NSTextField!
     @IBOutlet weak var countText: NSTextField!
     @IBOutlet weak var identifierText: NSTextField!

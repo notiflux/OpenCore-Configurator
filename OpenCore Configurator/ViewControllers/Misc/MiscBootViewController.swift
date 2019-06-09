@@ -10,6 +10,8 @@ import Cocoa
 
 class MiscBootViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var timeoutTextfield: NSTextField!
     @IBOutlet weak var timeoutStepper: NSStepper!
     @IBOutlet weak var showPicker: NSButton!

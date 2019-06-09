@@ -10,20 +10,23 @@ import Cocoa
 
 class UEFIDriversViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var uefiDriverTable: NSTableView!
     @IBOutlet weak var uefiAutoBtn: NSButton!
     @IBOutlet weak var uefiConnectDrivers: NSButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        
+        uefiAutoBtn.toolTip = "Automatically check and add entries for all UEFI drivers in EFI/OC/Drivers"
     }
     
     @IBAction func addUefiDriverBtn(_ sender: Any) {
-        addEntryToTable(table: &uefiDriverTable, appendix: ["driver": ""])
+        masterVC!.addEntryToTable(table: &uefiDriverTable, appendix: ["driver": ""])
     }
     @IBAction func remUefiDriverBtn(_ sender: Any) {
-        removeEntryFromTable(table: &uefiDriverTable)
+        masterVC!.removeEntryFromTable(table: &uefiDriverTable)
     }
     @IBAction func autoAddUefi(_ sender: Any) {
         if mountedESP != "" {
@@ -35,7 +38,6 @@ class UEFIDriversViewController: NSViewController {
                 for i in fileURLs {
                     filenames.append(i.lastPathComponent)
                 }
-                
                 for file in filenames {
                     tableLookup[uefiDriverTable]!.append(["driver": file])
                 }
@@ -44,7 +46,7 @@ class UEFIDriversViewController: NSViewController {
                 print("Error while enumerating files \(acpiUrl.path): \(error.localizedDescription)")
             }
         } else {
-            espWarning()
+            masterVC!.espWarning()
         }
     }
 }

@@ -10,6 +10,8 @@ import Cocoa
 
 class PlatformInfoNvramViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var platformNvramTable: NSTableView!
 
     override func viewDidLoad() {

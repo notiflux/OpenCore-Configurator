@@ -10,6 +10,8 @@ import Cocoa
 
 class DPAddViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var deviceAddTable: NSTableView!
 
     override func viewDidLoad() {
@@ -17,10 +19,10 @@ class DPAddViewController: NSViewController {
         // Do view setup here.
     }
     @IBAction func addDeviceAddBtn(_ sender: Any) {
-        addEntryToTable(table: &deviceAddTable, appendix: ["device": "", "property": "", "value": "", "edit": ""])
+        masterVC!.addEntryToTable(table: &deviceAddTable, appendix: ["device": "", "property": "", "value": "", "edit": ""])
     }
     
     @IBAction func remDeviceAddBtn(_ sender: Any) {
-        removeEntryFromTable(table: &deviceAddTable)
+        masterVC!.removeEntryFromTable(table: &deviceAddTable)
     }
 }

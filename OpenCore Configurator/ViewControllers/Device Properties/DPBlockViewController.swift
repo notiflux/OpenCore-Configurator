@@ -10,6 +10,8 @@ import Cocoa
 
 class DPBlockViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var deviceBlockTable: NSTableView!
 
     override func viewDidLoad() {
@@ -18,9 +20,9 @@ class DPBlockViewController: NSViewController {
     }
     
     @IBAction func addDeviceBlockBtn(_ sender: Any) {
-        addEntryToTable(table: &deviceBlockTable, appendix: ["device": "", "property": ""])
+        masterVC!.addEntryToTable(table: &deviceBlockTable, appendix: ["device": "", "property": ""])
     }
     @IBAction func remDeviceBlockBtn(_ sender: Any) {
-        removeEntryFromTable(table: &deviceBlockTable)
+        masterVC!.removeEntryFromTable(table: &deviceBlockTable)
     }
 }

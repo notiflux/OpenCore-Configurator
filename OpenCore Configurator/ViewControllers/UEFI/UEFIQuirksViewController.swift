@@ -10,6 +10,8 @@ import Cocoa
 
 class UEFIQuirksViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var IgnoreTextInGraphics: NSButton!
     @IBOutlet weak var IgnoreInvalidFlexRatio: NSButton!
     @IBOutlet weak var ProvideConsoleGop: NSButton!

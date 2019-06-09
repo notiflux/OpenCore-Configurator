@@ -10,6 +10,8 @@ import Cocoa
 
 class NvramBlockViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var nvramBlockTable: NSTableView!
 
     override func viewDidLoad() {
@@ -18,9 +20,9 @@ class NvramBlockViewController: NSViewController {
     }
     
     @IBAction func addNvramBlockBtn(_ sender: Any) {
-        addEntryToTable(table: &nvramBlockTable, appendix: ["guid": "", "property": ""])
+        masterVC!.addEntryToTable(table: &nvramBlockTable, appendix: ["guid": "", "property": ""])
     }
     @IBAction func remNvramBlockBtn(_ sender: Any) {
-        removeEntryFromTable(table: &nvramBlockTable)
+        masterVC!.removeEntryFromTable(table: &nvramBlockTable)
     }
 }

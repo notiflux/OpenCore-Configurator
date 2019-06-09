@@ -42,14 +42,40 @@ public var allPatchesApplied: String = String()
 
 class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
     
+    @IBOutlet weak var sectionsTable:NSTableView!
     @IBOutlet weak var espPopup: NSPopUpButton!
     @IBOutlet var masterDetailView: NSView!
     @IBOutlet var tableView: NSTableView!
     
     var acpiTabVC: ACPITabViewController?
+    var acpiAddVC: AcpiAddViewContoller?
+    var acpiBlockVC: AcpiBlockViewController?
+    var acpiPatchVC: AcpiPatchViewController?
+    var acpiQuirksVC: AcpiQuirksViewController?
     var devicePropertiesTabVC: DevicePropertiesTabViewController?
+    var devicePropertiesAddVC: DPAddViewController?
+    var devicePropertiesBlockVC: DPBlockViewController?
     var kernelTabVC: KernelTabViewController?
+    var kernelAddVC: KernelAddViewController?
+    var kernelBlockVC: KernelBlockViewController?
+    var kernelPatchVC: KernelPatchViewController?
+    var kernelQuirksVC: KernelQuirksViewController?
     var miscTabVC: MiscTabViewController?
+    var miscBootVC: MiscBootViewController?
+    var miscDebugVC: MiscDebugViewController?
+    var miscSecurityVC: MiscSecurityViewController?
+    var nvramTabVC: NVRAMTabViewController?
+    var nvramAddVC: NvramAddViewController?
+    var nvramBlockVC: NvramBlockViewController?
+    var platformInfoTabVC: PlatformInfoTabViewController?
+    var platformInfoGeneralVC: PlatformInfoGeneralViewController?
+    var platformInfoGenericVC: PlatformInfoGenericViewController?
+    var platformInfoDataHubVC: PlatformInfoDataHubViewController?
+    var platformInfoNvramVC: PlatformInfoNvramViewController?
+    var platformInfoSmbiosVC: PlatformInfoSmbiosViewController?
+    var uefiTabVC: UEFITabViewController?
+    var uefiDriversVC: UEFIDriversViewController?
+    var uefiQuirksVC: UEFIQuirksViewController?
     var detailsVC: DetailViewController?
     var itemsList = ["ACPI", "Device Properties", "Kernel", "Misc", "NVRAM", "Platform Info", "UEFI"]
     var wasMounted = false
@@ -70,70 +96,42 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resetTables()   // initialize table datasources
+//        resetTables()   // initialize table datasources
         
         for table in Array(tableLookup.keys) {              // setup table delegate and datasource
             table.delegate = self as NSTableViewDelegate
             table.dataSource = self
         }
         
-        kernelAddTable.registerForDraggedTypes([dragDropKernelAdd])      // allow row reordering for kexts + acpi pactches table
-        acpiPatchTable.registerForDraggedTypes([dragDropAcpiPatch])
-        kernelPatchTable.registerForDraggedTypes([dragDropKernelPatch])
-        acpiAddTable.registerForDraggedTypes([dragDropAcpiAdd])
-        
-        sectionsTable.action = #selector(onItemClicked)     // on section selection
-        
-        viewLookup = [
-            0: acpiTab,
-            1: deviceTab,
-            2: kernelTab,
-            3: miscTab,
-            4: nvramTab,
-            5: platformTab,
-            6: uefiTab
-        ]
-        
-        acpiQuirks = [
-            "FadtEnableReset": self.FadtEnableReset,
-            "IgnoreForWindows": self.IgnoreForWindows,
-            "NormalizeHeaders": self.NormalizeHeaders,
-            "RebaseRegions": self.RebaseRegions,
-            "ResetLogoStatus": self.ResetLogoStatus
-        ]
+//        sectionsTable.action = #selector(onItemClicked)     // on section selection
         
         /*deviceQuirks = [
          "ReinstallProtocol": self.ReinstallProtocol
          ]*/
         
-        kernelQuirks = [
-            "AppleCpuPmCfgLock": self.AppleCpuPmCfgLock,
-            "AppleXcpmCfgLock": self.AppleXcpmCfgLock,
-            "ExternalDiskIcons": self.ExternalDiskIcons,
-            "ThirdPartyTrim": self.ThirdPartyTrim,
-            "XhciPortLimit": self.XhciPortLimit
-        ]
-        
-        uefiQuirks = [
-            "IgnoreTextInGraphics": self.IgnoreTextInGraphics,
-            "IgnoreInvalidFlexRatio": self.IgnoreInvalidFlexRatio,
-            "ProvideConsoleGop": self.ProvideConsoleGop,
-            "ReleaseUsbOwnership": self.ReleaseUsbOwnership,
-            "RequestBootVarRouting": self.RequestBootVarRouting,
-            "SanitiseClearScreen": self.SanitiseClearScreen
-        ]
-        
-        uefiProtocols = [
-            "AppleBootPolicy": self.AppleBootPolicy,
-            "ConsoleControl": self.ConsoleControl,
-            "DataHub": self.DataHub,
-            "DeviceProperties": self.DeviceProperties
-        ]
-        
-        kernelAutoBtn.toolTip = "Automatically check and add entries for all KEXTs in EFI/OC/Kexts"
-        platformAutoBtn.toolTip = "Select an SMBIOS preset"
-        uefiAutoBtn.toolTip = "Automatically check and add entries for all UEFI drivers in EFI/OC/Drivers"
-        
+//        kernelQuirks = [
+//            "AppleCpuPmCfgLock": self.kernelQuirksVC!.AppleCpuPmCfgLock,
+//            "AppleXcpmCfgLock": self.kernelQuirksVC!.AppleXcpmCfgLock,
+//            "ExternalDiskIcons": self.kernelQuirksVC!.ExternalDiskIcons,
+//            "ThirdPartyTrim": self.kernelQuirksVC!.ThirdPartyTrim,
+//            "XhciPortLimit": self.kernelQuirksVC!.XhciPortLimit
+//        ]
+//
+//        uefiQuirks = [
+//            "IgnoreTextInGraphics": self.uefiQuirksVC!.IgnoreTextInGraphics,
+//            "IgnoreInvalidFlexRatio": self.uefiQuirksVC!.IgnoreInvalidFlexRatio,
+//            "ProvideConsoleGop": self.uefiQuirksVC!.ProvideConsoleGop,
+//            "ReleaseUsbOwnership": self.uefiQuirksVC!.ReleaseUsbOwnership,
+//            "RequestBootVarRouting": self.uefiQuirksVC!.RequestBootVarRouting,
+//            "SanitiseClearScreen": self.uefiQuirksVC!.SanitiseClearScreen
+//        ]
+//
+//        uefiProtocols = [
+//            "AppleBootPolicy": self.uefiQuirksVC!.AppleBootPolicy,
+//            "ConsoleControl": self.uefiQuirksVC!.ConsoleControl,
+//            "DataHub": self.uefiQuirksVC!.DataHub,
+//            "DeviceProperties": self.uefiQuirksVC!.DeviceProperties
+//        ]
         NotificationCenter.default.addObserver(self, selector: #selector(onPlistOpen(_:)), name: .plistOpen, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onPlistSave(_:)), name: .plistSave, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onAcpiSyncPopover(_:)), name: .syncAcpiPopoverAndDict, object: nil)
@@ -149,10 +147,10 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
     
     override func keyDown(with event: NSEvent) {
         if (event.keyCode == 49){
-            if sectionsTable.selectedRow == 0, (viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as? NSTableView ?? NSTableView()) == acpiPatchTable {
-                if acpiPatchTable.selectedRow != -1 {
+            if sectionsTable.selectedRow == 0, (viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as? NSTableView ?? NSTableView()) == acpiPatchVC!.acpiPatchTable {
+                if acpiPatchVC!.acpiPatchTable.selectedRow != -1 {
                     let iaslPath = Bundle.main.path(forAuxiliaryExecutable: "iasl62")!
-                    let currentRow = tableLookup[acpiPatchTable]![acpiPatchTable.selectedRow]
+                    let currentRow = tableLookup[acpiPatchVC!.acpiPatchTable]![acpiPatchVC!.acpiPatchTable.selectedRow]
                     if currentRow["Find"]! != "", currentRow["Replace"]! != "", currentRow["TableSignature"]! != "" {       // only show differ if fields aren't empty
                         currentTableData = acpiTables.value(forKey: currentRow["TableSignature"]!) as? Data ?? Data()     // get apci table for patch
                         var beforeString = ""
@@ -184,9 +182,9 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
                         currentTable = currentRow["TableSignature"]!        // set global variables for use in acpiDifferController
                         currentFind = String(data: Data(hexString: currentRow["Find"]!) ?? Data(), encoding: .ascii) ?? "??"
                         currentReplace = String(data: Data(hexString: currentRow["Replace"]!) ?? Data(), encoding: .ascii) ?? "??"
-                        let acpiDifferVc = acpiDifferController.loadFromNib()
-                        acpiDifferVc.showPopover(bounds: view.bounds, window: view)
-                        acpiDifferVc.populatePopover(before: beforeString, after: afterString)
+//                        let acpiDifferVc = acpiDifferController.loadFromNib()
+//                        acpiDifferVc.showPopover(bounds: view.bounds, window: view)
+//                        acpiDifferVc.populatePopover(before: beforeString, after: afterString)
                     }
                 }
             }
@@ -198,7 +196,7 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
     @objc func openVaultManager(_ notification: Notification) {
         if mountedESP != "" {
             let vault = openCoreVault()
-            vaultWindow = vault.showVaultManager(vaultEnabled: miscRequireVault.state.rawValue)
+            vaultWindow = vault.showVaultManager(vaultEnabled: miscSecurityVC!.miscRequireVault.state.rawValue)
             view.window!.beginSheet(vaultWindow!, completionHandler: nil)
         } else {
             messageBox(message: "No EFI partition selected", info: "Please select an EFI partition from the dropdown menu.")
@@ -212,7 +210,7 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
     }
     
     @objc func applyAllPatches(_ notification: Notification) {
-        for entry in tableLookup[acpiPatchTable]! {
+        for entry in tableLookup[acpiPatchVC!.acpiPatchTable]! {
             if entry["TableSignature"] == currentTable {
                 currentTableData = currentTableData.replaceSubranges(of: entry["Find"]!, with: entry["Replace"]!, skip: Int(entry["Skip"]!) ?? 0, count: Int(entry["Count"]!) ?? 0, limit: Int(entry["Limit"]!) ?? 0)
             }
@@ -324,134 +322,134 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
                 return (mountedVolume.volumeName, efiPartition.deviceIdentifier)
         }
         
-        // Populate the drives dictionary
-        drivesDict = Dictionary(uniqueKeysWithValues: espsForPartitions + espsForVolumes)
-        
-        // Reset the ESP pop-up menu
-        espPopup.removeAllItems()
-        espPopup.addItem(withTitle: "Select an EFI partition…")
-        espPopup.menu?.addItem(NSMenuItem.separator())
-        
-        // Populate the pop-up menu
-        drivesDict.keys.forEach(espPopup.addItem(withTitle:))
+//        // Populate the drives dictionary
+//        drivesDict = Dictionary(uniqueKeysWithValues: espsForPartitions + espsForVolumes)
+//        
+//        // Reset the ESP pop-up menu
+//        espPopup.removeAllItems()
+//        espPopup.addItem(withTitle: "Select an EFI partition…")
+//        espPopup.menu?.addItem(NSMenuItem.separator())
+//        
+//        // Populate the pop-up menu
+//        drivesDict.keys.forEach(espPopup.addItem(withTitle:))
     }
     
-    func resetTables() {
-        tableLookup = [             // lookup table holding the datasources to the tableviews
-            sectionsTable: [["section": "ACPI"],["section": "Device Properties"],["section": "Kernel"],["section": "Misc"],["section": "NVRAM"],["section": "Platform Info"],["section": "UEFI"]],
-            acpiAddTable: [[String: String]](),
-            acpiBlockTable: [[String: String]](),
-            acpiPatchTable: [[String: String]](),
-            deviceAddTable: [[String: String]](),
-            deviceBlockTable: [[String: String]](),
-            kernelAddTable: [[String: String]](),
-            kernelBlockTable: [[String: String]](),
-            kernelPatchTable: [[String: String]](),
-            nvramBootTable: [[String: String]](),
-            nvramVendorTable: [[String: String]](),
-            nvramCustomTable: [[String: String]](),
-            nvramBlockTable: [[String: String]](),
-            uefiDriverTable: [[String: String]](),
-            platformSmbiosTable: [["property": "BIOSVendor", "value": ""],
-                                  ["property": "BIOSVersion", "value": ""],
-                                  ["property": "BIOSReleaseDate", "value": ""],
-                                  ["property": "SystemManufacturer", "value": ""],
-                                  ["property": "SystemProductName", "value": ""],
-                                  ["property": "SystemVersion", "value": ""],
-                                  ["property": "SystemSerialNumber", "value": ""],
-                                  ["property": "SystemUUID", "value": ""],
-                                  ["property": "SystemSKUNumber", "value": ""],
-                                  ["property": "SystemFamily", "value": ""],
-                                  ["property": "BoardManufacturer", "value": ""],
-                                  ["property": "BoardProduct", "value": ""],
-                                  ["property": "BoardVersion", "value": ""],
-                                  ["property": "BoardSerialNumber", "value": ""],
-                                  ["property": "BoardAssetTag", "value": ""],
-                                  ["property": "BoardType", "value": ""],
-                                  ["property": "BoardLocationInChassis", "value": ""],
-                                  ["property": "ChassisManufacturer", "value": ""],
-                                  ["property": "ChassisType", "value": ""],
-                                  ["property": "ChassisVersion", "value": ""],
-                                  ["property": "ChassisSerialNumber", "value": ""],
-                                  ["property": "ChassisAssetTag", "value": ""],
-                                  ["property": "PlatformFeature", "value": ""],
-                                  ["property": "FirmwareFeatures", "value": ""],
-                                  ["property": "FirmwareFeaturesMask", "value": ""],
-                                  ["property": "ProcessorType", "value": ""],
-                                  ["property": "MemoryFormFactor", "value": ""]],
-            
-            platformDatahubTable: [["property": "ARTFrequency", "value": ""],
-                                   ["property": "BoardProduct", "value": ""],
-                                   ["property": "BoardRevision", "value": ""],
-                                   ["property": "DevicePathsSupported", "value": ""],
-                                   ["property": "FSBFrequency", "value": ""],
-                                   ["property": "InitialTSC", "value": ""],
-                                   ["property": "PlatformName", "value": ""],
-                                   ["property": "SmcBranch", "value": ""],
-                                   ["property": "SmcPlatform", "value": ""],
-                                   ["property": "SmcRevision", "value": ""],
-                                   ["property": "StartupPowerEvents", "value": ""],
-                                   ["property": "SystemProductName", "value": ""],
-                                   ["property": "SystemSerialNumber", "value": ""],
-                                   ["property": "SystemUUID", "value": ""]],
-            
-            platformGenericTable: [["property": "SystemUUID", "value": ""],
-                                   ["property": "MLB", "value": ""],
-                                   ["property": "ROM", "value": ""],
-                                   ["property": "SystemProductName", "value": ""],
-                                   ["property": "SystemSerialNumber", "value": ""]],
-            
-            platformNvramTable: [["property": "BID", "value": ""],
-                                 ["property": "MLB", "value": ""],
-                                 ["property": "ROM", "value": ""],
-                                 ["property": "FirmwareFeatures", "value": ""],
-                                 ["property": "FirmwareFeaturesMask", "value": ""]]
-        ]
-    }
+//    func resetTables() {
+//        tableLookup = [             // lookup table holding the datasources to the tableviews
+////            sectionsTable: [["section": "ACPI"],["section": "Device Properties"],["section": "Kernel"],["section": "Misc"],["section": "NVRAM"],["section": "Platform Info"],["section": "UEFI"]],
+//            acpiAddVC!.acpiAddTable: [[String: String]](),
+//            acpiBlockVC!.acpiBlockTable: [[String: String]](),
+//            acpiPatchVC!.acpiPatchTable: [[String: String]](),
+//            devicePropertiesAddVC!.deviceAddTable: [[String: String]](),
+//            devicePropertiesBlockVC!.deviceBlockTable: [[String: String]](),
+//            kernelAddVC!.kernelAddTable: [[String: String]](),
+//            kernelBlockVC!.kernelBlockTable: [[String: String]](),
+//            kernelPatchVC!.kernelPatchTable: [[String: String]](),
+//            nvramAddVC!.nvramBootTable: [[String: String]](),
+//            nvramAddVC!.nvramVendorTable: [[String: String]](),
+//            nvramAddVC!.nvramCustomTable: [[String: String]](),
+//            nvramBlockVC!.nvramBlockTable: [[String: String]](),
+//            uefiDriversVC!.uefiDriverTable: [[String: String]](),
+//            platformInfoSmbiosVC!.platformSmbiosTable: [["property": "BIOSVendor", "value": ""],
+//                                  ["property": "BIOSVersion", "value": ""],
+//                                  ["property": "BIOSReleaseDate", "value": ""],
+//                                  ["property": "SystemManufacturer", "value": ""],
+//                                  ["property": "SystemProductName", "value": ""],
+//                                  ["property": "SystemVersion", "value": ""],
+//                                  ["property": "SystemSerialNumber", "value": ""],
+//                                  ["property": "SystemUUID", "value": ""],
+//                                  ["property": "SystemSKUNumber", "value": ""],
+//                                  ["property": "SystemFamily", "value": ""],
+//                                  ["property": "BoardManufacturer", "value": ""],
+//                                  ["property": "BoardProduct", "value": ""],
+//                                  ["property": "BoardVersion", "value": ""],
+//                                  ["property": "BoardSerialNumber", "value": ""],
+//                                  ["property": "BoardAssetTag", "value": ""],
+//                                  ["property": "BoardType", "value": ""],
+//                                  ["property": "BoardLocationInChassis", "value": ""],
+//                                  ["property": "ChassisManufacturer", "value": ""],
+//                                  ["property": "ChassisType", "value": ""],
+//                                  ["property": "ChassisVersion", "value": ""],
+//                                  ["property": "ChassisSerialNumber", "value": ""],
+//                                  ["property": "ChassisAssetTag", "value": ""],
+//                                  ["property": "PlatformFeature", "value": ""],
+//                                  ["property": "FirmwareFeatures", "value": ""],
+//                                  ["property": "FirmwareFeaturesMask", "value": ""],
+//                                  ["property": "ProcessorType", "value": ""],
+//                                  ["property": "MemoryFormFactor", "value": ""]],
+//
+//            platformInfoDataHubVC!.platformDatahubTable: [["property": "ARTFrequency", "value": ""],
+//                                   ["property": "BoardProduct", "value": ""],
+//                                   ["property": "BoardRevision", "value": ""],
+//                                   ["property": "DevicePathsSupported", "value": ""],
+//                                   ["property": "FSBFrequency", "value": ""],
+//                                   ["property": "InitialTSC", "value": ""],
+//                                   ["property": "PlatformName", "value": ""],
+//                                   ["property": "SmcBranch", "value": ""],
+//                                   ["property": "SmcPlatform", "value": ""],
+//                                   ["property": "SmcRevision", "value": ""],
+//                                   ["property": "StartupPowerEvents", "value": ""],
+//                                   ["property": "SystemProductName", "value": ""],
+//                                   ["property": "SystemSerialNumber", "value": ""],
+//                                   ["property": "SystemUUID", "value": ""]],
+//
+//            platformInfoGenericVC!.platformGenericTable: [["property": "SystemUUID", "value": ""],
+//                                   ["property": "MLB", "value": ""],
+//                                   ["property": "ROM", "value": ""],
+//                                   ["property": "SystemProductName", "value": ""],
+//                                   ["property": "SystemSerialNumber", "value": ""]],
+//
+//            platformInfoNvramVC!.platformNvramTable: [["property": "BID", "value": ""],
+//                                 ["property": "MLB", "value": ""],
+//                                 ["property": "ROM", "value": ""],
+//                                 ["property": "FirmwareFeatures", "value": ""],
+//                                 ["property": "FirmwareFeaturesMask", "value": ""]]
+//        ]
+//    }
     
     @objc func acpiAdvanced(_ sender: NSButton) {
-        let acpiVc = AcpiPopoverController.loadFromNib()        // load popover viewcontroller set up in AcpiPopoverController.swift
+//        let acpiVc = AcpiPopoverController.loadFromNib()        // load popover viewcontroller set up in AcpiPopoverController.swift
         
-        acpiPatchTable.selectRowIndexes(IndexSet(integer: Int(sender.identifier!.rawValue)!), byExtendingSelection: false)      // select row the button belongs to for the code below to work
+        acpiPatchVC!.acpiPatchTable.selectRowIndexes(IndexSet(integer: Int(sender.identifier!.rawValue)!), byExtendingSelection: false)      // select row the button belongs to for the code below to work
         // TODO: rely only on button identifier, not selected row, so we can allow an empty selection like in all other tables
         
-        acpiLimitString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Limit"] ?? ""        // fill variables with contents of plist file
-        acpiMaskString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Mask"] ?? ""
-        acpiOemTableIdString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["OemTableId"] ?? ""
-        acpiReplaceMaskString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["ReplaceMask"] ?? ""
-        acpiSkipString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Skip"] ?? ""
-        acpiTableLengthString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["TableLength"] ?? ""
-        acpiCountString = tableLookup[acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Count"] ?? ""
+        acpiLimitString = tableLookup[acpiPatchVC!.acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Limit"] ?? ""        // fill variables with contents of plist file
+        acpiMaskString = tableLookup[acpiPatchVC!.acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Mask"] ?? ""
+        acpiOemTableIdString = tableLookup[acpiPatchVC!.acpiPatchTable]![Int(sender.identifier!.rawValue)!]["OemTableId"] ?? ""
+        acpiReplaceMaskString = tableLookup[acpiPatchVC!.acpiPatchTable]![Int(sender.identifier!.rawValue)!]["ReplaceMask"] ?? ""
+        acpiSkipString = tableLookup[acpiPatchVC!.acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Skip"] ?? ""
+        acpiTableLengthString = tableLookup[acpiPatchVC!.acpiPatchTable]![Int(sender.identifier!.rawValue)!]["TableLength"] ?? ""
+        acpiCountString = tableLookup[acpiPatchVC!.acpiPatchTable]![Int(sender.identifier!.rawValue)!]["Count"] ?? ""
         
-        acpiVc.showPopover(button: sender)
+//        acpiVc.showPopover(button: sender)
     }
     
     @objc func kernelAdvanced(_ sender: NSButton) {
-        let kernelVc = KernelPopoverController.loadFromNib()
+//        let kernelVc = KernelPopoverController.loadFromNib()
         
-        kernelPatchTable.selectRowIndexes(IndexSet(integer: Int(sender.identifier!.rawValue)!), byExtendingSelection: false)
+        kernelPatchVC!.kernelPatchTable.selectRowIndexes(IndexSet(integer: Int(sender.identifier!.rawValue)!), byExtendingSelection: false)
         
-        kernelBaseString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Base"] ?? ""
-        kernelCountString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Count"] ?? ""
-        kernelIdentifierString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Identifier"] ?? ""
-        kernelLimitString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Limit"] ?? ""
-        kernelMaskString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Mask"] ?? ""
-        kernelReplaceString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["ReplaceMask"] ?? ""
-        kernelSkipString = tableLookup[kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Skip"] ?? ""
+        kernelBaseString = tableLookup[kernelPatchVC!.kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Base"] ?? ""
+        kernelCountString = tableLookup[kernelPatchVC!.kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Count"] ?? ""
+        kernelIdentifierString = tableLookup[kernelPatchVC!.kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Identifier"] ?? ""
+        kernelLimitString = tableLookup[kernelPatchVC!.kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Limit"] ?? ""
+        kernelMaskString = tableLookup[kernelPatchVC!.kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Mask"] ?? ""
+        kernelReplaceString = tableLookup[kernelPatchVC!.kernelPatchTable]![Int(sender.identifier!.rawValue)!]["ReplaceMask"] ?? ""
+        kernelSkipString = tableLookup[kernelPatchVC!.kernelPatchTable]![Int(sender.identifier!.rawValue)!]["Skip"] ?? ""
         
-        kernelVc.showPopover(button: sender)
+//        kernelVc.showPopover(button: sender)
     }
     
     @objc func onAcpiSyncPopover(_ notification: Notification) {
-        tableLookup[acpiPatchTable]![acpiPatchTable.selectedRow][(acpiCurrentTextField.identifier?.rawValue)!] = acpiCurrentTextField.stringValue
+        tableLookup[acpiPatchVC!.acpiPatchTable]![acpiPatchVC!.acpiPatchTable.selectedRow][(acpiCurrentTextField.identifier?.rawValue)!] = acpiCurrentTextField.stringValue
     }
     
     @objc func onKernelSyncPopover(_ notification: Notification) {
-        tableLookup[kernelPatchTable]![kernelPatchTable.selectedRow][(kernelCurrentTextField.identifier?.rawValue)!] = kernelCurrentTextField.stringValue
+        tableLookup[kernelPatchVC!.kernelPatchTable]![kernelPatchVC!.kernelPatchTable.selectedRow][(kernelCurrentTextField.identifier?.rawValue)!] = kernelCurrentTextField.stringValue
     }
     
     @objc func onPasteVC(_ notification: Notification) {
-        if sectionsTable.selectedRow == 0, (viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as! NSTableView) == acpiPatchTable {
+        if sectionsTable.selectedRow == 0, (viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as! NSTableView) == acpiPatchVC!.acpiPatchTable {
             let currentTable = viewLookup[sectionsTable.selectedRow]!.selectedTabViewItem?.view?.subviews[0].subviews[1].subviews[0] as! NSTableView
             let pastedDictString = NSPasteboard.general.string(forType: .string) ?? ""
             do {
@@ -519,14 +517,14 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         
         let txt = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
         
-        txt.stringValue = String(decoding: Data(hexString: tableLookup[deviceAddTable]![Int(sender.identifier!.rawValue)!]["value"]!)!, as: UTF8.self)
+        txt.stringValue = String(decoding: Data(hexString: tableLookup[devicePropertiesAddVC!.deviceAddTable]![Int(sender.identifier!.rawValue)!]["value"]!)!, as: UTF8.self)
         
         customItem.accessoryView = txt
         let response: NSApplication.ModalResponse = customItem.runModal()
         
         if (response == NSApplication.ModalResponse.alertFirstButtonReturn) {
-            tableLookup[deviceAddTable]![Int(sender.identifier!.rawValue)!]["value"] = txt.stringValue.data(using: .ascii)?.hexEncodedString(options: .upperCase)
-            deviceAddTable.reloadData()
+            tableLookup[devicePropertiesAddVC!.deviceAddTable]![Int(sender.identifier!.rawValue)!]["value"] = txt.stringValue.data(using: .ascii)?.hexEncodedString(options: .upperCase)
+            devicePropertiesAddVC!.deviceAddTable.reloadData()
         }
     }
     var acpiDict: NSMutableDictionary = NSMutableDictionary()
@@ -567,7 +565,7 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
     var platformUpdateSmbiosModeStr: String = String()
     
     @objc func onPlistOpen(_ notification: Notification) {
-        resetTables()       // clear tables before adding new data to them
+//        resetTables()       // clear tables before adding new data to them
         let OHF = openHandlerFunctions()
         let plistDict = NSMutableDictionary(contentsOfFile: path)
         acpiDict = plistDict?.object(forKey: "ACPI") as? NSMutableDictionary ?? NSMutableDictionary()            // for now we're manually extracting each individual dict entry, this should be changed to doing this in a loop in the future,
@@ -676,51 +674,51 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         platformUpdateSmbiosBool = platformInfoDict.object(forKey: "UpdateSMBIOS") as? Bool ?? false
         platformUpdateSmbiosModeStr = platformInfoDict.object(forKey: "UpdateSMBIOSMode") as? String ?? String()
         topLevelBools = [
-            uefiConnectDrivers: uefiConnectDriversBool,
-            smbiosAutomatic: platformAutomaticBool,
-            updateDatahub: platformUpdateDatahubBool,
-            updateNvram: platformUpdateNvramBool,
-            updateSmbios: platformUpdateSmbiosBool
+            uefiDriversVC!.uefiConnectDrivers: uefiConnectDriversBool,
+            platformInfoGeneralVC!.smbiosAutomatic: platformAutomaticBool,
+            platformInfoGeneralVC!.updateDatahub: platformUpdateDatahubBool,
+            platformInfoGeneralVC!.updateNvram: platformUpdateNvramBool,
+            platformInfoGeneralVC!.updateSmbios: platformUpdateSmbiosBool
         ]
         for (key, value) in miscBootDict {      // we're not dealing with tables here so it's easier to just parse the data manually. This sucks but I don't have a better idea for this atm
             switch key as? String ?? "" {
             case "ShowPicker":
                 if value as? Bool ?? false {
-                    showPicker.state = .on
+                    miscBootVC!.showPicker.state = .on
                 }
                 else {
-                    showPicker.state = .off
+                    miscBootVC!.showPicker.state = .off
                 }
             case "Timeout":
-                timeoutStepper.stringValue = String(value as? Int ?? Int())
-                timeoutTextfield.stringValue = String(value as? Int ?? Int())
+                miscBootVC!.timeoutStepper.stringValue = String(value as? Int ?? Int())
+                miscBootVC!.timeoutTextfield.stringValue = String(value as? Int ?? Int())
             case "ConsoleMode":
-                consoleMode.stringValue = value as? String ?? ""
+                miscBootVC!.consoleMode.stringValue = value as? String ?? ""
             case "ConsoleBehaviourOs":
                 if value as? String ?? "" != "" {
-                    if OsBehavior.itemTitles.contains(value as? String ?? "") {
-                        OsBehavior.selectItem(withTitle: value as? String ?? "")
+                    if miscBootVC!.OsBehavior.itemTitles.contains(value as? String ?? "") {
+                        miscBootVC!.OsBehavior.selectItem(withTitle: value as? String ?? "")
                     }
                 } else {
-                    OsBehavior.selectItem(withTitle: "Don't change")
+                    miscBootVC!.OsBehavior.selectItem(withTitle: "Don't change")
                 }
             case "ConsoleBehaviourUi":
                 if value as? String ?? "" != "" {
-                    if UiBehavior.itemTitles.contains(value as? String ?? "") {
-                        UiBehavior.selectItem(withTitle: value as? String ?? "")
+                    if miscBootVC!.UiBehavior.itemTitles.contains(value as? String ?? "") {
+                        miscBootVC!.UiBehavior.selectItem(withTitle: value as? String ?? "")
                     }
                 } else {
-                    UiBehavior.selectItem(withTitle: "Don't change")
+                    miscBootVC!.UiBehavior.selectItem(withTitle: "Don't change")
                 }
             case "HideSelf":
                 if value as? Bool ?? false {
-                    hideSelf.state = .on
+                    miscBootVC!.hideSelf.state = .on
                 }
                 else {
-                    hideSelf.state = .off
+                    miscBootVC!.hideSelf.state = .off
                 }
             case "Resolution":
-                resolution.stringValue = value as? String ?? ""
+                miscBootVC!.resolution.stringValue = value as? String ?? ""
             default:
                 break
             }
@@ -728,16 +726,16 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         for (key, value) in miscDebugDict {
             switch key as? String ?? "" {
             case "DisplayDelay":
-                miscDelayText.stringValue = String(value as? Int ?? Int())
+                miscDebugVC!.miscDelayText.stringValue = String(value as? Int ?? Int())
             case "DisplayLevel":
-                miscDisplayLevelText.stringValue = String(value as? Int ?? Int())
+                miscDebugVC!.miscDisplayLevelText.stringValue = String(value as? Int ?? Int())
             case "Target":
-                miscTargetText.stringValue = String(value as? Int ?? Int())
+                miscDebugVC!.miscTargetText.stringValue = String(value as? Int ?? Int())
             case "DisableWatchDog":
                 if value as? Bool ?? false {
-                    disableWatchdog.state = .on
+                    miscDebugVC!.disableWatchdog.state = .on
                 } else {
-                    disableWatchdog.state = .off
+                    miscDebugVC!.disableWatchdog.state = .off
                 }
             default:
                 break
@@ -746,23 +744,23 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         for (key, value) in miscSecurityDict {
             switch key as? String ?? "" {
             case "HaltLevel":
-                miscHaltlevel.stringValue = String(value as? Int ?? Int())
+                miscSecurityVC!.miscHaltlevel.stringValue = String(value as? Int ?? Int())
             case "RequireSignature":
                 if value as? Bool ?? false {
-                    miscRequireSignature.state = .on
+                    miscSecurityVC!.miscRequireSignature.state = .on
                 }
                 else {
-                    miscRequireSignature.state = .off
+                    miscSecurityVC!.miscRequireSignature.state = .off
                 }
             case "RequireVault":
                 if value as? Bool ?? false {
-                    miscRequireVault.state = .on
+                    miscSecurityVC!.miscRequireVault.state = .on
                 }
                 else {
-                    miscRequireVault.state = .off
+                    miscSecurityVC!.miscRequireVault.state = .off
                 }
             case "ExposeSensitiveData":
-                miscExposeSensitiveData.stringValue = String(value as? Int ?? Int())
+                miscSecurityVC!.miscExposeSensitiveData.stringValue = String(value as? Int ?? Int())
             default:
                 break
             }
@@ -770,65 +768,65 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         for (key, value) in nvramAddDict {
             switch key as? String ?? "" {
             case "7C436110-AB2A-4BBB-A880-FE41995C9F82":
-                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramBootTable)
+                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramAddVC!.nvramBootTable)
             case "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14":
-                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramVendorTable)
+                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramAddVC!.nvramVendorTable)
             default:
-                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramCustomTable, guidString: key as? String)
+                OHF.createNvramData(value: value as? NSMutableDictionary ?? NSMutableDictionary(), table: &nvramAddVC!.nvramCustomTable, guidString: key as? String)
             }
         }
         for (key, value) in nvramBlockDict {
-            OHF.createNvramData(value: value as? NSMutableArray ?? NSMutableArray(), table: &nvramBlockTable, guidString: key as? String)
+            OHF.createNvramData(value: value as? NSMutableArray ?? NSMutableArray(), table: &nvramBlockVC!.nvramBlockTable, guidString: key as? String)
         }
         OHF.createTopLevelBools(buttonDict: &topLevelBools)
-        if smbioUpdateModePopup.itemTitles.contains(platformUpdateSmbiosModeStr) {
-            smbioUpdateModePopup.selectItem(withTitle: platformUpdateSmbiosModeStr)
+        if platformInfoGeneralVC!.smbioUpdateModePopup.itemTitles.contains(platformUpdateSmbiosModeStr) {
+            platformInfoGeneralVC!.smbioUpdateModePopup.selectItem(withTitle: platformUpdateSmbiosModeStr)
         } else {
-            smbioUpdateModePopup.selectItem(withTitle: "Create")
+            platformInfoGeneralVC!.smbioUpdateModePopup.selectItem(withTitle: "Create")
         }
-        //OHF.createData(input: acpiAddArray, table: &acpiAddTable, predefinedKey: "acpiAdd")
-        tableLookup[acpiAddTable] = acpiAddArray as? Array ?? Array()
-        acpiAddTable.reloadData()
-        OHF.createData(input: acpiBlockArray, table: &acpiBlockTable)
-        //OHF.createData(input: acpiPatchArray, table: &acpiPatchTable)
-        tableLookup[acpiPatchTable] = acpiPatchArray as? Array ?? Array()
-        acpiPatchTable.reloadData()
+        //OHF.createData(input: acpiAddArray, table: &acpiAddVC!.acpiAddTable, predefinedKey: "acpiAdd")
+        tableLookup[acpiAddVC!.acpiAddTable] = acpiAddArray as? Array ?? Array()
+        acpiAddVC!.acpiAddTable.reloadData()
+        OHF.createData(input: acpiBlockArray, table: &acpiBlockVC!.acpiBlockTable)
+        //OHF.createData(input: acpiPatchArray, table: &acpiPatchVC!.acpiPatchTable)
+        tableLookup[acpiPatchVC!.acpiPatchTable] = acpiPatchArray as? Array ?? Array()
+        acpiPatchVC!.acpiPatchTable.reloadData()
         OHF.createQuirksData(input: acpiQuirksDict, quirksDict: acpiQuirks)
-        OHF.createData(input: deviceAddDict, table: &deviceAddTable)
-        OHF.createData(input: deviceBlockDict, table: &deviceBlockTable)
+        OHF.createData(input: deviceAddDict, table: &devicePropertiesAddVC!.deviceAddTable)
+        OHF.createData(input: deviceBlockDict, table: &devicePropertiesBlockVC!.deviceBlockTable)
         // OHF.createQuirksData(input: deviceQuirksDict, quirksDict: deviceQuirks)          // device properties quirks don't exist anymore. leaving this here in case they come back
         //OHF.createData(input: kernelAddArray, table: &kernelAddTable)
-        tableLookup[kernelAddTable] = kernelAddArray as? Array ?? Array()
-        kernelAddTable.reloadData()
-        OHF.createData(input: kernelBlockArray, table: &kernelBlockTable)
+        tableLookup[kernelAddVC!.kernelAddTable] = kernelAddArray as? Array ?? Array()
+        kernelAddVC!.kernelAddTable.reloadData()
+        OHF.createData(input: kernelBlockArray, table: &kernelBlockVC!.kernelBlockTable)
         //OHF.createData(input: kernelPatchArray, table: &kernelPatchTable)
-        tableLookup[kernelPatchTable] = kernelPatchArray as? Array ?? Array()
-        kernelPatchTable.reloadData()
+        tableLookup[kernelPatchVC!.kernelPatchTable] = kernelPatchArray as? Array ?? Array()
+        kernelPatchVC!.kernelPatchTable.reloadData()
         OHF.createQuirksData(input: kernelQuirksDict, quirksDict: kernelQuirks)
-        OHF.createData(input: uefiDriverArray, table: &uefiDriverTable, predefinedKey: "driver")
+        OHF.createData(input: uefiDriverArray, table: &uefiDriversVC!.uefiDriverTable, predefinedKey: "driver")
         OHF.createQuirksData(input: uefiQuirksDict, quirksDict: uefiQuirks)
         OHF.createQuirksData(input: uefiProtocolsDict, quirksDict: uefiProtocols)
-        ExitBootServicesDelay.stringValue = String(uefiExitBootInt)
-        OHF.createData(input: platformSmbiosDict, table: &platformSmbiosTable)
-        OHF.createData(input: platformDatahubDict, table: &platformDatahubTable)
-        OHF.createData(input: platformGenericDict, table: &platformGenericTable)
+        uefiQuirksVC!.ExitBootServicesDelay.stringValue = String(uefiExitBootInt)
+        OHF.createData(input: platformSmbiosDict, table: &platformInfoSmbiosVC!.platformSmbiosTable)
+        OHF.createData(input: platformDatahubDict, table: &platformInfoDataHubVC!.platformDatahubTable)
+        OHF.createData(input: platformGenericDict, table: &platformInfoGenericVC!.platformGenericTable)
         if platformGenericDict.value(forKey: "SpoofVendor") as? Bool ?? false {
-            spoofVendor.state = .on
+            platformInfoGenericVC!.spoofVendor.state = .on
         } else {
-            spoofVendor.state = .off
+            platformInfoGenericVC!.spoofVendor.state = .off
         }
-        OHF.createData(input: platformNvramDict, table: &platformNvramTable)
-        togglePlatformAutomatic()
+        OHF.createData(input: platformNvramDict, table: &platformInfoNvramVC!.platformNvramTable)
+        platformInfoGeneralVC!.togglePlatformAutomatic()
         self.view.window?.title = "\((path as NSString).lastPathComponent) - OpenCore Configurator"
         self.view.window?.representedURL = URL(fileURLWithPath: path)
     }
     
     @objc func onPlistSave(_ notification: Notification) {
         let SHF = saveHandlerFunctions()
-        SHF.saveArrayOfDictData(table: acpiAddTable, array: &acpiAddArray)
-        SHF.saveArrayOfDictData(table: acpiBlockTable, array: &acpiBlockArray)
-        //SHF.saveArrayOfDictData(table: acpiPatchTable, array: &acpiPatchArray)
-        acpiPatchArray = (tableLookup[acpiPatchTable]! as NSArray).mutableCopy() as! NSMutableArray
+        SHF.saveArrayOfDictData(table: acpiAddVC!.acpiAddTable, array: &acpiAddArray)
+        SHF.saveArrayOfDictData(table: acpiBlockVC!.acpiBlockTable, array: &acpiBlockArray)
+        //SHF.saveArrayOfDictData(table: acpiPatchVC!.acpiPatchTable, array: &acpiPatchArray)
+        acpiPatchArray = (tableLookup[acpiPatchVC!.acpiPatchTable]! as NSArray).mutableCopy() as! NSMutableArray
         if acpiPatchArray.count > 0 {
             for i in 0...(acpiPatchArray.count - 1) {
                 let tempDict = (acpiPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
@@ -853,7 +851,7 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         }
         SHF.saveQuirksData(dict: acpiQuirks, quirksDict: &acpiQuirksDict)
         //SHF.saveArrayOfDictData(table: kernelAddTable, array: &kernelAddArray)
-        kernelAddArray = (tableLookup[kernelAddTable]! as NSArray).mutableCopy() as! NSMutableArray
+        kernelAddArray = (tableLookup[kernelAddVC!.kernelAddTable]! as NSArray).mutableCopy() as! NSMutableArray
         if kernelAddArray.count > 0 {
             for i in 0...(kernelAddArray.count - 1) {
                 let tempDict = (kernelAddArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
@@ -865,9 +863,9 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
                 kernelAddArray[i] = tempDict
             }
         }
-        SHF.saveArrayOfDictData(table: kernelBlockTable, array: &kernelBlockArray)
+        SHF.saveArrayOfDictData(table: kernelBlockVC!.kernelBlockTable, array: &kernelBlockArray)
         //SHF.saveArrayOfDictData(table: kernelPatchTable, array: &kernelPatchArray)
-        kernelPatchArray = (tableLookup[kernelPatchTable]! as NSArray).mutableCopy() as! NSMutableArray
+        kernelPatchArray = (tableLookup[kernelPatchVC!.kernelPatchTable]! as NSArray).mutableCopy() as! NSMutableArray
         if kernelPatchArray.count > 0 {
             for i in 0...(kernelPatchArray.count - 1) {
                 let tempDict = (kernelPatchArray[i] as! NSDictionary).mutableCopy() as! NSMutableDictionary
@@ -888,23 +886,23 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
             }
         }
         SHF.saveQuirksData(dict: kernelQuirks, quirksDict: &kernelQuirksDict)
-        SHF.saveDeviceData(table: deviceAddTable, dict: &deviceAddDict)
-        SHF.saveDeviceData(table: deviceBlockTable, dict: &deviceBlockDict)
+        SHF.saveDeviceData(table: devicePropertiesAddVC!.deviceAddTable, dict: &deviceAddDict)
+        SHF.saveDeviceData(table: devicePropertiesBlockVC!.deviceBlockTable, dict: &deviceBlockDict)
         SHF.saveQuirksData(dict: deviceQuirks, quirksDict: &deviceQuirksDict)
         // only process platform dicts if they're not empty. This is not necessary because we're checking this when appending to the platform dict too, but this is cleaner because we don't do unnecessary work
-        if isNotEmpty(platformGenericDict) { SHF.saveDictOfDictData(table: platformGenericTable, dict: &platformGenericDict) }
-        if isNotEmpty(platformNvramDict) { SHF.saveDictOfDictData(table: platformNvramTable, dict: &platformNvramDict) }
-        if isNotEmpty(platformSmbiosDict) { SHF.saveDictOfDictData(table: platformSmbiosTable, dict: &platformSmbiosDict) }
-        if isNotEmpty(platformDatahubDict) { SHF.saveDictOfDictData(table: platformDatahubTable, dict: &platformDatahubDict) }
-        SHF.saveStringData(table: uefiDriverTable, array: &uefiDriverArray)
+        if isNotEmpty(platformGenericDict) { SHF.saveDictOfDictData(table: platformInfoGenericVC!.platformGenericTable, dict: &platformGenericDict) }
+        if isNotEmpty(platformNvramDict) { SHF.saveDictOfDictData(table: platformInfoNvramVC!.platformNvramTable, dict: &platformNvramDict) }
+        if isNotEmpty(platformSmbiosDict) { SHF.saveDictOfDictData(table: platformInfoSmbiosVC!.platformSmbiosTable, dict: &platformSmbiosDict) }
+        if isNotEmpty(platformDatahubDict) { SHF.saveDictOfDictData(table: platformInfoDataHubVC!.platformDatahubTable, dict: &platformDatahubDict) }
+        SHF.saveStringData(table: uefiDriversVC!.uefiDriverTable, array: &uefiDriverArray)
         SHF.saveQuirksData(dict: uefiQuirks, quirksDict: &uefiQuirksDict)
-        uefiQuirksDict.addEntries(from: ["ExitBootServicesDelay": Int(ExitBootServicesDelay.stringValue) ?? 0])
+        uefiQuirksDict.addEntries(from: ["ExitBootServicesDelay": Int(uefiQuirksVC!.ExitBootServicesDelay.stringValue) ?? 0])
         SHF.saveQuirksData(dict: uefiProtocols, quirksDict: &uefiProtocolsDict)
-        SHF.saveNvramBootData(table: nvramBootTable, dict: &nvramAddDict)       // TODO: create subdicts for GUID, handle custom table seperately
-        SHF.saveNvramVendorData(table: nvramVendorTable, dict: &nvramAddDict)
-        SHF.saveNvramCustomData(table: nvramCustomTable, dict: &nvramAddDict)
+        SHF.saveNvramBootData(table: nvramAddVC!.nvramBootTable, dict: &nvramAddDict)       // TODO: create subdicts for GUID, handle custom table seperately
+        SHF.saveNvramVendorData(table: nvramAddVC!.nvramVendorTable, dict: &nvramAddDict)
+        SHF.saveNvramCustomData(table: nvramAddVC!.nvramCustomTable, dict: &nvramAddDict)
         clearDict = true                                                    // we split data from the same dict into 3 tables, so we don't want to clear it for each of them
-        SHF.saveNvramBlockData(table: nvramBlockTable, dict: &nvramBlockDict)
+        SHF.saveNvramBlockData(table: nvramBlockVC!.nvramBlockTable, dict: &nvramBlockDict)
         acpiDict.removeAllObjects()
         acpiDict.addEntries(from: ["Add": acpiAddArray])
         acpiDict.addEntries(from: ["Block": acpiBlockArray])
@@ -920,14 +918,14 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         deviceDict.addEntries(from: ["Block": deviceBlockDict])
         //deviceDict.addEntries(from: ["Quirks": deviceQuirksDict])
         platformInfoDict.removeAllObjects()
-        if smbiosAutomatic.state == .on {
+        if platformInfoGeneralVC!.smbiosAutomatic.state == .on {
             platformInfoDict.addEntries(from: ["Automatic": true])
         } else {
             platformInfoDict.addEntries(from: ["Automatic": false])
         }                                                                // only add platform dicts if they're not empty
         if isNotEmpty(platformDatahubDict) { platformInfoDict.addEntries(from: ["DataHub": platformDatahubDict]) }
         if isNotEmpty(platformGenericDict) { platformInfoDict.addEntries(from: ["Generic": platformGenericDict]) }
-        if spoofVendor.state == .on {
+        if platformInfoGenericVC!.spoofVendor.state == .on {
             platformGenericDict.addEntries(from: ["SpoofVendor": true])
         } else {
             platformGenericDict.addEntries(from: ["SpoofVendor": false])
@@ -935,24 +933,24 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         if isNotEmpty(platformNvramDict) { platformInfoDict.addEntries(from: ["PlatformNVRAM": platformNvramDict]) }
         if isNotEmpty(platformSmbiosDict) { platformInfoDict.addEntries(from: ["SMBIOS": platformSmbiosDict]) }
         // set all button values
-        if updateDatahub.state == .on {
+        if platformInfoGeneralVC!.updateDatahub.state == .on {
             platformInfoDict.addEntries(from: ["UpdateDataHub": true])
         } else {
             platformInfoDict.addEntries(from: ["UpdateDataHub": false])
         }
-        if updateNvram.state == .on {
+        if platformInfoGeneralVC!.updateNvram.state == .on {
             platformInfoDict.addEntries(from: ["UpdateNVRAM": true])
         } else {
             platformInfoDict.addEntries(from: ["UpdateNVRAM": false])
         }
-        if updateSmbios.state == .on {
+        if platformInfoGeneralVC!.updateSmbios.state == .on {
             platformInfoDict.addEntries(from: ["UpdateSMBIOS": true])
         } else {
             platformInfoDict.addEntries(from: ["UpdateSMBIOS": false])
         }
-        platformInfoDict.addEntries(from: ["UpdateSMBIOSMode": (smbioUpdateModePopup.selectedItem?.title)!])
+        platformInfoDict.addEntries(from: ["UpdateSMBIOSMode": (platformInfoGeneralVC!.smbioUpdateModePopup.selectedItem?.title)!])
         uefiDict.removeAllObjects()
-        if uefiConnectDrivers.state == .on {
+        if uefiDriversVC!.uefiConnectDrivers.state == .on {
             uefiDict.addEntries(from: ["ConnectDrivers": true])
         } else {
             uefiDict.addEntries(from: ["ConnectDrivers": false])
@@ -1010,33 +1008,33 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
     
     func saveMisc() {
         miscBootDict.removeAllObjects()
-        miscBootDict.addEntries(from: ["ConsoleMode": consoleMode.stringValue])
-        if OsBehavior.selectedItem?.title == "Don't change" {
+        miscBootDict.addEntries(from: ["ConsoleMode": miscBootVC!.consoleMode.stringValue])
+        if miscBootVC!.OsBehavior.selectedItem?.title == "Don't change" {
             miscBootDict.addEntries(from: ["ConsoleBehaviourOs": ""])
         } else {
-            miscBootDict.addEntries(from: ["ConsoleBehaviourOs": (OsBehavior.selectedItem?.title)!])
+            miscBootDict.addEntries(from: ["ConsoleBehaviourOs": (miscBootVC!.OsBehavior.selectedItem?.title)!])
         }
-        if UiBehavior.selectedItem?.title == "Don't change" {
+        if miscBootVC!.UiBehavior.selectedItem?.title == "Don't change" {
             miscBootDict.addEntries(from: ["ConsoleBehaviourUi": ""])
         } else {
-            miscBootDict.addEntries(from: ["ConsoleBehaviourUi": (UiBehavior.selectedItem?.title)!])
+            miscBootDict.addEntries(from: ["ConsoleBehaviourUi": (miscBootVC!.UiBehavior.selectedItem?.title)!])
         }
-        miscBootDict.addEntries(from: ["HideSelf": checkboxState(button: hideSelf)])
-        miscBootDict.addEntries(from: ["Resolution": resolution.stringValue])
-        miscBootDict.addEntries(from: ["ShowPicker": checkboxState(button: showPicker)])
-        miscBootDict.addEntries(from: ["Timeout": Int(timeoutTextfield.stringValue)!])
+        miscBootDict.addEntries(from: ["HideSelf": checkboxState(button: miscBootVC!.hideSelf)])
+        miscBootDict.addEntries(from: ["Resolution": miscBootVC!.resolution.stringValue])
+        miscBootDict.addEntries(from: ["ShowPicker": checkboxState(button: miscBootVC!.showPicker)])
+        miscBootDict.addEntries(from: ["Timeout": Int(miscBootVC!.timeoutTextfield.stringValue)!])
         
         miscDebugDict.removeAllObjects()
-        miscDebugDict.addEntries(from: ["DisableWatchDog": checkboxState(button: disableWatchdog)])
-        miscDebugDict.addEntries(from: ["DisplayDelay": Int(miscDelayText.stringValue) ?? 0])
-        miscDebugDict.addEntries(from: ["DisplayLevel": Int(miscDisplayLevelText.stringValue) ?? 0])
-        miscDebugDict.addEntries(from: ["Target": Int(miscTargetText.stringValue) ?? 0])
+        miscDebugDict.addEntries(from: ["DisableWatchDog": checkboxState(button: miscDebugVC!.disableWatchdog)])
+        miscDebugDict.addEntries(from: ["DisplayDelay": Int(miscDebugVC!.miscDelayText.stringValue) ?? 0])
+        miscDebugDict.addEntries(from: ["DisplayLevel": Int(miscDebugVC!.miscDisplayLevelText.stringValue) ?? 0])
+        miscDebugDict.addEntries(from: ["Target": Int(miscDebugVC!.miscTargetText.stringValue) ?? 0])
         
         miscSecurityDict.removeAllObjects()
-        miscSecurityDict.addEntries(from: ["ExposeSensitiveData": Int(miscExposeSensitiveData.stringValue) ?? 0])
-        miscSecurityDict.addEntries(from: ["HaltLevel": Int(miscHaltlevel.stringValue) ?? 0])
-        miscSecurityDict.addEntries(from: ["RequireSignature": checkboxState(button: miscRequireSignature)])
-        miscSecurityDict.addEntries(from: ["RequireVault": checkboxState(button: miscRequireVault)])
+        miscSecurityDict.addEntries(from: ["ExposeSensitiveData": Int(miscSecurityVC!.miscExposeSensitiveData.stringValue) ?? 0])
+        miscSecurityDict.addEntries(from: ["HaltLevel": Int(miscSecurityVC!.miscHaltlevel.stringValue) ?? 0])
+        miscSecurityDict.addEntries(from: ["RequireSignature": checkboxState(button: miscSecurityVC!.miscRequireSignature)])
+        miscSecurityDict.addEntries(from: ["RequireVault": checkboxState(button: miscSecurityVC!.miscRequireVault)])
         
         miscDict.removeAllObjects()
         miscDict.addEntries(from: ["Boot": miscBootDict])
@@ -1208,9 +1206,227 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         return itemsList.count
     }
     
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    @objc func dropDownHandler(_ sender: NSPopUpButton) {
+        guard let parentRowView = sender.superview as? NSTableRowView,
+            let parentTableView = parentRowView.superview as? NSTableView else { debugPrint("Failed to assign parent values"); return }
+        let parentTableColumn = parentTableView.tableColumns[parentTableView.column(for: sender)]
+        if sender.selectedItem?.title != "Other..." {
+            tableLookup[parentTableView]![Int(sender.identifier!.rawValue)!][parentTableColumn.identifier.rawValue] = (sender.selectedItem?.title)!
+        } else {
+            let customItem = NSAlert()
+            customItem.addButton(withTitle: "OK")      // 1st button
+            customItem.addButton(withTitle: "Cancel")  // 2nd button
+            customItem.messageText = "Add a custom item"
+            customItem.informativeText = ""
+            let txt = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+            txt.stringValue = ""
+            customItem.accessoryView = txt
+            let response: NSApplication.ModalResponse = customItem.runModal()
+            if (response == NSApplication.ModalResponse.alertFirstButtonReturn) {
+                sender.addItem(withTitle: txt.stringValue)
+                sender.selectItem(withTitle: txt.stringValue)
+            }
+        }
+        self.view.window?.isDocumentEdited = true
+        editedState = true
+    }
+    
+    @objc func checkboxHandler(_ sender: NSButton) {
+        guard let parentRowView = sender.superview as? NSTableRowView,
+            let parentTableView = parentRowView.superview as? NSTableView else { debugPrint("Failed to assign parent values"); return }
+        
+        let parentTableColumn = parentTableView.tableColumns[parentTableView.column(for: sender)]
+        
+        if sender.state == NSControl.StateValue.on {
+            tableLookup[parentTableView]![Int(sender.identifier!.rawValue)!][parentTableColumn.identifier.rawValue] = "1"
+        }
+        else {
+            tableLookup[parentTableView]![Int(sender.identifier!.rawValue)!][parentTableColumn.identifier.rawValue] = "0"
+        }
+        self.view.window?.isDocumentEdited = true
+        editedState = true
+    }
+    
+    func controlTextDidChange(_ obj: Notification) {
+        guard let textField = obj.object as? NSTextField,
+            let parentCellView = textField.superview as? NSTableCellView,
+            let parentRowView = parentCellView.superview as? NSTableRowView,
+            let parentTableView = parentRowView.superview as? NSTableView else { print("Failed to assign parent values"); return }
+        if textField.identifier?.rawValue == "hex", tableLookup[parentTableView]![parentTableView.row(for: parentCellView)]["property"] != "boot-args" {        // only allow 1-9,A-F for "hex"tagged fields, except if the property name is "boot-args", as that is parsed as a string
+            let characterSet: NSCharacterSet = NSCharacterSet(charactersIn: "1234567890abcdefABCDEF").inverted as NSCharacterSet
+            textField.stringValue =  (textField.stringValue.components(separatedBy: characterSet as CharacterSet) as NSArray).componentsJoined(by: "")
+        }
+    }
+    
+    func controlTextDidEndEditing(_ obj: Notification) {
+        guard let textField = obj.object as? NSTextField,
+            let parentCellView = textField.superview as? NSTableCellView,
+            let parentRowView = parentCellView.superview as? NSTableRowView,
+            let parentTableView = parentRowView.superview as? NSTableView else { print("Failed to assign parent values"); return }      // going up the superview chain until we reach the tableView. This is relatively safe as this function is only called on text fields where we set the delegate to the ViewController, but we're still wrapping this in a guard statement for good measure. TODO: do that to all other force unwraps too, atm the program will probably crash given a malformatted plist
+        let parentTableColumn = parentTableView.tableColumns[parentTableView.column(for: parentCellView)]       // seems to be the only way to access the column of the current cell. Hacky, but it works
+        tableLookup[parentTableView]![parentTableView.selectedRow][parentTableColumn.identifier.rawValue] = textField.stringValue       // update the datasource entry for the current cell
+        if textField.identifier?.rawValue == "hex", tableLookup[parentTableView]![parentTableView.row(for: parentCellView)]["property"] != "boot-args" {
+            if textField.stringValue.count % 2 != 0 {
+                textField.stringValue = String(textField.stringValue.prefix(textField.stringValue.count - 1))
+            }
+        }
+        self.view.window?.isDocumentEdited = true
+        editedState = true
+    }
+    
+    @objc func onTableClick(_ tableView: NSTableView) {
+        if tableView.clickedRow != -1, tableView.clickedColumn != -1 {
+            tableView.editColumn(tableView.clickedColumn, row: tableView.clickedRow, with: nil, select: true)
+        }
+    }
+    
+    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+        let item = NSPasteboardItem()
+        switch tableView {
+        case kernelAddVC!.kernelAddTable:
+            item.setString(String(row), forType: self.dragDropKernelAdd)
+        case acpiPatchVC!.acpiPatchTable:
+            item.setString(String(row), forType: self.dragDropAcpiPatch)
+        case kernelPatchVC!.kernelPatchTable:
+            item.setString(String(row), forType: self.dragDropKernelPatch)
+        case acpiAddVC!.acpiAddTable:
+            item.setString(String(row), forType: self.dragDropAcpiAdd)
+        default:
+            break
+        }
+        return item
+    }
+    
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+        if dropOperation == .above {
+            return .move
+        }
+        return []
+    }
+    
+    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        var oldIndexes = [Int]()
+        switch tableView {
+        case kernelAddVC!.kernelAddTable:
+            info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
+                if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropKernelAdd), let index = Int(str) {
+                    oldIndexes.append(index)
+                }
+            }
+        case acpiPatchVC!.acpiPatchTable:
+            info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
+                if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropAcpiPatch), let index = Int(str) {
+                    oldIndexes.append(index)
+                }
+            }
+        case kernelPatchVC!.kernelPatchTable:
+            info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
+                if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropKernelPatch), let index = Int(str) {
+                    oldIndexes.append(index)
+                }
+            }
+        case acpiAddVC!.acpiAddTable:
+            info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) { dragItem, _, _ in
+                if let str = (dragItem.item as! NSPasteboardItem).string(forType: self.dragDropAcpiAdd), let index = Int(str) {
+                    oldIndexes.append(index)
+                }
+            }
+        default:
+            break
+        }
+        var oldIndexOffset = 0
+        var newIndexOffset = 0
+        tableView.beginUpdates()
+        for oldIndex in oldIndexes {
+            if oldIndex < row {
+                tableView.moveRow(at: oldIndex + oldIndexOffset, to: row - 1)
+                tableLookup[tableView]!.insert(tableLookup[tableView]![oldIndex + oldIndexOffset], at: row)
+                oldIndexOffset -= 1
+                tableLookup[tableView]!.remove(at: oldIndex)
+            } else {
+                tableView.moveRow(at: oldIndex, to: row + newIndexOffset)
+                tableLookup[tableView]!.insert(tableLookup[tableView]![oldIndex], at: row + newIndexOffset)
+                newIndexOffset += 1
+                tableLookup[tableView]!.remove(at: oldIndex + 1)
+            }
+        }
+        tableView.endUpdates()
+        return true
+    }
+    
+    func tableView(_ tableViewName: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let vw = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else {return nil}
         vw.textField?.stringValue = itemsList[row]
+//        if tableLookup[tableViewName]!.count > 0 {
+//            switch tableColumn?.identifier.rawValue {
+//            case "advanced":
+//                let cell = NSButton()
+//                cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))      // make the button identifier the row number for row selection on button press
+//                cell.image = NSImage.init(named: "NSActionTemplate")
+//                cell.isBordered = false
+//                cell.action = #selector(MasterDetailsViewController.acpiAdvanced)                // every button has the same action, button is determined via identifier
+//                return cell
+//            case "kernelAdvanced":
+//                let cell = NSButton()
+//                cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
+//                cell.image = NSImage.init(named: "NSActionTemplate")
+//                cell.isBordered = false
+//                cell.action = #selector(MasterDetailsViewController.kernelAdvanced)
+//                return cell
+//            case "TableSignature":
+//                let cell = NSPopUpButton()
+//                cell.isBordered = false
+//                cell.addItems(withTitles: ["DSDT", "SSDT", "APIC", "ASF!", "BATB", "BGRT", "BOOT", "DBG2", "DBGP", "ECDT", "FACS", "FPDT", "HPET", "MCFG", "MSDM", "RSDT", "TPM2", "UEFI", "", "Other..."])
+//                cell.selectItem(withTitle: "DSDT")      // otherwise new empty item is created and selected
+//                cell.action = #selector(dropDownHandler)
+//                cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
+//                let table = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] ?? ""
+//                if !cell.itemTitles.contains(table) {
+//                    cell.addItem(withTitle: table)
+//                }
+//                cell.selectItem(withTitle: table)
+//                return cell
+//            case "Enabled", "All":
+//                let cell = NSButton()
+//                cell.setButtonType(.switch)     // checkbox
+//                cell.imagePosition = .imageOnly     // no text, -> center button
+//                cell.action = #selector(checkboxHandler)
+//                cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
+//                if tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] ?? "0" == "1" {
+//                    cell.state = NSControl.StateValue.on
+//                }
+//                return cell
+//            case "MatchKernel":
+//                let cell = NSPopUpButton()
+//                cell.isBordered = false
+//                cell.addItems(withTitles: ["18.", "17.", "16.", "15.", "No", "Other..."])
+//                cell.selectItem(withTitle: "DSDT")      // otherwise new empty item is created and selected
+//                cell.action = #selector(dropDownHandler)
+//                cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
+//                let kernelVersion = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] ?? ""
+//                if !cell.itemTitles.contains(kernelVersion), kernelVersion != "" {
+//                    cell.addItem(withTitle: kernelVersion)
+//                }
+//                if kernelVersion != "" {
+//                    cell.selectItem(withTitle: kernelVersion)
+//                }
+//                else {
+//                    cell.selectItem(withTitle: "No")
+//                }
+//                return cell
+//            case "edit":
+//                let cell = NSButton()
+//                cell.identifier = NSUserInterfaceItemIdentifier(rawValue: String(row))
+//                cell.image = NSImage.init(named: "NSQuickLookTemplate")
+//                cell.isBordered = false
+//                cell.action = #selector(MasterDetailsViewController.deviceEdit)
+//                return cell
+//            default:
+//                let cell = tableViewName.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: (tableColumn?.identifier.rawValue)!), owner: nil) as? NSTableCellView
+//                cell?.textField?.stringValue = tableLookup[tableViewName]![row][(tableColumn?.identifier.rawValue)!] ?? ""       // string value should be whatever was written to the correspondig tableview datasource entry for that row/column
+//                return cell
+//            }
+//        }
         return vw
     }
     
@@ -1313,6 +1529,17 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
             NSApplication.shared.presentError(error)
         }
     }
+}
+
+extension Notification.Name {
+    static let plistOpen = Notification.Name("plistOpen")
+    static let plistSave = Notification.Name("plistSave")
+    static let syncAcpiPopoverAndDict = Notification.Name("syncAcpiPopoverAndDict")
+    static let syncKernelPopoverAndDict = Notification.Name("syncKernelPopoverAndDict")
+    static let paste = Notification.Name("paste")
+    static let applyAllPatches = Notification.Name("applyAllPatches")
+    static let manageVault = Notification.Name("manageVault")
+    static let closeVault = Notification.Name("closeVault")
 }
 
 extension Data {

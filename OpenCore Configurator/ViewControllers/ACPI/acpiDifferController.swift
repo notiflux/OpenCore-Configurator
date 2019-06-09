@@ -2,6 +2,38 @@ import Cocoa
 
 class acpiDifferController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    var acpiTabVC: ACPITabViewController?
+    var acpiAddVC: AcpiAddViewContoller?
+    var acpiBlockVC: AcpiBlockViewController?
+    var acpiPatchVC: AcpiPatchViewController?
+    var acpiQuirksVC: AcpiQuirksViewController?
+    var devicePropertiesTabVC: DevicePropertiesTabViewController?
+    var devicePropertiesAddVC: DPAddViewController?
+    var devicePropertiesBlockVC: DPBlockViewController?
+    var kernelTabVC: KernelTabViewController?
+    var kernelAddVC: KernelAddViewController?
+    var kernelBlockVC: KernelBlockViewController?
+    var kernelPatchVC: KernelPatchViewController?
+    var kernelQuirksVC: KernelQuirksViewController?
+    var miscTabVC: MiscTabViewController?
+    var miscBootVC: MiscBootViewController?
+    var miscDebugVC: MiscDebugViewController?
+    var miscSecurityVC: MiscSecurityViewController?
+    var nvramTabVC: NVRAMTabViewController?
+    var nvramAddVC: NvramAddViewController?
+    var nvramBlockVC: NvramBlockViewController?
+    var platformInfoTabVC: PlatformInfoTabViewController?
+    var platformInfoGeneralVC: PlatformInfoGeneralViewController?
+    var platformInfoGenericVC: PlatformInfoGenericViewController?
+    var platformInfoDataHubVC: PlatformInfoDataHubViewController?
+    var platformInfoNvramVC: PlatformInfoNvramViewController?
+    var platformInfoSmbiosVC: PlatformInfoSmbiosViewController?
+    var uefiTabVC: UEFITabViewController?
+    var uefiDriversVC: UEFIDriversViewController?
+    var uefiQuirksVC: UEFIQuirksViewController?
+    var detailsVC: DetailViewController?
+    
     @IBOutlet var beforeTextfield: NSTextView!
     @IBOutlet weak var beforeScrollview: NSScrollView!
     @IBOutlet var afterTextfield: NSTextView!
@@ -61,11 +93,11 @@ class acpiDifferController: NSViewController {
         scrollView.reflectScrolledClipView(viewToScroll)
     }
     
-    class func loadFromNib() -> acpiDifferController {
-        let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "acpiDiffer") as! acpiDifferController       // we need this because we're calling this function from another view controller
-        vc.popover.contentViewController = vc
-        return vc           // allow for access of objects from this view controller from another one
-    }
+//    class func loadFromNib() -> acpiDifferController {
+//        let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "acpiDiffer") as! acpiDifferController       // we need this because we're calling this function from another view controller
+//        vc.popover.contentViewController = vc
+//        return vc           // allow for access of objects from this view controller from another one
+//    }
     
     func showPopover(bounds: NSRect, window: NSView) {
         popover.show(relativeTo: bounds, of: window, preferredEdge: .minY)

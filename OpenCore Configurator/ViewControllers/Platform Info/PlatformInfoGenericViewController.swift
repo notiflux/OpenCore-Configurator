@@ -10,13 +10,16 @@ import Cocoa
 
 class PlatformInfoGenericViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var platformGenericTable: NSTableView!
     @IBOutlet weak var platformAutoBtn: NSButton!
     @IBOutlet weak var spoofVendor: NSButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        
+        platformAutoBtn.toolTip = "Select an SMBIOS preset"
     }
     
     @objc func onSmbiosSelect(_ sender: NSMenuItem) {
@@ -26,7 +29,7 @@ class PlatformInfoGenericViewController: NSViewController {
                                              ["property": "SystemProductName", "value": ""],
                                              ["property": "SystemSerialNumber", "value": ""]]
         
-        let mac = String((shell(launchPath: "/bin/bash", arguments: ["-c", "ifconfig en0 | grep ether"])?.dropFirst(6))!).replacingOccurrences(of: ":", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "").uppercased()
+        let mac = String((masterVC!.shell(launchPath: "/bin/bash", arguments: ["-c", "ifconfig en0 | grep ether"])?.dropFirst(6))!).replacingOccurrences(of: ":", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "").uppercased()
         
         tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "SystemSerialNumber", "value": ""])!] = ["property": "SystemSerialNumber", "value": serialDict[sender.title]![0]]
         tableLookup[platformGenericTable]![tableLookup[platformGenericTable]!.firstIndex(of: ["property": "SystemProductName", "value": ""])!] = ["property": "SystemProductName", "value": sender.title]
@@ -38,7 +41,7 @@ class PlatformInfoGenericViewController: NSViewController {
     
     @IBAction func genSmbios(_ sender: NSButton) {
         let macSerial = Bundle.main.path(forAuxiliaryExecutable: "macserial" )!
-        let serialMess = shell(launchPath: macSerial, arguments: ["-a"])?.components(separatedBy: "\n")
+        let serialMess = masterVC!.shell(launchPath: macSerial, arguments: ["-a"])?.components(separatedBy: "\n")
         
         for entry in serialMess! {
             let modelArray = entry.replacingOccurrences(of: " ", with: "").components(separatedBy: "|")

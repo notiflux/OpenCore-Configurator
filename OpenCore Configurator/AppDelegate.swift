@@ -1,3 +1,28 @@
+//import Cocoa
+//var path = ""
+//var editedState = false
+//var shouldExit = false
+//
+//@NSApplicationMain
+//class AppDelegate: NSObject, NSApplicationDelegate {
+//
+//    func application(_ sender: NSApplication, openFile filename: String) -> Bool {
+//        path = filename
+//        NotificationCenter.default.post(name: .plistOpen, object: nil)
+//        return true
+//    }
+//
+//
+//    func applicationDidFinishLaunching(_ aNotification: Notification) {
+//        // Insert code here to initialize your application
+//    }
+//
+//    func applicationWillTerminate(_ aNotification: Notification) {
+//        // Insert code here to tear down your application
+//    }
+//
+//
+//}
 import Cocoa
 
 var path = ""
@@ -13,21 +38,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.post(name: .plistOpen, object: nil)
         return true
     }
-    
+
+
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         if editedState {
             let alert = NSAlert()
             let appDelegate = NSApplication.shared.delegate as! AppDelegate
-            
+
             alert.addButton(withTitle: "Save changes and exit")
             alert.addButton(withTitle: "Cancel")
             alert.addButton(withTitle: "Exit without saving")
             alert.alertStyle = .warning
             alert.messageText = "Unsaved changes"
             alert.informativeText = "Do you want to save your changes?"
-            
+
             let result = alert.runModal()
-            
+
             switch result {
             case NSApplication.ModalResponse.alertFirstButtonReturn:
                 appDelegate.saveFile("")
@@ -42,19 +68,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else { return NSApplication.TerminateReply.terminateNow }
         return NSApplication.TerminateReply.terminateCancel
     }
-    
+
     @IBAction func newFile(_ sender: Any) {
-        let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "mainVC") as! ViewController
+        let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "mainVC") as! MasterDetailsViewController
         let newWindow = NSWindow(contentViewController: vc)
         newWindow.makeKeyAndOrderFront(self)
         windowController = NSWindowController(window: newWindow)
         windowController?.showWindow(self)
 
     }
-    
+
     @IBAction func openFile(_ sender: Any) {
         let dialog = NSOpenPanel()             // "file -> open" handler
-        
+
         dialog.title                   = "Choose a configuration plist"
         dialog.showsResizeIndicator    = true
         dialog.showsHiddenFiles        = false
@@ -62,10 +88,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         dialog.canCreateDirectories    = false
         dialog.allowsMultipleSelection = false
         dialog.allowedFileTypes        = ["plist"]
-        
+
         if dialog.runModal() == NSApplication.ModalResponse.OK {
             let result = dialog.url         // Pathname of the file
-            
+
             if (result != nil) {
                 path = result!.path         // we're posting a notification to handle the file open request in the main view controller, so we're writing the path to a public variable
                 NotificationCenter.default.post(name: .plistOpen, object: nil)
@@ -75,7 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
     }
-    
+
     @IBAction func saveFile(_ sender: Any) {
         if path == "" {
             saveFileAs(sender)
@@ -84,19 +110,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NotificationCenter.default.post(name: .plistSave, object: nil)
         }
     }
-    
+
     @IBAction func saveFileAs(_ sender: Any) {
         let dialog = NSSavePanel()
-        
+
         dialog.title                   = "Choose a location to save the configuration plist"
         dialog.showsResizeIndicator    = true
         dialog.showsHiddenFiles        = false
         dialog.canCreateDirectories    = true
         dialog.allowedFileTypes        = ["plist"]
-        
+
         if dialog.runModal() == NSApplication.ModalResponse.OK {
             let result = dialog.url
-            
+
             if result != nil {
                 path = result!.path
                 NotificationCenter.default.post(name: .plistSave, object: nil)
@@ -108,14 +134,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func manageVault(_ sender: Any) {
         NotificationCenter.default.post(name: .manageVault, object: nil)
     }
-    
+
     @IBAction func onTableDataPaste(_ sender: Any) {
         NotificationCenter.default.post(name: .paste, object: nil)
     }
 }
 
 class window: NSWindow {
-    
+
     func exitDialogHandler(_ result: NSApplication.ModalResponse) {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
         switch result {
@@ -135,17 +161,17 @@ class window: NSWindow {
     override func close() {
         if editedState {
             let alert = NSAlert()
-            
+
             alert.addButton(withTitle: "Save changes and close")
             alert.addButton(withTitle: "Cancel")
             alert.addButton(withTitle: "Close without saving")
             alert.alertStyle = .warning
             alert.messageText = "Unsaved changes"
             alert.informativeText = "Do you want to save your changes?"
-            
+
             alert.beginSheetModal(for: windowController!.window!, completionHandler: exitDialogHandler)
-            
-            
+
+
         } else { super.close() }
     }
 }

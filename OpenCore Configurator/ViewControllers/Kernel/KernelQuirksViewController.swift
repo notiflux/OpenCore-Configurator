@@ -10,6 +10,8 @@ import Cocoa
 
 class KernelQuirksViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var AppleCpuPmCfgLock: NSButton!
     @IBOutlet weak var AppleXcpmCfgLock: NSButton!
     @IBOutlet weak var ExternalDiskIcons: NSButton!

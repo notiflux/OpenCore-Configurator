@@ -10,6 +10,8 @@ import Cocoa
 
 class NvramAddViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     
     @IBOutlet weak var nvramBootTable: NSTableView!
     @IBOutlet weak var nvramVendorTable: NSTableView!
@@ -21,22 +23,22 @@ class NvramAddViewController: NSViewController {
     }
     
     @IBAction func addNvramBootBtn(_ sender: Any) {
-        addEntryToTable(table: &nvramBootTable, appendix: ["property": "", "value": ""])
+        masterVC!.addEntryToTable(table: &nvramBootTable, appendix: ["property": "", "value": ""])
     }
     @IBAction func remNvramBootBtn(_ sender: Any) {
-        removeEntryFromTable(table: &nvramBootTable)
+        masterVC!.removeEntryFromTable(table: &nvramBootTable)
     }
     @IBAction func addNvramVendorBtn(_ sender: Any) {
-        addEntryToTable(table: &nvramVendorTable, appendix: ["property": "", "value": ""])
+        masterVC!.addEntryToTable(table: &nvramVendorTable, appendix: ["property": "", "value": ""])
     }
     @IBAction func remNvramVendorBtn(_ sender: Any) {
-        removeEntryFromTable(table: &nvramVendorTable)
+        masterVC!.removeEntryFromTable(table: &nvramVendorTable)
     }
     @IBAction func addNvramCustomBtn(_ sender: Any) {
-        addEntryToTable(table: &nvramCustomTable, appendix: ["guid": "", "property": "", "value": ""])
+        masterVC!.addEntryToTable(table: &nvramCustomTable, appendix: ["guid": "", "property": "", "value": ""])
     }
     @IBAction func remNvramCustomBtn(_ sender: Any) {
-        removeEntryFromTable(table: &nvramCustomTable)
+        masterVC!.removeEntryFromTable(table: &nvramCustomTable)
     }
     
 }

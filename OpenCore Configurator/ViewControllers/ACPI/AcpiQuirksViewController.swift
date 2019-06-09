@@ -10,6 +10,8 @@ import Cocoa
 
 class AcpiQuirksViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var FadtEnableReset: NSButton!
     @IBOutlet weak var IgnoreForWindows: NSButton!
     @IBOutlet weak var NormalizeHeaders: NSButton!
@@ -18,7 +20,14 @@ class AcpiQuirksViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        
+//        acpiQuirks = [
+//            "FadtEnableReset": self.FadtEnableReset,
+//            "IgnoreForWindows": self.IgnoreForWindows,
+//            "NormalizeHeaders": self.NormalizeHeaders,
+//            "RebaseRegions": self.RebaseRegions,
+//            "ResetLogoStatus": self.ResetLogoStatus
+//        ]
     }
     
 }

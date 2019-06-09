@@ -18,7 +18,8 @@ class AcpiAddViewContoller: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        acpiAutoBtn.toolTip = "Automatically check and add entries for all ACPI tables in EFI/OC/ACPI/Custom"
+//        acpiAutoBtn.toolTip = "Automatically check and add entries for all ACPI tables in EFI/OC/ACPI/Custom"
+//        acpiAddTable.registerForDraggedTypes([masterVC!.dragDropAcpiAdd])
     }
     
     @IBAction func addAcpiBtn(_ sender: Any) {

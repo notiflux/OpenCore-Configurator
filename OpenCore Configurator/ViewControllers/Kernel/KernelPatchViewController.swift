@@ -10,17 +10,20 @@ import Cocoa
 
 class KernelPatchViewController: NSViewController {
     
+    var masterVC: MasterDetailsViewController?
+    
     @IBOutlet weak var kernelPatchTable: NSTableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        
+//        kernelPatchTable.registerForDraggedTypes([masterVC!.dragDropKernelPatch])
     }
     
     @IBAction func addKernelPatchBtn(_ sender: Any) {
-        addEntryToTable(table: &kernelPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "MatchKernel": "", "Enabled": "", "kernelAdvanced": "", "Base": "", "Count": "", "Identifier": "", "Limit": "", "Mask": "", "ReplaceMask": "", "Skip": ""])
+        masterVC?.addEntryToTable(table: &kernelPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "MatchKernel": "", "Enabled": "", "kernelAdvanced": "", "Base": "", "Count": "", "Identifier": "", "Limit": "", "Mask": "", "ReplaceMask": "", "Skip": ""])
     }
     @IBAction func remKernelPatchBtn(_ sender: Any) {
-        removeEntryFromTable(table: &kernelPatchTable)
+        masterVC?.removeEntryFromTable(table: &kernelPatchTable)
     }
 }
