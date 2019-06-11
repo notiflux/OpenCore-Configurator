@@ -1,11 +1,3 @@
-//
-//  AcpiPatchViewController.swift
-//  test
-//
-//  Created by Henry Brock on 6/8/19.
-//  Copyright © 2019 Henry Brock. All rights reserved.
-//
-
 import Cocoa
 
 class AcpiPatchViewController: NSViewController {
@@ -21,9 +13,9 @@ class AcpiPatchViewController: NSViewController {
     }
     
     @IBAction func addPatchAcpiBtn(_ sender: Any) {
-        masterVC?.addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "DSDT", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": "", "Count": ""])
+        //masterVC?.addEntryToTable(table: &acpiPatchTable, appendix: ["Comment": "", "Find": "", "Replace": "", "TableSignature": "DSDT", "Enabled": "", "advanced": "", "Limit": "", "Mask": "", "OemTableId": "", "ReplaceMask": "", "Skip": "", "TableLength": "", "Count": ""])
     }
     @IBAction func remPatchAcpiBtn(_ sender: Any) {
-        masterVC?.removeEntryFromTable(table: &acpiPatchTable)
+        //masterVC?.removeEntryFromTable(table: &acpiPatchTable)
     }
 }

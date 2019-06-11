@@ -1,11 +1,3 @@
-//
-//  NvramAddViewController.swift
-//  test
-//
-//  Created by Henry Brock on 6/8/19.
-//  Copyright © 2019 Henry Brock. All rights reserved.
-//
-
 import Cocoa
 
 class NvramAddViewController: NSViewController {
@@ -23,22 +15,22 @@ class NvramAddViewController: NSViewController {
     }
     
     @IBAction func addNvramBootBtn(_ sender: Any) {
-        masterVC!.addEntryToTable(table: &nvramBootTable, appendix: ["property": "", "value": ""])
+        //masterVC!.addEntryToTable(table: &nvramBootTable, appendix: ["property": "", "value": ""])
     }
     @IBAction func remNvramBootBtn(_ sender: Any) {
-        masterVC!.removeEntryFromTable(table: &nvramBootTable)
+        //masterVC!.removeEntryFromTable(table: &nvramBootTable)
     }
     @IBAction func addNvramVendorBtn(_ sender: Any) {
-        masterVC!.addEntryToTable(table: &nvramVendorTable, appendix: ["property": "", "value": ""])
+        //masterVC!.addEntryToTable(table: &nvramVendorTable, appendix: ["property": "", "value": ""])
     }
     @IBAction func remNvramVendorBtn(_ sender: Any) {
-        masterVC!.removeEntryFromTable(table: &nvramVendorTable)
+        //masterVC!.removeEntryFromTable(table: &nvramVendorTable)
     }
     @IBAction func addNvramCustomBtn(_ sender: Any) {
-        masterVC!.addEntryToTable(table: &nvramCustomTable, appendix: ["guid": "", "property": "", "value": ""])
+        //masterVC!.addEntryToTable(table: &nvramCustomTable, appendix: ["guid": "", "property": "", "value": ""])
     }
     @IBAction func remNvramCustomBtn(_ sender: Any) {
-        masterVC!.removeEntryFromTable(table: &nvramCustomTable)
+        //masterVC!.removeEntryFromTable(table: &nvramCustomTable)
     }
     
 }

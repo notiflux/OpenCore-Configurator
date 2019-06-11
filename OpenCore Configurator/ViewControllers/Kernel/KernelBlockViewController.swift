@@ -1,11 +1,3 @@
-//
-//  KernelBlockViewController.swift
-//  test
-//
-//  Created by Henry Brock on 6/8/19.
-//  Copyright © 2019 Henry Brock. All rights reserved.
-//
-
 import Cocoa
 
 class KernelBlockViewController: NSViewController {
@@ -20,9 +12,9 @@ class KernelBlockViewController: NSViewController {
     }
     
     @IBAction func addKernelBlockBtn(_ sender: Any) {
-        masterVC!.addEntryToTable(table: &kernelBlockTable, appendix: ["Identifier": "", "Comment": "", "MatchKernel": "", "Enabled": ""])
+        //masterVC!.addEntryToTable(table: &kernelBlockTable, appendix: ["Identifier": "", "Comment": "", "MatchKernel": "", "Enabled": ""])
     }
     @IBAction func remKernelBlockBtn(_ sender: Any) {
-        masterVC!.removeEntryFromTable(table: &kernelBlockTable)
+        //masterVC!.removeEntryFromTable(table: &kernelBlockTable)
     }
 }

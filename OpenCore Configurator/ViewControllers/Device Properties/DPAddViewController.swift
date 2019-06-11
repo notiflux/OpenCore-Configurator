@@ -1,11 +1,3 @@
-//
-//  DPAddViewController.swift
-//  test
-//
-//  Created by Henry Brock on 6/8/19.
-//  Copyright © 2019 Henry Brock. All rights reserved.
-//
-
 import Cocoa
 
 class DPAddViewController: NSViewController {
@@ -19,10 +11,12 @@ class DPAddViewController: NSViewController {
         // Do view setup here.
     }
     @IBAction func addDeviceAddBtn(_ sender: Any) {
-        masterVC!.addEntryToTable(table: &deviceAddTable, appendix: ["device": "", "property": "", "value": "", "edit": ""])
+        NotificationCenter.default.post(name: .addTableEntry, object: sender)
+        //masterVC!.addEntryToTable(table: &deviceAddTable, appendix: ["device": "", "property": "", "value": "", "edit": ""])
     }
     
     @IBAction func remDeviceAddBtn(_ sender: Any) {
-        masterVC!.removeEntryFromTable(table: &deviceAddTable)
+        NotificationCenter.default.post(name: .removeTableEntry, object: sender)
+        //masterVC!.removeEntryFromTable(table: &deviceAddTable)
     }
 }

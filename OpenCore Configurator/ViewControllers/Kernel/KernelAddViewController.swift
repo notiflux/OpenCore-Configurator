@@ -1,11 +1,3 @@
-//
-//  KernelAddViewController.swift
-//  test
-//
-//  Created by Henry Brock on 6/8/19.
-//  Copyright © 2019 Henry Brock. All rights reserved.
-//
-
 import Cocoa
 
 class KernelAddViewController: NSViewController {
@@ -23,10 +15,10 @@ class KernelAddViewController: NSViewController {
     }
     
     @IBAction func addKernelAddBtn(_ sender: Any) {
-        masterVC?.addEntryToTable(table: &kernelAddTable, appendix: ["BundlePath": "", "Comment": "", "ExecutablePath": "", "PlistPath": "","MatchKernel": "", "Enabled": ""])
+        //masterVC?.addEntryToTable(table: &kernelAddTable, appendix: ["BundlePath": "", "Comment": "", "ExecutablePath": "", "PlistPath": "","MatchKernel": "", "Enabled": ""])
     }
     @IBAction func remKernelAddBtn(_ sender: Any) {
-        masterVC?.removeEntryFromTable(table: &kernelAddTable)
+        //masterVC?.removeEntryFromTable(table: &kernelAddTable)
     }
     @IBAction func autoAddKernel(_ sender: Any) {
         if mountedESP != "" {

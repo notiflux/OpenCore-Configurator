@@ -1,5 +1,3 @@
-//  Copyright © 2019 notiflux. All rights reserved.
-
 import Foundation
 
 extension Bundle {

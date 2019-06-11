@@ -1,11 +1,3 @@
-//
-//  UEFIDriversViewController.swift
-//  test
-//
-//  Created by Henry Brock on 6/8/19.
-//  Copyright © 2019 Henry Brock. All rights reserved.
-//
-
 import Cocoa
 
 class UEFIDriversViewController: NSViewController {
@@ -23,10 +15,10 @@ class UEFIDriversViewController: NSViewController {
     }
     
     @IBAction func addUefiDriverBtn(_ sender: Any) {
-        masterVC!.addEntryToTable(table: &uefiDriverTable, appendix: ["driver": ""])
+        //masterVC!.addEntryToTable(table: &uefiDriverTable, appendix: ["driver": ""])
     }
     @IBAction func remUefiDriverBtn(_ sender: Any) {
-        masterVC!.removeEntryFromTable(table: &uefiDriverTable)
+        //masterVC!.removeEntryFromTable(table: &uefiDriverTable)
     }
     @IBAction func autoAddUefi(_ sender: Any) {
         if mountedESP != "" {

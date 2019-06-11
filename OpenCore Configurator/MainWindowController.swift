@@ -1,11 +1,3 @@
-//
-//  MainWindowController.swift
-//  OpenCore Configurator
-//
-//  Created by Henry Brock on 6/9/19.
-//  Copyright © 2019 notiflux. All rights reserved.
-//
-
 import Cocoa
 
 class MainWindowController: NSWindowController {

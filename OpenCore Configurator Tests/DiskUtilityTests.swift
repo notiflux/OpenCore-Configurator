@@ -1,5 +1,3 @@
-//  Copyright © 2019 notiflux. All rights reserved.
-
 @testable import OpenCore_Configurator
 import XCTest
 

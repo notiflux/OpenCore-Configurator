@@ -1,11 +1,3 @@
-//
-//  AcpiAddViewContoller.swift
-//  test
-//
-//  Created by Henry Brock on 6/8/19.
-//  Copyright © 2019 Henry Brock. All rights reserved.
-//
-
 import Cocoa
 
 class AcpiAddViewContoller: NSViewController {
@@ -23,11 +15,11 @@ class AcpiAddViewContoller: NSViewController {
     }
     
     @IBAction func addAcpiBtn(_ sender: Any) {
-        masterVC?.addEntryToTable(table: &acpiAddTable, appendix: ["Path": "", "Comment": "", "Enabled": ""])
+        //masterVC?.addEntryToTable(table: &acpiAddTable, appendix: ["Path": "", "Comment": "", "Enabled": ""])
     }
     
     @IBAction func remAcpiBtn(_ sender: Any) {
-        masterVC?.removeEntryFromTable(table: &acpiAddTable)
+        //masterVC?.removeEntryFromTable(table: &acpiAddTable)
     }
     
     @IBAction func autoAddAcpi(_ sender: Any) {

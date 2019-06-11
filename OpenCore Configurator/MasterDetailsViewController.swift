@@ -1,11 +1,3 @@
-//
-//  MasterDetailsViewController.swift
-//  test
-//
-//  Created by Henry Brock on 6/5/19.
-//  Copyright © 2019 Henry Brock. All rights reserved.
-//
-
 import Cocoa
 
 public let kNotification = Notification.Name("kNotification")
@@ -140,6 +132,8 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         NotificationCenter.default.addObserver(self, selector: #selector(applyAllPatches(_:)), name: .applyAllPatches, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(openVaultManager(_:)), name: .manageVault, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(closeVaultManager(_:)), name: .closeVault, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(addEntryToTable(_:)), name: .addTableEntry, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(removeEntryFromTable(_:)), name: .removeTableEntry, object: nil)
     }
     
     var acpiTables: NSMutableDictionary = NSMutableDictionary()
@@ -232,14 +226,19 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
     override func viewDidAppear() {
         super.viewDidAppear()
         
+        guard let splitViewController = self.parent as? NSSplitViewController,
+            let viewController = self.storyboard?.instantiateController(withIdentifier: "acpiTabVC") as? ACPITabViewController else { return }
+        let item = NSSplitViewItem(viewController: viewController)
+        splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
+        splitViewController.addSplitViewItem(item)
+        
         do {
             try reloadEsps()
         } catch let error {
             NSApplication.shared.presentError(error)
         }
         
-        // I stole this from MaciASL
-        // TODO: write tables to file (xxd -r -p) and show differences
+        // credit: MaciASL
         let expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert"))
         acpiTables = IORegistryEntryCreateCFProperty(expert, ("ACPI Tables" as CFString), kCFAllocatorDefault, 0)?.takeRetainedValue() as! NSMutableDictionary
         
@@ -1116,7 +1115,9 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         return nil
     }
     
-    func removeEntryFromTable(table: inout NSTableView) {       // for some reason this spawns simultaneous read and write access to the table view delegate. TODO: figure this out so we can re-enable exclusive memory access enforcement
+    // for some reason this spawns simultaneous read and write access to the table view delegate. TODO: figure this out so we can re-enable exclusive memory access enforcement
+    @objc func removeEntryFromTable(_ obj: Notification) {               // split view       right side     generic view    tab view        generic view    scroll view   clip view     table view
+        let table = (self.parent as! NSSplitViewController).splitView.arrangedSubviews.last?.subviews.first!.subviews.first!.subviews.first!.subviews.first!.subviews[1].subviews.first! as! NSTableView
         let SR = table.selectedRow
         if SR != -1 {
             table.removeRows(at: IndexSet(integer: SR), withAnimation: .effectGap)
@@ -1140,8 +1141,20 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         }
     }
     
-    func addEntryToTable(table: inout NSTableView, appendix: [String:String]) {
-        tableLookup[table]!.append(appendix)
+    @objc func addEntryToTable(_ obj: Notification) {              // split view       right side     generic view    tab view        generic view    scroll view   clip view     table view
+        let table = (self.parent as! NSSplitViewController).splitView.arrangedSubviews.last?.subviews.first!.subviews.first!.subviews.first!.subviews.first!.subviews[1].subviews.first! as! NSTableView
+        var appendix: [String:String] = [String:String]()
+        switch (obj.object as! NSButton).identifier?.rawValue {
+        case "deviceAdd":
+            appendix = ["device": "", "property": "", "value": "", "edit": ""]
+        default:
+            break
+        }
+        if tableLookup[table] != nil {
+            tableLookup[table]!.append(appendix)
+        } else {
+            tableLookup[table] = [appendix]
+        }
         table.beginUpdates()
         table.insertRows(at: IndexSet(integer: tableLookup[table]!.count - 1), withAnimation: .effectGap)
         table.endUpdates()
@@ -1430,65 +1443,31 @@ class MasterDetailsViewController: NSViewController, NSTableViewDataSource, NSTa
         return vw
     }
     
+    func cast<T>(value: Any, to type: T) -> T? {
+        return value as? T
+    }
+    
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let selectedRow = tableView.selectedRow
-        if selectedRow < 0 {
-            guard let splitViewController = self.parent as? NSSplitViewController,
-                let viewController = self.storyboard?.instantiateController(withIdentifier: "detailsVC") as? DetailViewController else {return}
-            let item = NSSplitViewItem(viewController: viewController)
-            splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
-            splitViewController.addSplitViewItem(item)
-        } else {
-            if selectedRow == 0 {
-                guard let splitViewController = self.parent as? NSSplitViewController,
-                    let viewController = self.storyboard?.instantiateController(withIdentifier: "acpiTabVC") as? ACPITabViewController else {return}
-                let item = NSSplitViewItem(viewController: viewController)
-                splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
-                splitViewController.addSplitViewItem(item)
-            }
-            if selectedRow == 1 {
-                guard let splitViewController = self.parent as? NSSplitViewController,
-                    let viewController = self.storyboard?.instantiateController(withIdentifier: "devicePropertiesTabVC") as? DevicePropertiesTabViewController else {return}
-                let item = NSSplitViewItem(viewController: viewController)
-                splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
-                splitViewController.addSplitViewItem(item)
-            }
-            if selectedRow == 2 {
-                guard let splitViewController = self.parent as? NSSplitViewController,
-                    let viewController = self.storyboard?.instantiateController(withIdentifier: "kernelTabVC") as? KernelTabViewController else {return}
-                let item = NSSplitViewItem(viewController: viewController)
-                splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
-                splitViewController.addSplitViewItem(item)
-            }
-            if selectedRow == 3 {
-                guard let splitViewController = self.parent as? NSSplitViewController,
-                    let viewController = self.storyboard?.instantiateController(withIdentifier: "miscTabVC") as? MiscTabViewController else {return}
-                let item = NSSplitViewItem(viewController: viewController)
-                splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
-                splitViewController.addSplitViewItem(item)
-            }
-            if selectedRow == 4 {
-                guard let splitViewController = self.parent as? NSSplitViewController,
-                    let viewController = self.storyboard?.instantiateController(withIdentifier: "nvramTabVC") as? NVRAMTabViewController else {return}
-                let item = NSSplitViewItem(viewController: viewController)
-                splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
-                splitViewController.addSplitViewItem(item)
-            }
-            if selectedRow == 5 {
-                guard let splitViewController = self.parent as? NSSplitViewController,
-                    let viewController = self.storyboard?.instantiateController(withIdentifier: "platformInfoTabVC") as? PlatformInfoTabViewController  else {return}
-                let item = NSSplitViewItem(viewController: viewController)
-                splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
-                splitViewController.addSplitViewItem(item)
-            }
-            if selectedRow == 6 {
-                guard let splitViewController = self.parent as? NSSplitViewController,
-                    let viewController = self.storyboard?.instantiateController(withIdentifier: "uefiTabVC") as? UEFITabViewController else {return}
-                let item = NSSplitViewItem(viewController: viewController)
-                splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
-                splitViewController.addSplitViewItem(item)
-            }
+        let vcLookup: [Int: [String: AnyObject]] = [
+            -1: ["detailsVC": DetailViewController.self],
+            0: ["acpiTabVC": ACPITabViewController.self],
+            1: ["devicePropertiesTabVC": DevicePropertiesTabViewController.self],
+            2: ["kernelTabVC": KernelTabViewController.self],
+            3: ["miscTabVC": MiscTabViewController.self],
+            4: ["nvramTabVC": NVRAMTabViewController.self],
+            5: ["platformInfoTabVC": PlatformInfoTabViewController.self],
+            6: ["uefiTabVC": UEFITabViewController.self]
+        ]
+        let identifier = vcLookup[tableView.selectedRow]!.keys.first!
+        let type = vcLookup[tableView.selectedRow]?.values.first!
+        guard let splitViewController = self.parent as? NSSplitViewController,
+            let viewController = cast(value: self.storyboard?.instantiateController(withIdentifier: identifier) as Any, to: type) else {
+                print("couldn't open vc with identifier \(vcLookup[self.tableView.selectedRow]!.keys.first!)")
+                return
         }
+        let item = NSSplitViewItem(viewController: viewController as! NSViewController)
+        splitViewController.removeSplitViewItem(splitViewController.splitViewItems[1])
+        splitViewController.addSplitViewItem(item)
     }
     
     @IBAction func mountEsp(_ sender: NSPopUpButton) {
@@ -1540,6 +1519,8 @@ extension Notification.Name {
     static let applyAllPatches = Notification.Name("applyAllPatches")
     static let manageVault = Notification.Name("manageVault")
     static let closeVault = Notification.Name("closeVault")
+    static let addTableEntry = Notification.Name("addTableEntry")
+    static let removeTableEntry = Notification.Name("removeTableEntry")
 }
 
 extension Data {
