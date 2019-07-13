@@ -1,4 +1,5 @@
 import Cocoa
+import CommonCrypto.CommonDigest
 
 var dataSource: [[String: String]] = [[String: String]]()
 var requireVault: Bool = false
