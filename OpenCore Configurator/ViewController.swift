@@ -329,7 +329,7 @@ class ViewController: NSViewController {
 
             // I stole this from MaciASL
             // TODO: write tables to file (xxd -r -p) and show differences
-        let expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert"))
+        let expert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("AppleACPIPlatformExpert"))
         acpiTables = IORegistryEntryCreateCFProperty(expert, ("ACPI Tables" as CFString), kCFAllocatorDefault, 0)?.takeRetainedValue() as! NSMutableDictionary
         
         
